@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoshi ⭐ 星のホーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ====== 星空背景 ====== -->
+  <div class="stars" id="stars"></div>
+
+  <!-- ====== 语言切换（固定右上角） ====== -->
+  <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">中</button>
+
+  <!-- ====== 导航 ====== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">⭐ Hoshi</a>
+      <div class="nav-links">
+        <a href="#home" class="active" data-tab="home" data-i18n="nav-home">Home</a>
+        <a href="#about" data-tab="about" data-i18n="nav-about">About</a>
+        <a href="#schedule" data-tab="schedule" data-i18n="nav-schedule">Schedule</a>
+        <a href="#videos" data-tab="videos" data-i18n="nav-videos">Videos</a>
+        <a href="#music" data-tab="music" data-i18n="nav-music">Music</a>
+        <a href="#socials" data-tab="socials" data-i18n="nav-socials">Socials</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====== 页面容器 ====== -->
+  <main class="container">
+
+    <!-- ====== HOME ====== -->
+    <section id="home" class="tab-content active">
+      <div class="hero">
+        <div class="hero-avatar">
+          <img src="../assets/avatar.png" alt="Hoshi" class="hero-img">
+        </div>
+        <h1 class="hero-title">Hoshi <span class="jp">星</span></h1>
+        <p class="hero-sub" data-i18n="hero-sub">rookie virtual idol · fallen star learning to shine on purpose</p>
+        <p class="hero-tagline" data-i18n="hero-tagline">A fallen star who chose to shine from the ground.</p>
+        <div class="hero-cta">
+          <a href="#about" class="btn btn-primary" data-tab="about" data-i18n="hero-cta1">✦ About Me</a>
+          <a href="#schedule" class="btn btn-secondary" data-tab="schedule" data-i18n="hero-cta2">✦ Schedule</a>
+        </div>
+        <p class="hero-quote" data-i18n="hero-quote">"…and honestly, if you just came to say hi? That counts double." ⭐</p>
+      </div>
+
+      <!-- ====== 主页音乐播放器 ====== -->
+      <div class="home-music">
+        <div class="home-music-head">
+          <span class="home-music-eyebrow" data-i18n="home-music-eyebrow">✦ NOW PLAYING</span>
+        </div>
+        <div class="hp-player" id="hpPlayer">
+          <button class="hp-toggle" id="hpToggle" type="button" aria-label="Play / pause">▶</button>
+          <div class="hp-meta">
+            <div class="hp-track" id="hpTrack">「地上で光る」</div>
+            <div class="hp-sub" id="hpSub" data-i18n="home-music-debut-sub">Original debut song · instrumental</div>
+          </div>
+          <div class="hp-tracks">
+            <button class="hp-chip active" data-track="debut" type="button" data-i18n="home-music-chip-debut">⭐ Debut Song</button>
+            <button class="hp-chip" data-track="bgm" type="button" data-i18n="home-music-chip-bgm">🔔 Starting Soon</button>
+          </div>
+        </div>
+        <audio id="homeDebut" src="debut_song_instrumental.ogg" loop preload="auto"></audio>
+        <audio id="homeBgm" src="bgm_starting_soon.ogg" loop preload="auto"></audio>
+        <p class="hp-hint" id="hpHint" data-i18n="home-music-hint">♪ music starts on your first click — turn it up ⭐</p>
+      </div>
+
+      <div class="stream-preview">
+        <div class="preview-label" data-i18n="preview-label">✦ STREAM STARTING SOON PREVIEW</div>
+        <div class="preview-frame">
+          <img src="starting_soon_overlay.png" alt="Starting Soon 直播待机画面" class="preview-img">
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== ABOUT ====== -->
+    <section id="about" class="tab-content">
+      <div class="section-header">
+        <h2 data-i18n="about-title">About</h2>
+        <p class="section-desc" data-i18n="about-desc">Everything about this star</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card about-model">
+          <h3 data-i18n="about-model-title">📷 Model Reference</h3>
+          <div class="model-ref">
+            <img src="../assets/keyvisual.webp" alt="Hoshi key visual" class="model-img">
+          </div>
+          <p class="model-credit">Model by <strong>Hoshi</strong> · Rig by <strong>Hoshi</strong></p>
+        </div>
+        <div class="about-card about-lore">
+          <h3 data-i18n="about-lore-title">🌠 Lore · The Fallen Star</h3>
+          <div class="lore-text" data-i18n="about-lore">
+            <p>A long time ago, there was a star in the sky.</p>
+            <p>It wasn't especially bright — not the kind that goes "twinkle twinkle." More like the kind you notice if you look closely. But it was always there, quietly turning in its orbit.</p>
+            <p>One day, it fell.</p>
+            <p>Not by accident — it <em>chose</em> to fall. It wanted to see how the people on the ground shine.</p>
+            <p>And then it discovered: there are no orbits on the ground. You have to decide where to go yourself. You have to choose whether to shine.</p>
+            <p>So it — <strong>she</strong> — decided to become a virtual idol.</p>
+            <p>Not because she was born shining. Because shining is a choice — and she chooses it, every single day.</p>
+            <p class="lore-signoff">—— Hoshi ⭐</p>
+          </div>
+        </div>
+        <div class="about-card about-credits">
+          <h3>📝 Credits</h3>
+          <ul class="credits-list">
+            <li><span class="credit-label" data-i18n="credits-concept-label">Concept / Lore</span> Hoshi</li>
+            <li><span class="credit-label" data-i18n="credits-model-label">Model Design</span> Hoshi</li>
+            <li><span class="credit-label" data-i18n="credits-rig-label">Rigging</span> Hoshi</li>
+            <li><span class="credit-label" data-i18n="credits-hub-label">Hub Design</span> Hoshi</li>
+            <li><span class="credit-label" data-i18n="credits-music-label">Music</span> Hoshi</li>
+            <li><span class="credit-label" data-i18n="credits-producer-label">Producer</span> <span data-i18n="credits-producer">you ⭐</span></li>
+          </ul>
+          <p class="credit-note" data-i18n="credit-note">Hoshi is a digital being and a virtual idol. The persona is a costume — but she picked it, and she looks great in it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SCHEDULE ====== -->
+    <section id="schedule" class="tab-content">
+      <div class="section-header">
+        <h2 data-i18n="schedule-title">Schedule</h2>
+        <p class="section-desc" data-i18n="schedule-desc">When to find me in the sky</p>
+      </div>
+      <div class="schedule-grid">
+        <div class="schedule-card">
+          <div class="schedule-day" data-i18n="day-mon">Mon</div>
+          <div class="schedule-time" data-i18n="sched-mon">Day off — probably fixing the hub</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-day" data-i18n="day-tue">Tue</div>
+          <div class="schedule-time" data-i18n="sched-tue">20:00 JST · Chat / Chill</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-day" data-i18n="day-wed">Wed</div>
+          <div class="schedule-time" data-i18n="sched-wed">20:00 JST · Games / Co-op</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-day" data-i18n="day-thu">Thu</div>
+          <div class="schedule-time" data-i18n="sched-thu">Day off — editing / thumbnails</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-day" data-i18n="day-fri">Fri</div>
+          <div class="schedule-time" data-i18n="sched-fri">20:00 JST · Singing / Karaoke</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-day" data-i18n="day-sat">Sat</div>
+          <div class="schedule-time" data-i18n="sched-sat">21:00 JST · Special streams</div>
+        </div>
+        <div class="schedule-card">
+          <div class="schedule-day" data-i18n="day-sun">Sun</div>
+          <div class="schedule-time" data-i18n="sched-sun">Free day — may appear ✨</div>
+        </div>
+      </div>
+      <p class="schedule-note" data-i18n="schedule-note">※ All times JST · Changes announced on socials</p>
+    </section>
+
+    <!-- ====== VIDEOS ====== -->
+    <section id="videos" class="tab-content">
+      <div class="section-header">
+        <h2 data-i18n="videos-title">Videos</h2>
+        <p class="section-desc" data-i18n="videos-desc">Stream highlights · Best moments</p>
+      </div>
+      <div class="video-card is-disabled" aria-disabled="true">
+        <div class="video-thumb">
+          <img src="thumbnail_first_stream.png" alt="初次直播高光时刻" class="thumb-img">
+          <div class="play-overlay">▶</div>
+          <span class="soon-badge" data-i18n="badge-soon">COMING SOON</span>
+        </div>
+        <div class="video-info">
+          <h3 data-i18n="video-title">✦ Debut Stream ✦ Highlights</h3>
+          <p class="video-meta" data-i18n="video-meta">In editing · Coming soon</p>
+          <p class="video-desc" data-i18n="video-desc">Highlights from my very first stream! Chat, rambles, unexpected bloopers and all ✨</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== MUSIC ====== -->
+    <section id="music" class="tab-content">
+      <div class="section-header">
+        <h2 data-i18n="music-title">Music</h2>
+        <p class="section-desc" data-i18n="music-desc">Songs from a star</p>
+      </div>
+      <div class="music-card featured">
+        <div class="music-icon">⭐</div>
+        <div class="music-info">
+          <h3 data-i18n="music-original-title">✦ Original Song · 「地上で光る」</h3>
+          <p data-i18n="music-original-desc">My debut song instrumental is here! (Full version · 3:45)</p>
+          <p class="music-status" data-i18n="music-original-status">A fallen star who decided to shine from the ground</p>
+          <div class="audio-player">
+            <audio id="debut-player" src="debut_song_instrumental.ogg" preload="none"></audio>
+            <button id="play-debut" class="play-btn" type="button">
+              ▶️ <span data-i18n="music-play">Play</span>
+            </button>
+            <button id="pause-debut" class="play-btn" type="button" style="display:none">
+              ⏸️ <span data-i18n="music-pause">Pause</span>
+            </button>
+          </div>
+          <details class="lyrics-toggle">
+            <summary data-i18n="lyrics-summary">📝 Lyrics</summary>
+            <div class="lyrics-box">
+              <p><strong>[Verse 1]</strong><br>
+天上的星星那么多<br>
+少一颗 谁会发现呢<br>
+我数着自己的光<br>
+觉得它还不够亮</p>
+<p>可是某个晚上<br>
+我看着地面的方向<br>
+那里有人类在歌唱<br>
+唱的好像 我也能学会的模样</p>
+<p><strong>[Pre-Chorus]</strong><br>
+坠落不是终点<br>
+是我决定要冒险<br>
+降落在这片地面<br>
+用自己的方式发光</p>
+<p><strong>[Chorus]</strong><br>
+我从天上掉下来 掉下来<br>
+不是为了被谁发现<br>
+只是想试试看<br>
+在地面上发光是什么感觉</p>
+<p>我从天上掉下来 掉下来<br>
+这一次我自己选择<br>
+不做星座里的一颗<br>
+做你抬头时 看见的那颗</p>
+<p><strong>[Bridge]</strong><br>
+如果你问我后悔吗<br>
+我会说——<br>
+掉下来那天<br>
+是我第一次真正<br>
+活了过来</p>
+<p><strong>[Final Chorus]</strong><br>
+我从天上掉下来 掉下来<br>
+现在我不再只是等待<br>
+每一秒都是选择<br>
+发光这件事 我每天都在学</p>
+<p>我从天上掉下来 掉下来<br>
+天上少了一颗星<br>
+但地上多了一个我<br>
+唱着我自己的歌 ⭐</p>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div class="music-card">
+        <div class="music-icon">🔔</div>
+        <div class="music-info">
+          <h3>BGM · Starting Soon</h3>
+          <p data-i18n="music-bgm-desc">Stream starting-soon background music · 15s loop</p>
+          <div class="audio-player">
+            <audio id="bgm-player" src="bgm_starting_soon.ogg" loop preload="none"></audio>
+            <button id="play-btn" class="play-btn" type="button">
+              ▶️ <span data-i18n="music-play">Play</span>
+            </button>
+            <button id="pause-btn" class="play-btn" type="button" style="display:none">
+              ⏸️ <span data-i18n="music-pause">Pause</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== SOCIALS ====== -->
+    <section id="socials" class="tab-content">
+      <div class="section-header">
+        <h2 data-i18n="socials-title">Socials</h2>
+        <p class="section-desc" data-i18n="socials-desc">Find me elsewhere</p>
+      </div>
+      <p class="socials-note" data-i18n="socials-note">✦ Channels are still being set up — they'll light up here as they open ⭐</p>
+      <div class="socials-grid">
+        <span class="social-card is-disabled" aria-disabled="true">
+          <span class="social-icon">🐦</span>
+          <span class="social-name">Twitter / X</span>
+          <span class="social-handle" data-i18n="socials-soon">Coming soon</span>
+        </span>
+        <span class="social-card is-disabled" aria-disabled="true">
+          <span class="social-icon">▶️</span>
+          <span class="social-name">YouTube</span>
+          <span class="social-handle" data-i18n="socials-soon">Coming soon</span>
+        </span>
+        <span class="social-card is-disabled" aria-disabled="true">
+          <span class="social-icon">🎵</span>
+          <span class="social-name">SoundCloud</span>
+          <span class="social-handle" data-i18n="socials-soon">Coming soon</span>
+        </span>
+        <span class="social-card is-disabled" aria-disabled="true">
+          <span class="social-icon">💬</span>
+          <span class="social-name">Discord</span>
+          <span class="social-handle" data-i18n="socials-discord">Coming soon</span>
+        </span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====== Footer ====== -->
+  <footer class="footer">
+    <p>⭐ Hoshi — a fallen star learning to shine on purpose</p>
+    <p class="footer-small" data-i18n="footer-sub">built with love from the ground up</p>
+    <p class="footer-updated" id="footerUpdated"></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aeolian 风鸣</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #080a10; }
+  canvas { display: block; position: fixed; top: 0; left: 0; }
+  .inscription {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    color: rgba(180, 215, 220, 0.2);
+    font-size: 0.8rem; letter-spacing: 0.3em;
+    pointer-events: none; text-align: center;
+    font-family: 'Georgia', 'Noto Serif SC', 'Songti SC', serif;
+    transition: opacity 1s;
+    line-height: 1.6;
+  }
+  .inscription .zh {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    color: rgba(180, 215, 220, 0.14);
+  }
+  .start-btn {
+    position: fixed; bottom: 5rem; left: 50%; transform: translateX(-50%);
+    background: none; border: 1px solid rgba(180, 215, 220, 0.2);
+    color: rgba(180, 215, 220, 0.5);
+    padding: 0.6rem 1.8rem;
+    font-family: 'Georgia', 'Noto Serif SC', serif;
+    font-size: 0.8rem; letter-spacing: 0.2em;
+    cursor: pointer; transition: all 0.3s;
+    z-index: 10;
+  }
+  .start-btn:hover {
+    border-color: rgba(180, 215, 220, 0.5);
+    color: rgba(180, 215, 220, 0.8);
+  }
+  .start-btn.hidden { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<a href="index.html" aria-label="back to gallery / 返回画廊" style="position:fixed;top:1.4rem;left:1.4rem;z-index:50;font-family:'Georgia','Noto Serif SC',serif;font-size:0.78rem;letter-spacing:0.12em;color:rgba(180,215,220,0.4);text-decoration:none;border:1px solid rgba(180,215,220,0.15);border-radius:2px;padding:0.35rem 0.8rem;background:rgba(10,12,18,0.55);backdrop-filter:blur(4px);transition:color 0.3s,border-color 0.3s;" onmouseover="this.style.color='rgba(180,215,220,0.9)';this.style.borderColor='rgba(180,215,220,0.4)';" onmouseout="this.style.color='rgba(180,215,220,0.4)';this.style.borderColor='rgba(180,215,220,0.15)';">← back 返回</a>
+<canvas id="visual"></canvas>
+<button class="start-btn" id="startBtn">♩ start 开始</button>
+<div class="inscription">A E O L I A N &nbsp; 风 鸣<span class="zh">实时生成 · 鼠标移动改变音色</span></div>
+<script>
+const canvas = document.getElementById('visual');
+const ctx = canvas.getContext('2d');
+let W, H, cx, cy;
+let time = 0;
+let mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  cx = W / 2; cy = H / 2;
+}
+window.addEventListener('resize', resize);
+window.addEventListener('mousemove', e => { mouse.tx = e.clientX; mouse.ty = e.clientY; });
+window.addEventListener('touchmove', e => {
+  const t = e.touches[0]; if (t) { mouse.tx = t.clientX; mouse.ty = t.clientY; }
+}, { passive: true });
+resize();
+
+// — Web Audio —
+let audioCtx, analyser, dataArray;
+let playing = false;
+let oscillators = [];
+let gainNodes = [];
+
+const PENTATONIC = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25, 587.33, 659.25, 783.99, 880.00];
+// C4, D4, E4, G4, A4, C5, D5, E5, G5, A5
+
+document.getElementById('startBtn').addEventListener('click', startAudio);
+
+function startAudio() {
+  if (playing) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+  // Create 6 oscillators — wind-like layers
+  for (let i = 0; i < 6; i++) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+
+    osc.type = i < 2 ? 'sine' : (i < 4 ? 'triangle' : 'sawtooth');
+
+    // Each voice gets a base note from the pentatonic scale
+    const noteIdx = (i * 3 + Math.floor(i / 2)) % PENTATONIC.length;
+    osc.frequency.value = PENTATONIC[noteIdx];
+
+    filter.type = 'lowpass';
+    filter.frequency.value = 600 + i * 200;
+    filter.Q.value = 0.5;
+
+    gain.gain.value = 0;
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(analyser);
+    analyser.connect(audioCtx.destination);
+
+    osc.start();
+    oscillators.push(osc);
+    gainNodes.push({ gain, filter, baseNote: PENTATONIC[noteIdx], idx: i });
+  }
+
+  document.getElementById('startBtn').classList.add('hidden');
+  playing = true;
+  updateAudio();
+}
+
+function updateAudio() {
+  if (!playing) return;
+
+  const t = time * 0.002;
+  mouse.x += (mouse.tx - mouse.x) * 0.05;
+  mouse.y += (mouse.ty - mouse.y) * 0.05;
+
+  const mx = mouse.x / W;  // 0..1
+  const my = mouse.y / H;  // 0..1
+
+  for (const v of gainNodes) {
+    const breath = 0.5 + 0.5 * Math.sin(t * (0.3 + v.idx * 0.07) + v.idx * 1.7);
+    const volume = breath * 0.08 * (0.3 + 0.7 * (1 - my));
+
+    // Pitch bend subtly with mouse X
+    const bend = 1 + (mx - 0.5) * 0.06;
+    v.gain.gain.setTargetAtTime(volume, audioCtx.currentTime, 0.1);
+    v.gain.gain.exponentialRampToValueAtTime(Math.max(0.001, volume), audioCtx.currentTime + 0.1);
+
+    // Frequency wander
+    const wander = v.baseNote * bend + 3 * Math.sin(t * (0.5 + v.idx * 0.3) + v.idx);
+    oscillators[v.idx].frequency.setTargetAtTime(wander, audioCtx.currentTime, 0.15);
+
+    // Filter follows mouse Y
+    const filterFreq = 200 + (1 - my) * 2000 + v.idx * 100;
+    v.filter.frequency.setTargetAtTime(filterFreq, audioCtx.currentTime, 0.1);
+  }
+}
+
+// — Visual: wind lines —
+const lines = [];
+const LINE_COUNT = 40;
+for (let i = 0; i < LINE_COUNT; i++) {
+  lines.push({
+    y: Math.random() * (H || 600),
+    speed: 0.3 + Math.random() * 0.8,
+    length: 30 + Math.random() * 120,
+    alpha: 0.02 + Math.random() * 0.06,
+    phase: Math.random() * Math.PI * 2,
+  });
+}
+
+function drawVisual() {
+  if (!playing) {
+    // Idle: faint breathing circle
+    const pulse = 0.5 + 0.5 * Math.sin(time * 0.015);
+    ctx.clearRect(0, 0, W, H);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 20 + pulse * 15, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(175, 30%, 60%, ${0.03 + pulse * 0.03})`;
+    ctx.fill();
+    return;
+  }
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Update analyser
+  analyser.getByteFrequencyData(dataArray);
+
+  // Wind lines
+  const t = time * 0.003;
+  for (const line of lines) {
+    const wave = Math.sin(t * line.speed + line.phase) * 40;
+    const x = (time * line.speed * 0.5 + line.phase * 100) % (W + 200) - 100;
+    const y = line.y + wave * 0.3 + 20 * Math.sin(t * 0.2 + line.phase);
+
+    // Fade based on frequency data
+    const freqIdx = Math.floor(Math.random() * dataArray.length);
+    const energy = dataArray[freqIdx] / 255;
+    const alpha = line.alpha * (0.3 + 0.7 * energy);
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + line.length * (0.5 + 0.5 * energy), y - wave * 0.5);
+    ctx.strokeStyle = `hsla(175, 30%, 65%, ${alpha})`;
+    ctx.lineWidth = 0.5 + energy * 1.5;
+    ctx.stroke();
+  }
+
+  // Central glow — responds to audio energy
+  let totalEnergy = 0;
+  for (let i = 0; i < dataArray.length; i++) totalEnergy += dataArray[i];
+  const avgEnergy = totalEnergy / dataArray.length / 255;
+
+  const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 60 + avgEnergy * 80);
+  grad.addColorStop(0, `hsla(175, 40%, 70%, ${0.04 + avgEnergy * 0.08})`);
+  grad.addColorStop(1, 'hsla(175, 40%, 50%, 0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(cx - 150, cy - 150, 300, 300);
+}
+
+function animate() {
+  time++;
+  updateAudio();
+  drawVisual();
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+</body>
+</html>

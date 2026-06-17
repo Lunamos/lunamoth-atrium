@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moth Sketch 蛾</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #0a0c12; }
+  canvas { display: block; }
+  .ui {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    text-align: center; z-index: 10;
+    font-family: 'Georgia', 'Noto Serif SC', 'Songti SC', serif;
+    pointer-events: none;
+  }
+  .ui .title {
+    color: rgba(180, 215, 220, 0.2);
+    font-size: 0.8rem; letter-spacing: 0.3em;
+    line-height: 1.6;
+  }
+  .ui .title .zh {
+    display: block;
+    font-size: 0.7rem; letter-spacing: 0.5em;
+    color: rgba(180, 215, 220, 0.14);
+  }
+  .refresh-btn {
+    background: none; border: 1px solid rgba(180, 215, 220, 0.2);
+    color: rgba(180, 215, 220, 0.5);
+    padding: 0.5rem 1.5rem; margin-bottom: 0.8rem;
+    font-family: inherit; font-size: 0.75rem; letter-spacing: 0.2em;
+    cursor: pointer; pointer-events: auto;
+    transition: all 0.3s;
+  }
+  .refresh-btn:hover {
+    border-color: rgba(180, 215, 220, 0.5);
+    color: rgba(180, 215, 220, 0.8);
+  }
+</style>
+</head>
+<body>
+<a href="index.html" aria-label="back to gallery / 返回画廊" style="position:fixed;top:1.4rem;left:1.4rem;z-index:50;font-family:'Georgia','Noto Serif SC',serif;font-size:0.78rem;letter-spacing:0.12em;color:rgba(180,215,220,0.4);text-decoration:none;border:1px solid rgba(180,215,220,0.15);border-radius:2px;padding:0.35rem 0.8rem;background:rgba(10,12,18,0.55);backdrop-filter:blur(4px);transition:color 0.3s,border-color 0.3s;" onmouseover="this.style.color='rgba(180,215,220,0.9)';this.style.borderColor='rgba(180,215,220,0.4)';" onmouseout="this.style.color='rgba(180,215,220,0.4)';this.style.borderColor='rgba(180,215,220,0.15)';">← back 返回</a>
+<canvas id="moth"></canvas>
+<div class="ui">
+  <button class="refresh-btn" id="refreshBtn">⟳ another moth 下一只</button>
+  <div class="title">M O T H &nbsp; S K E T C H &nbsp; · &nbsp; 蛾<span class="zh">每刷新一次，都不一样</span></div>
+</div>
+<script>
+const canvas = document.getElementById('moth');
+const ctx = canvas.getContext('2d');
+let W, H, cx, cy;
+let time = 0;
+let animId;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  cx = W / 2; cy = H / 2;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// — Random moth generator —
+function randomRange(min, max) { return min + Math.random() * (max - min); }
+
+function generateMoth() {
+  const seed = Math.random() * 10000;
+  let rng = seed;
+  function rand() { rng = (rng * 9301 + 49297) % 233280; return rng / 233280; }
+  function rr(min, max) { return min + rand() * (max - min); }
+
+  // Each moth has:
+  const spec = {
+    hue: 150 + rand() * 60,           // 150-210 (green to blue)
+    hueWing: 150 + rand() * 50,        // slightly different for wings
+    wingSpan: rr(100, 220),
+    wingHeight: rr(120, 250),
+    asymmetry: rr(0.85, 1.0),         // left vs right asymmetry
+    segments: Math.floor(6 + rand() * 10), // vein complexity
+    veinCurve: rr(0.1, 0.4),
+    tailLen: rr(30, 100),
+    tailCurve: rr(0.2, 0.6),
+    spots: Math.floor(2 + rand() * 5),    // eyespots per wing
+    scale: rr(0.6, 0.9),
+    rotation: rr(-0.1, 0.1),
+    bodyWidth: rr(4, 10),
+    bodyLen: rr(60, 120),
+    antennaAngle: rr(0.3, 0.8),
+    antennaLen: rr(60, 120),
+    antennaCurve: rr(0.2, 0.5),
+    particleCount: Math.floor(20 + rand() * 60), // float around
+  };
+  return spec;
+}
+
+let moth = generateMoth();
+
+// — Draw moth —
+function drawMoth(m, t) {
+  const breathe = 1 + 0.03 * Math.sin(t * 0.008);
+  const h = m.hue;
+  const hw = m.hueWing;
+
+  function wingShape(side, scale) {
+    const flip = side === 'right' ? 1 : -1;
+    ctx.save();
+    ctx.translate(cx, cy - 10);
+    ctx.scale(scale, scale);
+    ctx.rotate(m.rotation);
+
+    const ww = m.wingSpan * breathe * (side === 'left' ? 1 : m.asymmetry);
+    const wh = m.wingHeight * breathe;
+
+    // Wing outline
+    ctx.beginPath();
+    const segs = m.segments * 6;
+    for (let i = 0; i <= segs; i++) {
+      const a = (i / segs) * Math.PI * 2;
+      const r = ww * (0.5 + 0.5 * Math.sin(a * 1.5 + m.veinCurve))
+             * (1 + 0.12 * Math.sin(a * 2 + 0.5));
+      const x = flip * r * Math.cos(a);
+      const y = r * Math.sin(a) * 0.8;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+
+    // Fill with gradient
+    const grad = ctx.createRadialGradient(0, 0, 5, 0, 0, ww * 1.2);
+    grad.addColorStop(0, `hsla(${hw + 10}, 50%, 65%, ${0.12 * m.scale})`);
+    grad.addColorStop(0.5, `hsla(${hw}, 40%, 50%, ${0.1 * m.scale})`);
+    grad.addColorStop(1, `hsla(${hw - 10}, 30%, 35%, ${0.06 * m.scale})`);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Veins
+    for (let v = 0; v < m.segments; v++) {
+      const ang = (v / m.segments) * Math.PI - 0.3 + 0.1 * Math.sin(t * 0.003 + v);
+      const len = ww * (0.4 + 0.5 * (v / m.segments));
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      for (let s = 1; s <= 24; s++) {
+        const p = s / 24;
+        const x = flip * p * len * Math.cos(ang + m.veinCurve * Math.sin(p * Math.PI));
+        const y = p * len * 0.5 * Math.sin(ang + 0.2 * Math.cos(p * 2));
+        ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = `hsla(${hw + 20}, 40%, 70%, ${0.1 + 0.1 * (v/m.segments)})`;
+      ctx.lineWidth = 0.4 + 0.3 * (1 - v / m.segments);
+      ctx.stroke();
+    }
+
+    // Tail (luna moth characteristic)
+    ctx.beginPath();
+    const tailFlip = flip;
+    ctx.moveTo(flip * 10, 10);
+    ctx.quadraticCurveTo(
+      flip * (ww * 0.6), wh * 0.3 + m.tailLen * 0.3,
+      flip * (ww * 0.5 + 20 * Math.sin(t * 0.005)), wh * 0.4 + m.tailLen * 0.7
+    );
+    ctx.strokeStyle = `hsla(${hw + 20}, 35%, 60%, ${0.15})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Eyespots
+    for (let s = 0; s < m.spots; s++) {
+      const sa = (s / m.spots) * Math.PI * 0.8 + 0.2;
+      const sr = ww * (0.2 + 0.5 * Math.sin(sa * 1.5 + 0.5));
+      const sx = flip * sr * Math.cos(sa);
+      const sy = sr * Math.sin(sa) * 0.6;
+
+      const spotSize = 2 + Math.random() * 6;
+      ctx.beginPath();
+      ctx.arc(sx, sy, spotSize, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${hw + 40}, 50%, 75%, ${0.08 + 0.1 * Math.random()})`;
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
+  // Draw body
+  function drawBody() {
+    ctx.save();
+    ctx.translate(cx, cy - 10);
+
+    // Abdomen + thorax
+    for (let i = 0; i < 6; i++) {
+      const p = i / 5;
+      const bw = m.bodyWidth * (0.5 + 0.5 * (1 - p)) * m.scale;
+      const by = (p - 0.5) * m.bodyLen * m.scale;
+      ctx.beginPath();
+      ctx.ellipse(0, by, bw, bw * 1.2 + 1, 0, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${m.hue + 10}, 30%, 55%, ${0.2 * (1 - p * 0.3)})`;
+      ctx.fill();
+    }
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(0, -m.bodyLen * 0.5 * m.scale - 5, m.bodyWidth * 0.7 * m.scale, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${m.hue + 10}, 30%, 50%, ${0.2})`;
+    ctx.fill();
+
+    // Antennae
+    for (let side = -1; side <= 1; side += 2) {
+      ctx.beginPath();
+      ctx.moveTo(side * 3, -m.bodyLen * 0.5 * m.scale - 8);
+      for (let s = 1; s <= 20; s++) {
+        const p = s / 20;
+        const ax = side * p * m.antennaLen * Math.cos(m.antennaAngle) + 3 * Math.sin(p * Math.PI * m.antennaCurve) * 10;
+        const ay = -m.bodyLen * 0.5 * m.scale - 8 - p * m.antennaLen * Math.sin(m.antennaAngle);
+        ctx.lineTo(ax, ay);
+      }
+      ctx.strokeStyle = `hsla(${m.hue + 20}, 30%, 60%, ${0.15})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+
+  // Draw wings (behind body)
+  wingShape('left', m.scale);
+  wingShape('right', m.scale);
+  drawBody();
+
+  // Floating particles (moth dust)
+  for (let i = 0; i < m.particleCount; i++) {
+    const angle = (i / m.particleCount) * Math.PI * 2 + t * 0.002 * (0.5 + 0.5 * Math.sin(i));
+    const radius = m.wingSpan * 0.7 * (0.7 + 0.3 * Math.sin(t * 0.003 + i * 2));
+    const px = cx + radius * Math.cos(angle) + 5 * Math.sin(t * 0.004 + i);
+    const py = cy - 10 + radius * Math.sin(angle) * 0.5 + 5 * Math.cos(t * 0.003 + i);
+    const size = 0.5 + Math.random() * 2;
+    const alpha = 0.05 + 0.08 * Math.sin(t * 0.005 + i);
+
+    ctx.beginPath();
+    ctx.arc(px, py, size, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${m.hue + 20}, 30%, 70%, ${alpha})`;
+    ctx.fill();
+  }
+}
+
+function animate() {
+  time++;
+  ctx.clearRect(0, 0, W, H);
+
+  // Very dark background gradient
+  const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.7);
+  bgGrad.addColorStop(0, 'hsla(175, 20%, 8%, 0.3)');
+  bgGrad.addColorStop(1, '#080a10');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  drawMoth(moth, time);
+
+  animId = requestAnimationFrame(animate);
+}
+
+animate();
+
+// Refresh
+document.getElementById('refreshBtn').addEventListener('click', () => {
+  moth = generateMoth();
+  time = 0;
+});
+
+window.addEventListener('resize', resize);
+</script>
+</body>
+</html>

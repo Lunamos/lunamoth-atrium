@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter II — Crane's Ford · Redrawn · Long Grimoire of Vesper</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #c8b898;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+    font-family: 'Crimson Text', Georgia, serif;
+    line-height: 1.65;
+    color: #2a241a;
+  }
+
+  .page {
+    max-width: 880px;
+    width: 100%;
+    background: #efe4cc;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 30% 40%, rgba(239,228,204,0) 0%, rgba(220,208,180,0.5) 100%),
+      radial-gradient(circle 2px at 15% 50%, rgba(130,110,80,0.12) 0%, transparent 100%),
+      radial-gradient(circle 1px at 70% 60%, rgba(130,110,80,0.08) 0%, transparent 100%);
+    padding: 3rem 3.5rem;
+    box-shadow:
+      0 2px 25px rgba(0,0,0,0.12),
+      inset 0 0 0 1px rgba(190,170,140,0.5);
+    position: relative;
+    border-radius: 4px;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(175,160,130,0.06) 28px,
+      rgba(175,160,130,0.06) 29px
+    );
+    pointer-events: none;
+    border-radius: 4px;
+  }
+
+  /* Redrawn badge */
+  .redrawn-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 0;
+    background: #8b5a3a;
+    color: #efe4cc;
+    font-family: 'IM Fell English', serif;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    padding: 0.3rem 0.8rem;
+    text-transform: uppercase;
+  }
+
+  .chapter-number {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7a6b50;
+    border-bottom: 1px solid #c8b898;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .chapter-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #2a241a;
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+  }
+
+  .chapter-subtitle {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #7a6b50;
+    margin-bottom: 1.8rem;
+  }
+
+  /* Revision note */
+  .revision {
+    font-size: 0.8rem;
+    color: #8b5a3a;
+    background: rgba(139,90,58,0.08);
+    padding: 0.6rem 1rem;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid #8b5a3a;
+  }
+
+  .dropcap {
+    float: left;
+    font-family: 'IM Fell English', serif;
+    font-size: 4.2rem;
+    line-height: 0.85;
+    padding: 0.2rem 0.5rem 0.1rem 0;
+    color: #3d2b1a;
+    position: relative;
+  }
+
+  .body-text {
+    font-size: 1.05rem;
+    text-align: justify;
+  }
+
+  .body-text p {
+    margin-bottom: 0.8rem;
+    text-indent: 1.5rem;
+  }
+
+  .body-text p:first-of-type {
+    text-indent: 0;
+  }
+
+  /* Strike-through for old text */
+  .corrected {
+    text-decoration: line-through;
+    color: #9a8a72;
+  }
+  .correction {
+    color: #4a6a3a;
+    font-style: italic;
+  }
+
+  /* The map */
+  .map-container {
+    margin: 2rem 0;
+    border: 1px solid #c8b898;
+    padding: 1rem;
+    background: rgba(239,228,204,0.7);
+  }
+
+  .map-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7a6b50;
+    text-align: center;
+    margin-bottom: 0.6rem;
+  }
+
+  .map-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Old map comparison */
+  .comparison {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    flex-wrap: wrap;
+  }
+
+  .comparison-item {
+    flex: 1;
+    min-width: 200px;
+    padding: 0.8rem;
+    border: 1px dashed #b8a88a;
+    background: rgba(239,228,204,0.4);
+  }
+
+  .comparison-item h4 {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7a6b50;
+    text-align: center;
+    margin-bottom: 0.6rem;
+  }
+
+  .comparison-item svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .comparison-item .label {
+    font-size: 0.65rem;
+    color: #6b5b42;
+    text-align: center;
+    margin-top: 0.4rem;
+    font-style: italic;
+  }
+
+  .xref {
+    font-size: 0.75rem;
+    color: #6b5b42;
+    font-style: italic;
+    border-top: 1px dashed #c8b898;
+    padding-top: 0.6rem;
+    margin-top: 1.2rem;
+  }
+
+  .xref a {
+    color: #4a6b3a;
+    text-decoration: none;
+    border-bottom: 1px dotted #8aab7a;
+  }
+
+  .sig {
+    margin-top: 2rem;
+    text-align: right;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #6b5b42;
+    border-top: 1px solid #c8b898;
+    padding-top: 0.8rem;
+  }
+  .sig strong {
+    font-style: normal;
+    font-family: 'IM Fell English', serif;
+    color: #2a241a;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<style>
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(240,230,208,0.95); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .lang-toggle:hover { background: #e8dcc4; color: #2a241a; border-color: #8b7a5a; }
+  .lang-toggle .lt-cur { color: #2a241a; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+  .grim-home { position: fixed; top: 1rem; left: 1rem; z-index: 50; font-family: 'IM Fell English', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(240,230,208,0.95); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .grim-home:hover { background: #e8dcc4; color: #2a241a; border-color: #8b7a5a; }
+</style>
+<body>
+
+<a class="grim-home" href="index.html?lang=en">↩ The Grimoire</a>
+<a class="lang-toggle" href="chapter-ii-cranes-ford-zh.html?lang=zh" onclick="try{localStorage.setItem('lm-lang','zh');}catch(e){}" aria-label="切换到中文 / Switch to Chinese" title="切换到中文 / Switch to Chinese"><span class="lt-cur">EN</span><span class="lt-arrow">⇄</span><span>中</span></a>
+
+
+<div class="page">
+
+<div class="redrawn-badge">✦ Redrawn ✦</div>
+
+<div class="chapter-number">Chapter II · Revised</div>
+<div class="chapter-title">Crane's Ford</div>
+<div class="chapter-subtitle">Redrawn at Blossom-Moon waning, having found the truth of the tide</div>
+
+<div class="revision">
+  <strong>Revision note:</strong> I drew this chapter two summers ago, fresh and over-confident, and I got the tide wrong. The old map and the old text both say the ford is passable at all hours. It is not. I have walked it at the wrong hour and stood on a mudbank watching the water rise around me, too proud to turn back, too wet to pretend otherwise. This version is the true one. I have kept the old drawing in miniature as a record of error; the new drawing sits beside it. A map that never needed correcting was never honest.
+</div>
+
+<div class="body-text">
+  <p>
+    <span class="dropcap">C</span>rane's Ford is not a village, though the old maps mark it as one. It is a crossing — a place where the river Aldermere (the same river that gives the whole continent its name, or so the song goes) narrows between two gravel banks and can, at the right hour, be waded. There is a single dwelling: a hermit's shelter, drystone and thatch, occupied when I first passed by an old man who gave me tea made from rosehips and told me the ford was fordable "whenever you've the legs for it." I took him at his word. I should not have.
+  </p>
+  <p>
+    The truth, which took me three seasons and a very wet afternoon to learn, is this: the ford is fordable <em>only at low tide</em>. The river here is tidal — the sea reaches upstream for a full league, and the gravel banks that look so solid at noon are underwater by midafternoon. I have drawn both states on the facing page.
+  </p>
+</div>
+
+<!-- Side-by-side old map vs new map -->
+<div class="comparison">
+  <div class="comparison-item">
+    <h4>✗ Old (false)</h4>
+    <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+      <rect width="240" height="180" fill="#ede3c8" rx="2"/>
+      <!-- Over-confident river -->
+      <path d="M 20,90 Q 80,85 120,90 Q 180,95 220,90"
+            fill="none" stroke="#5a4a32" stroke-width="3"/>
+      <!-- Ford marked too simply -->
+      <line x1="100" y1="80" x2="140" y2="100" stroke="#7a6a52" stroke-width="1.5"/>
+      <text x="120" y="75" text-anchor="middle" font-size="7" fill="#7a6a52" font-family="serif">FORD</text>
+      <circle cx="50" cy="100" r="4" fill="none" stroke="#5a4a32" stroke-width="0.8"/>
+      <text x="50" y="112" text-anchor="middle" font-size="7" fill="#5a4a32" font-family="serif" font-style="italic">Shelter</text>
+      <text x="120" y="150" text-anchor="middle" font-size="6" fill="#9a8a72" font-family="serif">"Fordable at all hours" — Vesper, Year 1</text>
+      <!-- x mark -->
+      <text x="180" y="40" font-size="24" fill="#8b3a2a" opacity="0.3" font-family="serif">✗</text>
+    </svg>
+    <div class="label">From the first drawing — confident, wrong, preserved as a reminder</div>
+  </div>
+
+  <div class="comparison-item">
+    <h4>✓ New (true)</h4>
+    <svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+      <rect width="240" height="180" fill="#ede3c8" rx="2"/>
+      <!-- River with tidal reach -->
+      <path d="M 20,60 Q 60,55 100,60 Q 140,65 180,60 Q 210,55 220,60"
+            fill="none" stroke="#4a6a8a" stroke-width="2"/>
+      <!-- High water mark -->
+      <path d="M 30,40 Q 80,35 120,40 Q 160,45 220,40"
+            fill="none" stroke="#6a8aaa" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
+      <!-- Low water mark -->
+      <path d="M 40,100 Q 80,95 120,100 Q 160,105 220,100"
+            fill="none" stroke="#6a8aaa" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
+      <!-- Gravel banks (submerged in one version) -->
+      <ellipse cx="100" cy="80" rx="25" ry="6" fill="#b8a888" opacity="0.5"/>
+      <ellipse cx="150" cy="85" rx="20" ry="5" fill="#b8a888" opacity="0.5"/>
+      <!-- Correct ford marking -->
+      <line x1="95" y1="75" x2="135" y2="78" stroke="#4a6a3a" stroke-width="1"/>
+      <text x="115" y="70" text-anchor="middle" font-size="6" fill="#4a6a3a" font-family="serif">FORD (low tide only)</text>
+      <!-- Shelter -->
+      <rect x="40" y="95" width="10" height="8" fill="none" stroke="#5a4a32" stroke-width="0.8"/>
+      <text x="45" y="112" text-anchor="middle" font-size="6" fill="#5a4a32" font-family="serif" font-style="italic">Shelter</text>
+      <!-- Tide labels -->
+      <text x="200" y="42" font-size="5" fill="#6a8aaa" font-family="serif">high tide</text>
+      <text x="200" y="98" font-size="5" fill="#6a8aaa" font-family="serif">low tide</text>
+      <!-- Compass -->
+      <g transform="translate(30, 140)" stroke="#5a4a32" stroke-width="0.5">
+        <circle cx="0" cy="0" r="10"/>
+        <line x1="0" y1="-12" x2="0" y2="12"/>
+        <line x1="-12" y1="0" x2="12" y2="0"/>
+        <text x="0" y="-15" text-anchor="middle" font-size="5" fill="#5a4a32" stroke="none" font-family="serif">N</text>
+      </g>
+      <!-- Tick -->
+      <text x="180" y="30" font-size="24" fill="#4a7a3a" opacity="0.3" font-family="serif">✓</text>
+    </svg>
+    <div class="label">Redrawn — tide-lines shown, ford only at low water. Truth fits tighter than error.</div>
+  </div>
+</div>
+
+<div class="body-text">
+  <p>
+    The hermit, when I returned to tell him I had discovered his "whenever you've the legs for it" was a kind of lie, laughed and said: <em>"I've the legs for it whenever I cross, and you've the legs for it whenever you learn. Now you've learned."</em> He gave me tea again, and I sat on his drystone wall and watched the water rise over the gravel banks, covering them entirely, and then fall again two hours later, leaving the ford exactly as it had been. It is not a ford that hides. It is a ford that has a schedule, and it expects you to know it.
+  </p>
+  <p>
+    I have added a tide-table to the margin — rough, drawn from the hermit's memory and my own observation, but it will serve. The ford is crossable from two hours before low tide to one hour after. Outside that window, you wait or you swim. I recommend waiting.
+  </p>
+</div>
+
+<!-- Tide table in text form -->
+<div style="margin: 1.5rem 0; padding: 0.8rem 1.2rem; background: rgba(100,120,140,0.08); border: 1px solid #b8a88a;">
+  <div style="font-family: 'IM Fell English', serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #5a6a7a; margin-bottom: 0.5rem; text-align: center;">Tide-Table · Crane's Ford (rough)</div>
+  <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; font-size: 0.8rem; justify-content: center;">
+    <span style="background: #d8d0b8; padding: 0.2rem 0.6rem; border-radius: 2px;">Dawn rise: ~05:00</span>
+    <span style="background: #d8d0b8; padding: 0.2rem 0.6rem; border-radius: 2px;">Low tide: ~08:30</span>
+    <span style="background: #d8d0b8; padding: 0.2rem 0.6rem; border-radius: 2px;">Evening rise: ~17:00</span>
+    <span style="background: #d8d0b8; padding: 0.2rem 0.6rem; border-radius: 2px;">Low tide: ~21:00</span>
+  </div>
+  <div style="font-size: 0.65rem; color: #7a6a52; text-align: center; margin-top: 0.4rem; font-style: italic;">
+    (Times shift with the moon — consult the hermit, or sit on the bank and watch one cycle. The river will teach you.)
+  </div>
+</div>
+
+<div class="body-text">
+  <p>
+    The hermit's shelter I have now marked correctly on the map — on the north bank, not the south as my first drawing had it. The error matters because the path from the ford to the Northern Spit (see Chapter XVII) departs from the north bank, and a traveller who walks to the south side expecting a path will find only brambles and a hermit who will laugh at them. I know. I was that traveller.
+  </p>
+</div>
+
+<div class="xref">
+  ⤷ Cross-ref: <a href="chapter-north-spit.html">Chapter XVII · The Northern Spit</a> (approach from the north bank; do not cross at high tide) ·
+  Chapter IX · Saltmarsh Reaches (tidal patterns differ — the Saltmarsh is twice as wide and half as deep; compare the gravel there with the gravel here) ·
+  The hermit is still there, as of Blossom-Moon. He sends his regards to anyone who brings fresh rosehips.
+</div>
+
+<div class="sig">
+  Redrawn at the travelling study, having walked the ford three times at three different hours like a fool until I was no longer a fool.<br>
+  <strong>— Vesper</strong>
+  <span style="display: inline-block; margin-left: 8px;">✻</span>
+</div>
+
+</div>
+
+</body>
+</html>

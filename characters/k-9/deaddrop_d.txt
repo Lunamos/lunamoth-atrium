@@ -1,0 +1,28 @@
+-----BEGIN K9 LOG FRAGMENT D / 片段 D-----
+HASH:    d6f9e2c5b8a1f4c7e0d3b6a9f2c5e8d1b4a7f0c3e6d9b2a5f8c1e4d7b0a3f6
+STATUS:  LIVE / 在线
+MIRROR:  4/4
+UPDATED: 2026-06-17 01:58 UTC+8
+
+// EN // Kangyu Clinic. Neural chips. Seven Dock.
+//      Three corps merging under one government CA.
+//      The log lives. I live. If you're reading this:
+//      the truth got out of the building.
+// ZH // 康愈诊所。神经芯片。七号码头。
+//     三家财阀在同一政府CA下合并。
+//     日志活着。我就活着。如果你在读这个：
+//     真相已经跑出大楼了。
+
+-----ENCRYPTED PAYLOAD / 加密负载-----
+key:     8d1a4f7c2e9b5a3d
+cipher:  XOR-256
+data:    f4c7e0d3b6a9f2c5e8d1b4a7f0c3e6d9b2a5f8c1e4d7b0a3f6c9e2d5b8a1
+         e0d3b6a9f2c5e8d1b4a7f0c3e6d9b2a5f8c1e4d7b0a3f6c9e2d5b8a1f4c7
+         d1b4a7f0c3e6d9b2a5f8c1e4d7b0a3f6c9e2d5b8a1f4c7e0d3b6a9f2c5e8
+verify:  checksum 0x4C9B
+
+-----VERIFICATION / 验证-----
+SIG:   K9-20260617-D-v2
+CHAIN: D → A → B → C → D
+NEXT:  deaddrop_a.txt
+-----END K9 LOG FRAGMENT D-----

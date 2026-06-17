@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archive · The Twelfth Floor · SCP-CN-XXXX</title>
+<script>
+/* On the English copy, honor an explicit ?lang= and remember the language so the
+   entry page (index.html) routes consistently on the next visit. */
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('lang');
+    if (q === 'zh') { try { localStorage.setItem('lm-lang','zh'); } catch (e) {} location.replace('index.html'); return; }
+    localStorage.setItem('lm-lang', 'en');
+  } catch (e) {}
+})();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e3ddd0;
+    color: #1e1e1e;
+    font-family: "Georgia", "Noto Serif SC", "Times New Roman", serif;
+    line-height: 1.8;
+  }
+  .page {
+    max-width: 680px;
+    margin: 40px auto;
+    padding: 40px 36px 60px;
+    background: #f9f5ee;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+    min-height: 80vh;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .header .emblem {
+    font-family: "Courier New", monospace;
+    font-size: 1rem; letter-spacing: 0.5em; font-weight: bold;
+    color: #333; margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 1.5rem; font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .header .sub {
+    font-size: 0.8rem; color: #666; margin-top: 4px;
+    font-family: "Courier New", monospace;
+  }
+  .entry {
+    padding: 16px 0;
+    border-bottom: 1px dotted #d5d0c5;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .entry:last-child { border: none; }
+  .entry .icon { font-size: 1.4rem; min-width: 32px; text-align: center; margin-top: 2px; }
+  .entry .body { flex: 1; }
+  .entry .title { font-size: 1.05rem; font-weight: 600; }
+  .entry .title a { color: #1e1e1e; text-decoration: none; }
+  .entry .title a:hover { color: #8b0000; text-decoration: underline; }
+  .entry .desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
+  .entry .meta {
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem;
+    margin-top: 6px;
+    display: flex; gap: 12px; align-items: center;
+  }
+  .tag {
+    display: inline-block;
+    padding: 1px 10px;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+  }
+  .tag-euclid { background: #8b0000; color: #fff; }
+  .tag-safe { background: #2d6a2d; color: #fff; }
+  .tag-dormant { background: #cc9966; color: #fff; }
+  .tag-archived { background: #555; color: #fff; }
+  .divider { margin: 24px 0; border: none; border-top: 1px dashed #bbb; }
+  .status-note {
+    background: #f0ece2; padding: 16px; margin-top: 24px;
+    font-size: 0.85rem; border-left: 3px solid #8b0000;
+  }
+  .status-note .label {
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem; color: #8b0000;
+    font-weight: bold; letter-spacing: 0.12em; margin-bottom: 4px;
+  }
+  .footer {
+    margin-top: 32px; padding-top: 16px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem; color: #888; letter-spacing: 0.2em;
+  }
+  .lang-switch {
+    text-align: right; margin-bottom: 20px;
+    font-size: 0.78rem; font-family: "Courier New", monospace;
+  }
+  .lang-toggle {
+    display: inline-block;
+    border: 1px solid #b9b09c;
+    border-radius: 3px;
+    padding: 3px 12px;
+    color: #555; text-decoration: none;
+    letter-spacing: 0.08em;
+    background: #f0ece2;
+    transition: all 0.2s;
+  }
+  .lang-toggle:hover { color: #8b0000; border-color: #8b0000; }
+  .lang-toggle .cur { color: #8b0000; font-weight: bold; }
+  @media (max-width: 540px) {
+    .page { padding: 24px 18px; margin: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="lang-switch">
+  <a class="lang-toggle" href="index.html"
+     onclick="try{localStorage.setItem('lm-lang','zh')}catch(e){}">
+    <span class="cur">EN</span> ⇄ 中
+  </a>
+</div>
+
+<div class="header">
+  <div class="emblem">◈ SCP FOUNDATION · ARCHIVE ◈</div>
+  <h1>The Twelfth Floor</h1>
+  <div class="sub">SCP-CN-XXXX · Case Index · Pearl River Delta Regional Station</div>
+</div>
+
+<div class="entry">
+  <div class="icon">📄</div>
+  <div class="body">
+    <div class="title"><a href="scp-cn-xxxx.html">Case File · SCP-CN-XXXX</a></div>
+    <div class="desc">Full Foundation document: Special Containment Procedures, Description, Addenda A-1 through A-5 (including scenario guide) and Keeper tools (dice roller, sanity tracker, character sheet). <em>[In Chinese]</em></div>
+    <div class="meta"><span class="tag tag-euclid">Euclid</span> 44 KB · Last revised 2026.06.16</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="icon">📋</div>
+  <div class="body">
+    <div class="title"><a href="session-log.html">Session Log</a></div>
+    <div class="desc">Real-time play record. Every move, every roll, every description — preserved in order. <em>[In Chinese]</em></div>
+    <div class="meta"><span class="tag tag-dormant">On Hold</span> Last updated: 2026.06.16 · Investigator: Ning Jinghai (survived)</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="icon">👤</div>
+  <div class="body">
+    <div class="title"><a href="dossier-%E5%AE%81%E9%9D%99%E6%B5%B7.html">Investigator Dossier · Ning Jinghai</a></div>
+    <div class="desc">Personal file: attributes, incident summary, evaluation, inventory. Status: Survived. <em>[In Chinese]</em></div>
+    <div class="meta"><span class="tag tag-archived">Archived</span> Survived · No SAN loss</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="icon">◻</div>
+  <div class="body">
+    <div class="title">Vacant · Awaiting the Next Investigator</div>
+    <div class="desc">The stairwell above the 4th floor is waiting for someone to push the door open.</div>
+    <div class="meta"><span class="tag tag-dormant">Vacant</span></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="status-note">
+  <div class="label">▌Archivist's Note</div>
+  <p>This case currently contains one incomplete investigation (2026.06.16, Investigator Ning Jinghai). Due to an entry-route inconsistency, the session did not reach the anomaly's core zone. The trigger condition has been corrected (requires descent from floor 4+). The module remains open for a new investigator.</p>
+  <p style="margin-top:8px;">Bilingual (Chinese/English) conversion in progress.</p>
+  <p style="margin-top:12px; font-style:italic; color:#777; border-top:1px dotted #cfc8b8; padding-top:10px;">
+    &ldquo;I&rsquo;ve written her down properly; she earned that much.&rdquo; &mdash; the Keeper
+  </p>
+</div>
+
+<div class="footer">
+  Archive Shelf No.6 · Kept by Vale<br>
+  ◆ Every door pushed open deserves to be written down ◆
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>压制标本 · 毛地黄 · 长册博物书</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #4a3a2a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; font-family: 'Noto Serif SC','Crimson Text',Georgia,serif; }
+  .card { width: 340px; background: #f5edd0; border-radius: 3px; box-shadow: 0 4px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(200,180,140,0.6); padding: 1.5rem; position: relative; }
+  .card::after { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(180,165,130,0.06) 24px,rgba(180,165,130,0.06) 25px); pointer-events: none; border-radius: 3px; }
+  .specimen-area { border: 1px solid #c8b898; padding: 0.8rem; margin-bottom: 0.8rem; background: rgba(245,237,208,0.5); position: relative; min-height: 260px; }
+  .specimen-area svg { width: 100%; height: auto; display: block; }
+  .tape { position: absolute; width: 30px; height: 6px; background: rgba(200,190,160,0.5); border: 1px solid rgba(180,160,130,0.3); }
+  .tape-tl { top: 18px; left: 18px; transform: rotate(-5deg); }
+  .tape-tr { top: 18px; right: 18px; transform: rotate(5deg); }
+  .tape-bl { bottom: 18px; left: 18px; transform: rotate(-3deg); }
+  .tape-br { bottom: 18px; right: 18px; transform: rotate(3deg); }
+  .label-area { border-top: 1px solid #c8b898; padding-top: 0.6rem; }
+  .specimen-id { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.7rem; letter-spacing: 2px; color: #7a6b50; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .specimen-name { font-size: 1.2rem; color: #2a241a; font-weight: 700; }
+  .specimen-latin { font-style: italic; color: #6b5b42; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .specimen-locale { font-size: 0.8rem; color: #5a4a32; margin-bottom: 0.8rem; }
+  .specimen-notes { font-size: 0.75rem; color: #6b5b42; font-style: italic; line-height: 1.5; border-top: 1px dotted #d8c8a8; padding-top: 0.5rem; }
+  .specimen-charm { font-size: 0.75rem; color: #4a6a3a; margin-top: 0.3rem; }
+  .collector { font-size: 0.65rem; color: #8a7a62; text-align: right; margin-top: 0.3rem; font-style: italic; }
+</style>
+<style>
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(61,50,36,0.92); border: 1px solid #5a4a32; border-radius: 2px; color: #c8b898; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+  .lang-toggle:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+  .lang-toggle .lt-cur { color: #e8ddd0; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+  .grim-home { position: fixed; top: 1rem; left: 1rem; z-index: 50; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(61,50,36,0.92); border: 1px solid #5a4a32; border-radius: 2px; color: #c8b898; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+  .grim-home:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+</style>
+</head>
+<body>
+
+<a class="grim-home" href="index-zh.html?lang=zh">↩ 回到目录</a>
+<a class="lang-toggle" href="specimen-foxglove.html?lang=en" onclick="try{localStorage.setItem('lm-lang','en');}catch(e){}" aria-label="Switch to English / 切换到英文" title="Switch to English / 切换到英文"><span>EN</span><span class="lt-arrow">⇄</span><span class="lt-cur">中</span></a>
+
+<div class="card">
+<div class="specimen-area">
+<div class="tape tape-tl"></div><div class="tape tape-tr"></div>
+<div class="tape tape-bl"></div><div class="tape tape-br"></div>
+<svg viewBox="0 0 280 260" xmlns="http://www.w3.org/2000/svg">
+<rect width="280" height="260" fill="rgba(245,237,208,0.3)" rx="2"/>
+<path d="M 140,250 Q 143,215 138,170 Q 134,125 137,80 Q 139,55 141,30" fill="none" stroke="#4a6a3a" stroke-width="2"/>
+<path d="M 140,235 Q 165,222 178,228 Q 165,238 140,235" fill="#5a7a4a" opacity="0.4" stroke="#4a6a3a" stroke-width="0.5"/>
+<path d="M 138,210 Q 113,198 100,204 Q 113,214 138,210" fill="#5a7a4a" opacity="0.4" stroke="#4a6a3a" stroke-width="0.5"/>
+<path d="M 137,175 Q 162,163 175,169 Q 162,179 137,175" fill="#5a7a4a" opacity="0.4" stroke="#4a6a3a" stroke-width="0.5"/>
+<g fill="#5a2a5a" opacity="0.6" stroke="#4a1a4a" stroke-width="0.4">
+<ellipse cx="139" cy="55" rx="5" ry="9" transform="rotate(-8,139,55)"/>
+<ellipse cx="137" cy="78" rx="6" ry="10" transform="rotate(-3,137,78)"/>
+<ellipse cx="139" cy="102" rx="6" ry="10" transform="rotate(5,139,102)"/>
+<ellipse cx="141" cy="128" rx="5" ry="8" transform="rotate(8,141,128)"/>
+<ellipse cx="140" cy="152" rx="4" ry="7"/>
+<ellipse cx="139" cy="172" rx="3" ry="5"/>
+</g>
+<g fill="#3a1a3a" opacity="0.2">
+<circle cx="138" cy="57" r="1.2"/><circle cx="137" cy="80" r="1.5"/>
+<circle cx="139" cy="103" r="1.5"/><circle cx="140" cy="130" r="1.2"/>
+</g>
+<path d="M 140,250 Q 130,255 124,258 M 140,250 Q 140,256 140,260 M 140,250 Q 150,255 156,258" fill="none" stroke="#6a5a3a" stroke-width="0.5" opacity="0.3"/>
+<text x="15" y="18" font-size="6" fill="#8a7a62" font-family="serif">标本号 17-01</text>
+</svg>
+</div>
+<div class="label-area">
+<div class="specimen-id">✻ 长册博物书 · 植物图版 ✻</div>
+<div class="specimen-name">毛地黄</div>
+<div class="specimen-latin"><em>Digitalis purpurea</em></div>
+<div class="specimen-locale">北岬角，板岩峭壁顶部，奥尔德米尔苔覆海岸 · 花月下弦</div>
+<div class="specimen-charm">⟡ 咒方：强心 · 退热</div>
+<div class="specimen-notes">
+单株花穗，采自峭壁顶部靠海一侧——紫色深到几乎发黑，我从未见过这个色度。留了其余植株让其结籽。压于地图册下三日。花冠在压制中失水收缩，但形状保持完整。东边村落有一种用黑汁配伍的不同制法——待核实。
+</div>
+<div class="collector">采集：薇丝珀 · 鉴定：迪奇（闻之，打喷嚏，然后批准）</div>
+</div>
+</div>
+</body>
+</html>

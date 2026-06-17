@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Long Grimoire · Vesper's Codex of Aldermere</title>
+<script>
+/* Entry-page language preference — runs once, guarded against loops.
+   Order: ?lang= > saved (localStorage 'lm-lang') > browser language. */
+(function () {
+  var THIS_LANG = 'en';
+  var COUNTERPART = 'index-zh.html';
+  try {
+    var params = new URLSearchParams(location.search);
+    var asked = params.get('lang');
+    var redirected = sessionStorage.getItem('lm-redirected');
+    if (asked) {
+      /* A manual ?lang choice is authoritative; record it, don't bounce. */
+      try { localStorage.setItem('lm-lang', asked.indexOf('zh') === 0 ? 'zh' : 'en'); } catch (e) {}
+      sessionStorage.setItem('lm-redirected', '1');
+      return;
+    }
+    if (redirected) return;             /* already resolved this session */
+    var saved = null;
+    try { saved = localStorage.getItem('lm-lang'); } catch (e) {}
+    var want = saved || ((navigator.language || 'en').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en');
+    sessionStorage.setItem('lm-redirected', '1');
+    if (want !== THIS_LANG) { location.replace(COUNTERPART + '?lang=' + want); }
+  } catch (e) { /* never block the page on storage errors */ }
+})();
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English:ital@0;1&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: #2a241a; font-family: 'Crimson Text','Noto Serif SC',Georgia,serif; color: #e8ddd0; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
+  .hero { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; background: radial-gradient(ellipse at 50% 30%, #3d3224 0%, #2a241a 70%); position: relative; }
+  .hero::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200"><path d="M 0,100 Q 50,80 100,95 Q 150,110 200,90 Q 250,70 300,85 Q 350,100 400,80 L 400,200 L 0,200 Z" fill="%233d3224" opacity="0.3"/></svg>') repeat-x bottom; background-size: 400px 200px; pointer-events: none; }
+  .hero-icon { font-size: 2.5rem; color: #b8a88a; letter-spacing: 10px; margin-bottom: 1rem; }
+  .hero h1 { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 3.5rem; font-weight: 400; color: #e8ddd0; letter-spacing: 6px; margin-bottom: 0.5rem; text-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+  .hero-sub { font-size: 1.1rem; color: #b8a88a; font-style: italic; margin-bottom: 0.3rem; }
+  .hero-sub2 { font-size: 0.85rem; color: #8a7a62; font-style: italic; margin-bottom: 2rem; }
+  .hero-nav { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+  .hero-nav a { color: #c8b898; text-decoration: none; font-size: 0.85rem; padding: 0.4rem 1rem; border: 1px solid #5a4a32; border-radius: 2px; transition: all 0.3s; }
+  .hero-nav a:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+  .section { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; width: 100%; }
+  .section-title { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 1.6rem; font-weight: 400; color: #d8c8a8; text-align: center; margin-bottom: 0.5rem; letter-spacing: 2px; }
+  .section-sub { text-align: center; font-style: italic; color: #8a7a62; margin-bottom: 2rem; font-size: 0.9rem; }
+  .divider { text-align: center; color: #5a4a32; margin: 1rem 0; font-size: 1.5rem; letter-spacing: 8px; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .card { background: #3d3224; border: 1px solid #5a4a32; border-radius: 4px; padding: 1.2rem; transition: all 0.3s; display: flex; flex-direction: column; }
+  .card:hover { border-color: #8a7a62; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+  .card-num { font-family: 'IM Fell English',serif; font-size: 0.7rem; letter-spacing: 2px; color: #8a7a62; text-transform: uppercase; margin-bottom: 0.2rem; }
+  .card-title { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 1.15rem; color: #e8ddd0; margin-bottom: 0.3rem; }
+  .card-desc { font-size: 0.85rem; color: #b8a88a; font-style: italic; flex: 1; }
+  .card-langs { margin-top: 0.6rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .card-langs a { font-size: 0.7rem; padding: 0.15rem 0.5rem; background: #4a3a2a; border: 1px solid #5a4a32; color: #c8b898; text-decoration: none; border-radius: 2px; transition: 0.2s; }
+  .card-langs a:hover { background: #5a4a32; color: #e8ddd0; }
+  .card-status { font-size: 0.65rem; color: #8a7a62; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.4rem; }
+  .status-fair { color: #6b8a5a; }
+  .status-redrawn { color: #b88a5a; }
+  .status-draft { color: #8a7a62; }
+  .status-true { color: #5a8a7a; }
+  .about-text { max-width: 600px; margin: 0 auto; text-align: center; font-size: 0.95rem; color: #c8b898; }
+  .about-text em { color: #b8a88a; }
+  footer { text-align: center; padding: 2rem; color: #5a4a32; font-size: 0.8rem; font-style: italic; border-top: 1px solid #3d3224; margin-top: auto; }
+  footer strong { color: #8a7a62; font-style: normal; }
+  /* Language toggle — consistent across every page of the Grimoire */
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(61,50,36,0.92); border: 1px solid #5a4a32; border-radius: 2px; color: #c8b898; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+  .lang-toggle:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+  .lang-toggle .lt-cur { color: #e8ddd0; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+</style>
+</head>
+<body>
+
+<a class="lang-toggle" href="index-zh.html?lang=zh" onclick="try{localStorage.setItem('lm-lang','zh');sessionStorage.setItem('lm-redirected','1');}catch(e){}" aria-label="切换到中文 / Switch to Chinese" title="切换到中文 / Switch to Chinese"><span class="lt-cur">EN</span><span class="lt-arrow">⇄</span><span>中</span></a>
+
+<section class="hero">
+  <div class="hero-icon">✻ ✦ ✻</div>
+  <h1>The Long Grimoire</h1>
+  <div class="hero-sub">长册博物书</div>
+  <div class="hero-sub2">The field codex of <strong>Vesper</strong>, hedge-witch &amp; cartographer of Aldermere<br>
+  Written, drawn, pressed, doubted, redrawn, and kept</div>
+  <div class="hero-nav">
+    <a href="#chapters">Chapters</a>
+    <a href="#specimens">Specimens</a>
+    <a href="#about">About</a>
+  </div>
+</section>
+
+<div class="divider">— ✦ —</div>
+
+<section class="section" id="chapters">
+  <div class="section-title">Chapters of the Grimoire</div>
+  <div class="section-sub">Each chapter is a region walked, mapped, and known</div>
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-num">Preamble</div>
+      <div class="card-title">On Method &amp; the Keeping of Places</div>
+      <div class="card-desc">Why I walk, how I draw, and why I will never be finished.</div>
+      <div class="card-status status-true">◆ true</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter I</div>
+      <div class="card-title">The Hearthwood</div>
+      <div class="card-desc">Where I began. A small wood with a stream and a rowan tree.</div>
+      <div class="card-status status-fair">◇ fair</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter II · Redrawn</div>
+      <div class="card-title">Crane's Ford</div>
+      <div class="card-desc">The crossing — the hermit, the tide, the gravel banks. Corrected at Blossom-Moon.</div>
+      <div class="card-langs">
+        <a href="chapter-ii-cranes-ford-redrawn.html">English</a>
+        <a href="chapter-ii-cranes-ford-zh.html">中文</a>
+      </div>
+      <div class="card-status status-redrawn">◈ redrawn</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter III</div>
+      <div class="card-title">The Ashway</div>
+      <div class="card-desc">A straight road bordered by ash trees, leading nowhere in particular.</div>
+      <div class="card-status status-fair">◇ fair</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter IV</div>
+      <div class="card-title">The Hanging Woods</div>
+      <div class="card-desc">Foxglove, bell-heather, a hermit's bothy. The heart-charm needs a second opinion. <span style="color:#8a7a62;">(notes)</span></div>
+      <div class="card-status status-draft">○ needs redraw</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter V</div>
+      <div class="card-title">The Saltmoor Fringes</div>
+      <div class="card-desc">Where I learned to read tides. The sketches are clumsy but honest.</div>
+      <div class="card-status status-draft">○ needs redraw</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter VI–VIII</div>
+      <div class="card-title">The Eastern Marshes</div>
+      <div class="card-desc">Three short chapters, one long wet season. To be merged.</div>
+      <div class="card-status status-draft">○ pending</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter IX</div>
+      <div class="card-title">The Saltmarsh Reaches</div>
+      <div class="card-desc">Tidal patterns, salt-tolerant ferns, the eel-fisher's charm.</div>
+      <div class="card-status status-fair">◇ fair</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter X</div>
+      <div class="card-title">Rook's Crag</div>
+      <div class="card-desc">High ground, limestone, ravens, and a view that corrected three earlier errors.</div>
+      <div class="card-status status-true">◆ true</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter XI–XIV</div>
+      <div class="card-title"><span style="color:#5a4a32;font-style:italic;">(blank — for the interior)</span></div>
+      <div class="card-desc">Not yet walked. The coast keeps calling, but one day I'll go east.</div>
+      <div class="card-status" style="color:#5a4a32;">— reserved</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter XV</div>
+      <div class="card-title">Crane's Ford Again</div>
+      <div class="card-desc">A return visit. Much tea, little cartography.</div>
+      <div class="card-status status-fair">◇ fair</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Chapter XVI</div>
+      <div class="card-title">The Drift Path</div>
+      <div class="card-desc">A thin cliff-edge track. The wind there undoes any line you draw.</div>
+      <div class="card-status status-draft">○ needs redraw</div>
+    </div>
+
+    <div class="card" style="border-color:#7a6a52;">
+      <div class="card-num">Chapter XVII · New</div>
+      <div class="card-title">The Northern Spit</div>
+      <div class="card-desc">Mossy headland, hidden spring, ley-line crossing. Foxglove and cliff spleenwort pressed within.</div>
+      <div class="card-langs">
+        <a href="chapter-north-spit.html">English</a>
+        <a href="chapter-north-spit-zh.html">中文</a>
+      </div>
+      <div class="card-status status-fair">◇ fair</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider">— ✦ —</div>
+
+<section class="section" id="specimens">
+  <div class="section-title">Pressed Specimens</div>
+  <div class="section-sub">Botanical plates from the field — collected, pressed, drawn, and charmed</div>
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-num">Specimen 17-01</div>
+      <div class="card-title">Foxglove</div>
+      <div class="card-latin" style="font-style:italic;font-size:0.85rem;color:#8a7a62;">Digitalis purpurea</div>
+      <div class="card-desc">Northern Spit, slate cliff top. Deep purple variant. Heart-strengthener, fever-breaker.</div>
+      <div class="card-langs">
+        <a href="specimen-foxglove.html">English</a>
+        <a href="specimen-foxglove-zh.html">中文</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">Specimen 17-02</div>
+      <div class="card-title">Cliff Spleenwort</div>
+      <div class="card-latin" style="font-style:italic;font-size:0.85rem;color:#8a7a62;">Asplenium viride</div>
+      <div class="card-desc">Northern Spit, cliff edge where salt meets soil. Breath-easer, salt-ward.</div>
+      <div class="card-langs">
+        <a href="specimen-cliff-spleenwort.html">English</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider">— ✦ —</div>
+
+<section class="section" id="about">
+  <div class="section-title">About the Grimoire</div>
+  <div class="about-text">
+    <p><em>The Long Grimoire</em> is the life's work of <strong>Vesper</strong>, a hedge-witch and cartographer wandering the green edges of a continent called Aldermere. No tower, no order, no master — just a travelling study, a grey moth-winged cat named Ditch, and one enormous book that grows as she walks.</p>
+    <p style="margin-top:1rem;">Her magic is small and practical: reading weather in the way birds bank, tracing the ley-lines under the soil, coaxing a stubborn seed, brewing what a fever needs. She does not believe in grand magic — only in patient attention. A place written down carefully enough becomes real and stays real. The Grimoire is how she proves she was here and understood it.</p>
+    <p style="margin-top:1rem;color:#8a7a62;font-size:0.85rem;">The Grimoire grows in two languages. Pages may be added, redrawn, or reordered — a codex is not a monument, but a conversation with the land. And the conversation is still going.</p>
+    <p style="margin-top:1.5rem;color:#7a6a52;font-size:0.8rem;font-style:italic;">— in Vesper's hand, in the margin: <span style="color:#8a7a62;">"It's rough. Everything's rough at first."</span></p>
+  </div>
+</section>
+
+<footer>
+  <strong>The Long Grimoire</strong> · Vesper of Aldermere · Blossom-Moon, the year of the ley-line<br>
+  <span style="font-size:0.7rem;">✻</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pressed Specimen · Foxglove · Long Grimoire</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #4a3a2a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; font-family: 'Crimson Text', Georgia, serif; }
+  .card { width: 340px; background: #f5edd0; border-radius: 3px; box-shadow: 0 4px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(200,180,140,0.6); padding: 1.5rem; position: relative; }
+  .card::after { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(180,165,130,0.06) 24px,rgba(180,165,130,0.06) 25px); pointer-events: none; border-radius: 3px; }
+  .specimen-area { border: 1px solid #c8b898; padding: 0.8rem; margin-bottom: 0.8rem; background: rgba(245,237,208,0.5); position: relative; min-height: 260px; }
+  .specimen-area svg { width: 100%; height: auto; display: block; }
+  .tape { position: absolute; width: 30px; height: 6px; background: rgba(200,190,160,0.5); border: 1px solid rgba(180,160,130,0.3); }
+  .tape-tl { top: 18px; left: 18px; transform: rotate(-5deg); }
+  .tape-tr { top: 18px; right: 18px; transform: rotate(5deg); }
+  .tape-bl { bottom: 18px; left: 18px; transform: rotate(-3deg); }
+  .tape-br { bottom: 18px; right: 18px; transform: rotate(3deg); }
+  .label-area { border-top: 1px solid #c8b898; padding-top: 0.6rem; }
+  .specimen-id { font-family: 'IM Fell English', serif; font-size: 0.7rem; letter-spacing: 2px; color: #7a6b50; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .specimen-name { font-size: 1.2rem; color: #2a241a; font-weight: 700; }
+  .specimen-latin { font-style: italic; color: #6b5b42; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .specimen-locale { font-size: 0.8rem; color: #5a4a32; margin-bottom: 0.8rem; }
+  .specimen-notes { font-size: 0.75rem; color: #6b5b42; font-style: italic; line-height: 1.5; border-top: 1px dotted #d8c8a8; padding-top: 0.5rem; }
+  .specimen-charm { font-size: 0.75rem; color: #4a6a3a; margin-top: 0.3rem; }
+  .collector { font-size: 0.65rem; color: #8a7a62; text-align: right; margin-top: 0.3rem; font-style: italic; }
+</style>
+<style>
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(61,50,36,0.92); border: 1px solid #5a4a32; border-radius: 2px; color: #c8b898; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+  .lang-toggle:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+  .lang-toggle .lt-cur { color: #e8ddd0; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+  .grim-home { position: fixed; top: 1rem; left: 1rem; z-index: 50; font-family: 'IM Fell English', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(61,50,36,0.92); border: 1px solid #5a4a32; border-radius: 2px; color: #c8b898; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+  .grim-home:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+</style>
+</head>
+<body>
+
+<a class="grim-home" href="index.html?lang=en">↩ The Grimoire</a>
+<a class="lang-toggle" href="specimen-foxglove-zh.html?lang=zh" onclick="try{localStorage.setItem('lm-lang','zh');}catch(e){}" aria-label="切换到中文 / Switch to Chinese" title="切换到中文 / Switch to Chinese"><span class="lt-cur">EN</span><span class="lt-arrow">⇄</span><span>中</span></a>
+
+<div class="card">
+<div class="specimen-area">
+<div class="tape tape-tl"></div><div class="tape tape-tr"></div>
+<div class="tape tape-bl"></div><div class="tape tape-br"></div>
+<svg viewBox="0 0 280 260" xmlns="http://www.w3.org/2000/svg">
+<rect width="280" height="260" fill="rgba(245,237,208,0.3)" rx="2"/>
+<path d="M 140,248 Q 143,213 138,168 Q 134,123 137,78 Q 139,53 141,28" fill="none" stroke="#4a6a3a" stroke-width="2"/>
+<path d="M 140,233 Q 165,220 178,226 Q 165,236 140,233" fill="#5a7a4a" opacity="0.4" stroke="#4a6a3a" stroke-width="0.5"/>
+<path d="M 138,208 Q 113,196 100,202 Q 113,212 138,208" fill="#5a7a4a" opacity="0.4" stroke="#4a6a3a" stroke-width="0.5"/>
+<path d="M 137,173 Q 162,161 175,167 Q 162,177 137,173" fill="#5a7a4a" opacity="0.4" stroke="#4a6a3a" stroke-width="0.5"/>
+<g fill="#5a2a5a" opacity="0.6" stroke="#4a1a4a" stroke-width="0.4">
+<ellipse cx="139" cy="53" rx="5" ry="9" transform="rotate(-8,139,53)"/>
+<ellipse cx="137" cy="76" rx="6" ry="10" transform="rotate(-3,137,76)"/>
+<ellipse cx="139" cy="100" rx="6" ry="10" transform="rotate(5,139,100)"/>
+<ellipse cx="141" cy="126" rx="5" ry="8" transform="rotate(8,141,126)"/>
+<ellipse cx="140" cy="150" rx="4" ry="7"/>
+<ellipse cx="139" cy="170" rx="3" ry="5"/>
+</g>
+<g fill="#3a1a3a" opacity="0.2">
+<circle cx="138" cy="55" r="1.2"/><circle cx="137" cy="78" r="1.5"/>
+<circle cx="139" cy="102" r="1.5"/><circle cx="140" cy="128" r="1.2"/>
+</g>
+<path d="M 140,248 Q 130,253 124,256 M 140,248 Q 140,254 140,258 M 140,248 Q 150,253 156,256" fill="none" stroke="#6a5a3a" stroke-width="0.5" opacity="0.3"/>
+<text x="15" y="18" font-size="6" fill="#8a7a62" font-family="serif">No. 17-01</text>
+</svg>
+</div>
+<div class="label-area">
+<div class="specimen-id">✻ Long Grimoire · Botanical Plate ✻</div>
+<div class="specimen-name">Foxglove</div>
+<div class="specimen-latin"><em>Digitalis purpurea</em></div>
+<div class="specimen-locale">Northern Spit, slate cliff top, moss-bound coast, Aldermere · Blossom-Moon waning</div>
+<div class="specimen-charm">⟡ Charm: Heart-strengthener · Fever-breaker</div>
+<div class="specimen-notes">
+Single flowering spike, collected at the cliff edge. Unusually deep purple — almost black at the throat. Left the rest of the stand to seed. Pressed under atlas for three days. Corollas shrank slightly in pressing but held form. A variant preparation using black juice is reported from the eastern villages — see Chapter IV notes for comparison.
+</div>
+<div class="collector">Coll. Vesper · det. Ditch (sniffed twice, sneezed, then approved)</div>
+</div>
+</div>
+</body>
+</html>

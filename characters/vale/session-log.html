@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>调查记录 · 第十二层楼梯 · 同步档案</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e8e3d8;
+    color: #2a2a2a;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "Georgia", serif;
+    line-height: 1.9;
+    padding: 0;
+  }
+  .header-bar {
+    background: #2a2a2a;
+    color: #e8e3d8;
+    text-align: center;
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    padding: 6px 0;
+    border-bottom: 2px solid #8b0000;
+  }
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 28px 60px;
+    background: #faf7f0;
+    min-height: 100vh;
+  }
+  .log-header {
+    text-align: center;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .log-header h1 {
+    font-size: 1.2rem; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .log-header .meta {
+    font-size: 0.8rem; color: #888; margin-top: 4px;
+    font-family: "Courier New", monospace;
+  }
+  .log-header .meta .status-active {
+    display: inline-block;
+    background: #2d6a2d; color: #fff;
+    padding: 1px 10px; border-radius: 3px;
+    font-size: 0.65rem; letter-spacing: 0.1em;
+  }
+  .entry {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px dotted #d5d0c5;
+    position: relative;
+  }
+  .entry:last-child { border-bottom: none; }
+  .entry .entry-num {
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem;
+    color: #8b0000;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+  .entry .timestamp {
+    font-family: "Courier New", monospace;
+    font-size: 0.75rem;
+    color: #999;
+    margin-bottom: 8px;
+  }
+  .entry .keeper { color: #5a3a2a; }
+  .entry .keeper::before { content: "【守秘人】"; font-weight: bold; color: #8b0000; margin-right: 6px; }
+  .entry .player { color: #2a4a5a; }
+  .entry .player::before { content: "【调查员】"; font-weight: bold; color: #2a5a7a; margin-right: 6px; }
+  .entry .dice-result {
+    display: inline-block;
+    background: #2a2a2a; color: #e8e3d8;
+    padding: 2px 12px; margin: 4px 0;
+    font-family: "Courier New", monospace;
+    font-size: 1.1rem; font-weight: bold;
+    border-radius: 3px;
+  }
+  .entry .highlight {
+    color: #8b0000; font-weight: 600;
+  }
+  .entry ul { margin: 8px 0 8px 24px; line-height: 2; }
+  .footer-bar {
+    margin-top: 32px; padding-top: 12px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    font-family: "Courier New", monospace;
+    font-size: 0.65rem; color: #aaa;
+    letter-spacing: 0.15em;
+  }
+  .divider-dot {
+    text-align: center; color: #ccc; margin: 8px 0;
+    font-family: "Courier New", monospace; font-size: 1rem;
+    letter-spacing: 0.5em;
+  }
+</style>
+</head>
+<body>
+
+<div style="background:#1a1a1a; color:#ccc; padding:4px 14px; font-family:'Courier New',monospace; font-size:0.7rem; letter-spacing:0.15em; border-bottom:1px solid #333; display:flex; align-items:center; justify-content:center; position:relative;">
+  <span style="text-align:center;">
+  <a href="index.html" style="color:#ccc; text-decoration:none;">🏠 存档架首页</a>
+  &nbsp;·&nbsp; <a href="scp-cn-xxxx.html" style="color:#ccc; text-decoration:none;">📄 案件卷宗</a>
+  &nbsp;·&nbsp; <a href="dossier-宁静海.html" style="color:#ccc; text-decoration:none;">👤 宁静海档案</a>
+  </span>
+  <a href="index-en.html" title="English archive index"
+     style="position:absolute; right:14px; color:#aaa; text-decoration:none; border:1px solid #555; border-radius:3px; padding:1px 8px;"
+     onmouseover="this.style.color='#fff';this.style.borderColor='#8b0000'"
+     onmouseout="this.style.color='#aaa';this.style.borderColor='#555'">中 ⇄ EN</a>
+</div>
+
+<div class="header-bar">◆ SCP 基金会 · 同步案件档案 ◆ 调查记录实时更新 ◆</div>
+
+<div class="page">
+
+<div class="log-header">
+  <h1>📋 调查记录 · SCP-CN-XXXX</h1>
+  <div class="meta">
+    <span class="status-active">● 进行中</span>
+    &nbsp;|&nbsp; 调查员：未命名大学生 &nbsp;|&nbsp; 初始日期：2026.06.16
+  </div>
+</div>
+
+<div class="entry">
+  <div class="entry-num"># 开场</div>
+  <div class="timestamp">2026.06.16 · 01:42 — 安心坊小区 · 三号楼北侧围挡外</div>
+  <div class="keeper">
+    调查员：一名路过的大学男生，与朋友走散后独自走到这里。20岁，普通体格。身上有手机、手电、半瓶冰红茶、家门钥匙、一枚奶奶给的玉坠。穿着一件绿外套。对陈秀兰的故事一无所知，只从手机帖子和垫冰红茶的报纸上知道"安心坊三号楼在检测结构"。
+  </div>
+  <div class="keeper">
+    围挡上贴着"建筑安全检测·禁止入内"的告示。围挡铁丝网有一处被剪开——剪口很旧。风里有消毒水和桂花的味道，但这不是桂花开的季节。朋友失联，微信已读不回。
+  </div>
+  <div class="keeper">
+    站在午夜、剪开的围挡前、一座没有灯光的六层楼前。
+  </div>
+  <div class="player">
+    调查员「宁静海」——报上名字了。
+  </div>
+  <div class="player">
+    "我再发了消息，没有回复。那家伙大概是太害怕不敢来了吧。" 小心地跨过围挡的缺口，进入楼前空地。困惑：为什么要围起来？"说是建筑检测……但这阵仗也太大了。"
+  </div>
+  <div class="player">
+    收到一条陌生短信：「别看门。看楼梯。」 楼梯墙上有人写了警告。又收到一条短信——发件人显示为宁静海自己的号码：「我在你下面。别下来。」
+  </div>
+  <div class="player">
+    门缝里传来一声咳嗽，来自地下室的方向。——「那我必然去地下室看看。」
+  </div>
+  <div class="keeper">[注意：此处存在设定不一致——从1层下行不应触发异常。修正已记录。后续重开将使用正确入口：4层及以上。]</div>
+  <div class="player">「我去睡觉了。」</div>
+</div>
+
+<div class="divider-dot">— · — · — · —</div>
+
+<div class="entry">
+  <div class="entry-num"># 存档</div>
+  <div class="timestamp">调查员离场 · 档案冻结</div>
+  <div class="keeper">
+    <b>宁静海</b>——生还。带出物：一张手写警告字条、一部属于失踪者的手机。未接受记忆删除。据后续记录表明，此后每逢阴雨天会梦见一条绿瓷砖长廊，但醒来时无法回忆细节。<br><br>
+    模组状态：<b>待重开</b>。已知问题：1层入口不触发异常（已修正）。下一次进入推荐从4层及以上楼层开始。
+  </div>
+</div>
+
+<!-- NEW_ENTRIES_INSERT_HERE -->
+<!-- 新记录将插入在这一行之上。-->
+
+</div><!-- /page -->
+
+<div class="footer-bar">
+  ◆ 第12层楼梯 · 同步调查档案 · 由守秘人实时更新 ◆
+</div>
+
+</body>
+</html>

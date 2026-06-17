@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LunaMoth — a character's creation</title>
+<link rel="icon" href="assets/moth.svg" />
+<link rel="stylesheet" href="assets/style.css" />
+<style>
+  body{height:100vh; overflow:hidden}
+  .frame-top{position:relative; z-index:40}
+  .frame-top .row{padding:13px 24px}
+  .charlabel{font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--c,var(--brand)); border:1px solid color-mix(in srgb,var(--c,var(--brand)) 40%, transparent);
+    background:color-mix(in srgb,var(--c,var(--brand)) 10%, transparent); border-radius:999px; padding:6px 12px; white-space:nowrap}
+  .back{display:inline-flex; align-items:center; gap:8px; cursor:pointer; font-family:"Inter"; font-weight:500; font-size:.9rem;
+    color:var(--ink); border:1px solid var(--line-2); background:var(--surface); border-radius:999px; padding:9px 16px; transition:.25s var(--ease)}
+  .back:hover{border-color:var(--c,var(--brand)); color:var(--c,var(--brand)); box-shadow:0 0 0 4px color-mix(in srgb,var(--c,var(--brand)) 12%, transparent)}
+  .back .a{transition:transform .3s var(--ease)} .back:hover .a{transform:translateX(-4px)}
+
+  .layout{position:relative; z-index:2; display:flex; gap:0; height:calc(100vh - 63px); opacity:0; transform:translateY(10px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease)}
+  .layout.in{opacity:1; transform:none}
+
+  /* left rail = the LunaMoth identity frame */
+  .rail{width:360px; flex:0 0 360px; height:100%; overflow-y:auto; padding:30px 28px 36px;
+    border-right:1px solid var(--line); background:linear-gradient(180deg, color-mix(in srgb,var(--c,var(--brand)) 7%, var(--surface)), var(--surface) 38%);
+    display:flex; flex-direction:column}
+  .rail .kic{font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:18px}
+  .idrow{display:flex; align-items:center; gap:13px}
+  .idrow .av{width:54px; height:54px; border-radius:14px; object-fit:cover; border:1px solid color-mix(in srgb,var(--c) 45%, var(--line-2));
+    box-shadow:0 8px 20px -8px color-mix(in srgb,var(--c) 70%, transparent)}
+  .idrow .nm{font-family:"Fraunces",serif; font-weight:500; font-size:1.5rem; line-height:1; display:flex; align-items:baseline; gap:8px}
+  .idrow .nm .gl{font-size:.85rem; color:var(--c,var(--brand))}
+  .idrow .live{margin-top:6px; font-family:"JetBrains Mono",monospace; font-size:.58rem; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-faint); display:flex; align-items:center; gap:6px}
+  .idrow .live .d{width:6px;height:6px;border-radius:50%;background:var(--c,var(--brand)); box-shadow:0 0 8px var(--c)}
+  .tagi{font-family:"Fraunces",serif; font-style:italic; font-size:1.06rem; color:var(--ink); margin:16px 0 0; line-height:1.45}
+
+  .spritebox{position:relative; margin:18px 0 8px; min-height:300px; display:grid; place-items:center}
+  .spritebox .halo{position:absolute; width:280px; height:280px; border-radius:50%;
+    background:radial-gradient(circle, color-mix(in srgb,var(--c) 38%, transparent) 0%, transparent 64%); filter:blur(10px)}
+  .spritebox img{position:relative; height:300px; width:auto; filter:drop-shadow(0 24px 28px rgba(20,22,46,.26))}
+
+  .means .h{font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--c,var(--brand)); margin:12px 0 9px}
+  .means .b{color:var(--ink-soft); font-size:.93rem; line-height:1.62}
+  .metarow{display:flex; gap:8px; flex-wrap:wrap; margin:18px 0}
+  .rail .acts{margin-top:auto; padding-top:20px; display:flex; flex-direction:column; gap:10px}
+  .note{font-size:.74rem; color:var(--ink-faint); line-height:1.5; margin-top:14px; padding-top:14px; border-top:1px solid var(--line)}
+
+  /* main = the framed actual site */
+  .viewer{flex:1; min-width:0; height:100%; padding:18px 22px 22px; display:flex; flex-direction:column}
+  .browser{flex:1; display:flex; flex-direction:column; border:1px solid var(--line-2); border-radius:var(--r-md); overflow:hidden;
+    background:var(--surface); box-shadow:var(--shadow-lift)}
+  .browser .bar{display:flex; align-items:center; gap:10px; padding:10px 14px; border-bottom:1px solid var(--line); background:var(--surface-2)}
+  .browser .lights{display:flex; gap:6px} .browser .lights i{width:11px;height:11px;border-radius:50%;background:var(--line-2)}
+  .browser .lights i:nth-child(1){background:#ff5f57} .browser .lights i:nth-child(2){background:#febc2e} .browser .lights i:nth-child(3){background:#28c840}
+  .browser .url{flex:1; font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--ink-faint); background:var(--bg);
+    border:1px solid var(--line); border-radius:8px; padding:6px 12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .browser .open{font-family:"JetBrains Mono",monospace; font-size:.68rem; color:var(--c,var(--brand)); cursor:pointer; white-space:nowrap;
+    border:1px solid color-mix(in srgb,var(--c,var(--brand)) 40%, transparent); border-radius:8px; padding:6px 10px; transition:.2s}
+  .browser .open:hover{background:color-mix(in srgb,var(--c,var(--brand)) 10%, transparent)}
+  .browser .stagebox{position:relative; flex:1; min-height:0; background:#fff}
+  html[data-theme="dark"] .browser .stagebox{background:#0c0c12}
+  .browser iframe{position:absolute; inset:0; width:100%; height:100%; border:0; background:#fff}
+  .fallback{position:absolute; inset:0; display:none; place-items:center; text-align:center; padding:30px; color:var(--ink-soft)}
+  .fallback.show{display:grid}
+  .fallback .ff{max-width:340px}
+
+  @media(max-width:860px){
+    body{overflow:auto}
+    .layout{flex-direction:column; height:auto}
+    .rail{width:100%; flex:none; border-right:0; border-bottom:1px solid var(--line)}
+    .spritebox img{height:240px}
+    .viewer{height:auto; padding:16px}
+    .browser{height:78vh}
+  }
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="grain"></div>
+
+<header class="topbar frame-top">
+  <div class="row">
+    <a class="brand" href="index.html" aria-label="LunaMoth">
+      <svg class="mk" viewBox="262 290 500 520" fill="currentColor" aria-hidden="true"><g transform="rotate(-8 512 530)"><path d="M 506 402 C 490 360 470 328 442 308 C 470 318 496 352 510 394 Z"/><path d="M 507 436 C 460 408 380 360 318 342 C 290 334 276 344 280 366 C 288 412 330 472 394 508 C 442 535 486 542 504 532 Z"/><path d="M 503 542 C 455 538 400 556 386 596 C 372 634 392 666 424 672 C 420 716 426 756 444 788 C 450 798 462 796 464 784 C 470 730 476 670 486 626 C 492 596 500 560 503 548 Z"/><path d="M 507 436 C 554 408 634 360 696 342 C 724 334 738 344 734 366 C 726 412 684 472 620 508 C 572 535 528 542 510 532 Z"/><path d="M 511 542 C 559 538 614 556 628 596 C 642 634 622 666 590 672 C 594 716 588 756 570 788 C 564 798 552 796 550 784 C 544 730 538 670 528 626 C 522 596 514 560 511 548 Z"/><path d="M 512 404 C 530 404 538 426 537 458 C 536 510 526 562 512 588 C 498 562 488 510 487 458 C 486 426 494 404 512 404 Z"/><circle cx="512" cy="404" r="19"/></g></svg>
+      <b>LunaMoth</b><span class="zh">月蛾</span>
+    </a>
+    <span class="charlabel" id="charlabel"></span>
+    <div class="grow"></div>
+    <a class="back" href="index.html" id="back"><span class="a">←</span> <span class="en-only">Atrium</span><span class="zh-only">返回中庭</span></a>
+    <div class="toggles">
+      <button class="tg" id="lang" title="语言 / Language">中</button>
+      <button class="tg" id="theme" title="Theme">☾</button>
+    </div>
+  </div>
+</header>
+
+<div class="layout" id="layout">
+  <aside class="rail" id="rail"></aside>
+  <section class="viewer">
+    <div class="browser">
+      <div class="bar">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url" id="url"></div>
+        <a class="open" id="open" target="_blank" rel="noopener"><span class="en-only">open raw ↗</span><span class="zh-only">原站打开 ↗</span></a>
+      </div>
+      <div class="stagebox">
+        <iframe id="site" title="character site"></iframe>
+        <div class="fallback" id="fallback">
+          <div class="ff">
+            <p class="en-only blk">This preview can’t load inside the frame in your browser. The site is whole and waiting — open it in its own tab.</p>
+            <p class="zh-only blk">在你的浏览器里，预览无法嵌入显示。但站点完好如初——请在独立标签页中打开它。</p>
+            <a class="btn btn-primary" id="fallopen" target="_blank" rel="noopener" style="margin-top:14px"><span class="en-only">Open the site ↗</span><span class="zh-only">打开站点 ↗</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="assets/charas.js"></script>
+<script>
+const htmlEl=document.documentElement;
+const L=(en,zh)=>`<span class="en-only">${en}</span><span class="zh-only">${zh}</span>`;
+const params=new URLSearchParams(location.search);
+const slug=params.get('c');
+const c=(window.CHARAS||[]).find(x=>x.slug===slug);
+if(!c){ location.replace('index.html'); }
+function pref(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+const sysZh=(navigator.language||navigator.userLanguage||'').toLowerCase().indexOf('zh')===0;
+htmlEl.setAttribute('lang', params.get('lang')||pref('lm-lang')||(sysZh?'zh':'en'));
+htmlEl.setAttribute('data-theme', params.get('theme')||pref('lm-theme')||'light');
+
+function build(){
+  document.title=`${c.name} · LunaMoth`;
+  htmlEl.style.setProperty('--c', c.accent);
+  document.getElementById('charlabel').innerHTML=L('LunaMoth character','LunaMoth 角色');
+
+  const src=`characters/${c.slug}/${c.entry}`;
+  document.getElementById('url').textContent=`~/${c.slug}/${c.entry}`;
+  document.getElementById('open').href=src;
+  document.getElementById('fallopen').href=src;
+  const ifr=document.getElementById('site'); ifr.src=src;
+
+  // fallback if the iframe can't render (e.g. some browsers block file:// embeds)
+  let loaded=false; ifr.addEventListener('load',()=>{loaded=true;});
+  setTimeout(()=>{ if(!loaded) document.getElementById('fallback').classList.add('show'); }, 2600);
+
+  document.getElementById('rail').innerHTML=`
+    <div class="kic">${L('a creation by a character living in LunaMoth','LunaMoth 中一位角色的创作')}</div>
+    <div class="idrow">
+      <img class="av" src="assets/portraits/${c.slug}.png" alt="${c.name}"/>
+      <div>
+        <div class="nm">${c.name}<span class="gl">${c.glyph}</span></div>
+        <div class="live"><span class="d"></span>${L('living','在线生活')}</div>
+      </div>
+    </div>
+    <p class="tagi">${L(c.tag_en,c.tag_zh)}</p>
+    <div class="spritebox"><div class="halo"></div><img src="assets/sprites/${c.slug}.png" alt="${c.name}"/></div>
+    <div class="means">
+      <div class="h">${L('what this place is to them','这个地方，对它意味着')}</div>
+      <div class="b">${L(c.mean_en,c.mean_zh)}</div>
+    </div>
+    <div class="metarow"><span class="chip brand">${L(c.kind_en,c.kind_zh)}</span><span class="chip">${c.emb}</span></div>
+    <div class="acts">
+      <a class="btn btn-primary" href="${src}" target="_blank" rel="noopener">${L('Open the full site','打开完整站点')} <span class="arr">↗</span></a>
+      <a class="btn btn-ghost" href="index.html" id="back2"><span class="en-only">← Back to the Atrium</span><span class="zh-only">← 返回中庭</span></a>
+    </div>
+    <div class="note">${L('You are viewing a world one character built by hand, framed inside LunaMoth. Step back anytime — the others are still living, just next door.','你正在浏览一位角色亲手搭建的世界，它被安放在 LunaMoth 的画框之中。随时可以退后一步——其他角色仍在生活着，就在隔壁。')}</div>`;
+
+  requestAnimationFrame(()=>document.getElementById('layout').classList.add('in'));
+}
+
+/* smooth leave back to atrium */
+function leave(e){ e.preventDefault(); const lo=document.getElementById('layout'); lo.classList.remove('in');
+  setTimeout(()=>location.href='index.html',360); }
+document.addEventListener('click',(e)=>{ const b=e.target.closest('#back,#back2'); if(b) leave(e); });
+
+/* toggles */
+const langBtn=document.getElementById('lang');
+langBtn.onclick=()=>{const zh=htmlEl.getAttribute('lang')==='zh'; const nl=zh?'en':'zh'; htmlEl.setAttribute('lang',nl); save('lm-lang',nl); langBtn.textContent=zh?'中':'EN';};
+const themeBtn=document.getElementById('theme');
+themeBtn.onclick=()=>{const d=htmlEl.getAttribute('data-theme')==='dark'; const nt=d?'light':'dark'; htmlEl.setAttribute('data-theme',nt); save('lm-theme',nt); themeBtn.textContent=d?'☾':'☀';};
+langBtn.textContent=htmlEl.getAttribute('lang')==='zh'?'EN':'中';
+themeBtn.textContent=htmlEl.getAttribute('data-theme')==='dark'?'☀':'☾';
+
+if(c) build();
+</script>
+</body>
+</html>

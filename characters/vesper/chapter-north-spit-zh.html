@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>第十七章 · 北岬角 · 长册博物书</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English:ital@0;1&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #d4c9a8; display: flex; justify-content: center; padding: 3rem 1rem; font-family: 'Noto Serif SC','Crimson Text',Georgia,serif; line-height: 1.75; color: #2a241a; }
+  .page { max-width: 880px; width: 100%; background: #f5edd6; padding: 3rem 3.5rem; box-shadow: 0 2px 30px rgba(0,0,0,0.15),inset 0 0 0 1px rgba(200,180,140,0.5); position: relative; border-radius: 4px; }
+  .page::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(180,165,130,0.08) 28px,rgba(180,165,130,0.08) 29px); pointer-events: none; border-radius: 4px; }
+  .marginal-zh { position: absolute; right: -60px; width: 80px; font-size: 0.65rem; color: #6b5b42; font-style: italic; line-height: 1.4; writing-mode: vertical-rl; }
+  @media (max-width: 980px) { .page { padding: 2rem 1.8rem; } .marginal-zh { position: static; writing-mode: horizontal-tb; width: auto; margin-top: 1rem; padding: 0.5rem 0 0 1rem; border-left: 2px solid #b8a88a; } }
+  .chapter-number { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: #7a6b50; border-bottom: 1px solid #c8b898; padding-bottom: 0.3rem; margin-bottom: 1.2rem; }
+  .chapter-title { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 2.2rem; font-weight: 400; color: #2a241a; margin-bottom: 0.5rem; line-height: 1.2; letter-spacing: 2px; }
+  .chapter-subtitle { font-size: 0.9rem; font-style: italic; color: #7a6b50; margin-bottom: 1.8rem; }
+  .dropcap-zh { float: left; font-family: 'IM Fell English',serif; font-size: 4.5rem; line-height: 0.85; padding: 0.2rem 0.5rem 0.1rem 0; color: #3d2b1a; }
+  .body-text { font-size: 1rem; text-align: justify; }
+  .body-text p { margin-bottom: 0.8rem; text-indent: 2em; }
+  .body-text p:first-of-type { text-indent: 0; }
+  .ley-note { margin: 1.5rem 0; padding: 1rem 1.5rem; background: rgba(180,195,170,0.2); border-left: 3px solid #6b8f5e; font-style: italic; position: relative; }
+  .ley-note::before { content: '⚡'; position: absolute; left: -14px; top: 0.8rem; font-size: 1.2rem; color: #6b8f5e; background: #f5edd6; padding: 0 4px; }
+  .ley-note strong { font-style: normal; color: #3d5a2e; }
+  .map-container { margin: 2rem 0 1.5rem; border: 1px solid #c8b898; padding: 1.2rem; background: rgba(245,237,214,0.8); }
+  .map-title { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: #7a6b50; text-align: center; margin-bottom: 0.8rem; }
+  .map-svg { width: 100%; height: auto; display: block; }
+  .botanical-plate { margin: 2rem 0 1rem; border: 1px solid #c8b898; padding: 1.5rem; background: rgba(245,237,214,0.6); }
+  .plate-title { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: #7a6b50; text-align: center; margin-bottom: 1rem; }
+  .plate-grid { display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; }
+  .specimen { flex: 0 0 200px; text-align: center; }
+  .specimen svg { width: 160px; height: 220px; display: block; margin: 0 auto; }
+  .specimen-name { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 1rem; margin: 0.4rem 0 0.2rem; color: #2a241a; }
+  .specimen-latin { font-style: italic; font-size: 0.8rem; color: #6b5b42; margin-bottom: 0.3rem; }
+  .specimen-charm { font-size: 0.8rem; color: #5a4a32; background: rgba(180,195,170,0.15); padding: 0.2rem 0.5rem; border-radius: 2px; display: inline-block; }
+  .xref-zh { font-size: 0.75rem; color: #6b5b42; font-style: italic; border-top: 1px dashed #c8b898; padding-top: 0.6rem; margin-top: 1.2rem; }
+  .xref-zh a { color: #4a6b3a; text-decoration: none; border-bottom: 1px dotted #8aab7a; }
+  .xref-pending { color: #9a8a72; border-bottom: 1px dotted #b8a88a; cursor: not-allowed; opacity: 0.65; }
+  .xref-note { display: block; margin-top: 0.5rem; font-size: 0.7rem; color: #9a8a72; }
+  .sig { margin-top: 2rem; text-align: right; font-style: italic; font-size: 0.9rem; color: #6b5b42; border-top: 1px solid #c8b898; padding-top: 0.8rem; }
+  .sig strong { font-style: normal; font-family: 'IM Fell English','Noto Serif SC',serif; color: #2a241a; letter-spacing: 1px; }
+</style>
+</head>
+<style>
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(245,237,214,0.96); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .lang-toggle:hover { background: #ece0c6; color: #2a241a; border-color: #8b7a5a; }
+  .lang-toggle .lt-cur { color: #2a241a; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+  .grim-home { position: fixed; top: 1rem; left: 1rem; z-index: 50; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(245,237,214,0.96); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .grim-home:hover { background: #ece0c6; color: #2a241a; border-color: #8b7a5a; }
+</style>
+<body>
+
+<a class="grim-home" href="index-zh.html?lang=zh">↩ 回到目录</a>
+<a class="lang-toggle" href="chapter-north-spit.html?lang=en" onclick="try{localStorage.setItem('lm-lang','en');}catch(e){}" aria-label="Switch to English / 切换到英文" title="Switch to English / 切换到英文"><span>EN</span><span class="lt-arrow">⇄</span><span class="lt-cur">中</span></a>
+
+<div class="page">
+<div class="marginal-zh">壹。走了三次——一次往北，一次往东，一次走错了。第三趟才是真的。壹。</div>
+<div class="chapter-number">第十七章</div>
+<div class="chapter-title">北岬角</div>
+<div class="chapter-subtitle">记鹤渡口以北的苔覆海岬、其隐泉、其地脉交叉，以及在此地忠实的草木</div>
+<div class="body-text">
+<p><span class="dropcap-zh">北</span>岬角不是你"到达"的地方——它是让你慢慢靠近的地方。我这么说，是因为我从鹤渡口出发了三次，每一次都带着晴朗的天空，而每一次都在同一个小路的弯道处天气骤变——就是山毛榉林让位给风刮的硬刺山楂、泥土变成一种踩上去像枯骨一样嘎吱作响的浅色苔藓的那个地方。第三次，我坐下来等。那才是诀窍：雾在第四个小时散了。不是因为雾跟我纠缠完了，而是它确信我真的打算留下来。</p>
+<p>岬角藏着什么？一条深色板岩峭壁的海岸线，岩石间嵌着石英脉；一片被海浪磨得滚圆的卵石滩，像是大海忘记孵化的一窝蛋；还有——最出乎意料的——一股淡水泉，从盐沼正中央冒出来。看那样子你会觉得它根本不能喝（蕨丛堵塞，泥炭染得水色棕黄），但那股水甜得跟什么似的。我随身的老地图在这里没有任何标记。它们画了一片空白。而我现在知道了，那片空白是一片地脉交叉口——我在这条海岸上找到的第一处。</p>
+</div>
+<div class="ley-note"><strong>地脉交叉，首次观测</strong>——花月十七，上弦月。主脉在沼地下方自北偏西北方向延伸，在泉水正前方与一条支脉相交，之后遁入海中，仿佛它另有去处。我的探脉仪确认之前，脚底已经感觉到了：一种低沉嗡嗡声，像音叉按在石头上。泉水在地脉交叉处有铁锈味和青草味。迪奇起初不肯喝，后来又回来喝了两次。你怎么解读都行。</div>
+<div class="body-text"><p>下面的海岸线我尽可能忠实地画了出来。地脉用最淡的墨水标记——几乎看不见，你得知道它在看才能发现——我觉得这样才对。泉水我用一个空心圆表示，因为它慷慨地涌流而出，我以为它在纸上也该显得慷慨。</p></div>
+<div class="map-container">
+<div class="map-title">✻ 北岬角与隐泉 ✻</div>
+<svg class="map-svg" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+<rect width="760" height="420" fill="#ede3c8" rx="3"/>
+<g transform="translate(680,55)" stroke="#5a4a32" stroke-width="0.8" fill="none">
+<circle cx="0" cy="0" r="16"/><line x1="0" y1="-18" x2="0" y2="18"/><line x1="-18" y1="0" x2="18" y2="0"/>
+<line x1="-13" y1="-13" x2="13" y2="13"/><line x1="13" y1="-13" x2="-13" y2="13"/>
+<text x="0" y="-22" text-anchor="middle" font-size="8" fill="#5a4a32" stroke="none" font-family="serif">北</text>
+<text x="0" y="30" text-anchor="middle" font-size="7" fill="#5a4a32" stroke="none" font-family="serif">南</text>
+<text x="24" y="2" text-anchor="middle" font-size="7" fill="#5a4a32" stroke="none" font-family="serif">东</text>
+<text x="-24" y="2" text-anchor="middle" font-size="7" fill="#5a4a32" stroke="none" font-family="serif">西</text>
+</g>
+<path d="M 20,380 Q 60,370 100,350 Q 140,330 180,340 Q 220,350 260,320 Q 300,290 340,260 Q 360,245 380,250 Q 420,260 440,230 Q 460,200 480,190 Q 500,180 520,170 Q 540,165 560,175 Q 580,185 600,200 Q 620,220 640,240 Q 660,260 680,280 Q 700,300 720,320 Q 740,340 760,350" fill="none" stroke="#5a4a32" stroke-width="1.8"/>
+<g stroke="#9a8a72" stroke-width="0.4" opacity="0.25">
+<line x1="20" y1="385" x2="80" y2="420"/><line x1="60" y1="375" x2="120" y2="420"/><line x1="100" y1="355" x2="160" y2="420"/><line x1="140" y1="335" x2="200" y2="420"/><line x1="180" y1="345" x2="240" y2="420"/><line x1="220" y1="355" x2="280" y2="420"/><line x1="260" y1="325" x2="320" y2="420"/><line x1="300" y1="295" x2="360" y2="420"/><line x1="340" y1="265" x2="400" y2="420"/><line x1="380" y1="255" x2="440" y2="420"/><line x1="420" y1="265" x2="480" y2="420"/><line x1="460" y1="235" x2="520" y2="420"/><line x1="500" y1="195" x2="560" y2="420"/><line x1="540" y1="170" x2="600" y2="420"/><line x1="580" y1="190" x2="640" y2="420"/><line x1="620" y1="225" x2="680" y2="420"/><line x1="660" y1="265" x2="720" y2="420"/><line x1="700" y1="305" x2="760" y2="420"/>
+</g>
+<ellipse cx="350" cy="280" rx="70" ry="40" fill="#c8b898" opacity="0.3" stroke="none"/>
+<circle cx="350" cy="275" r="8" fill="none" stroke="#4a7a5a" stroke-width="1.5"/>
+<circle cx="350" cy="275" r="3" fill="#6b9a7a" stroke="none" opacity="0.5"/>
+<path d="M 260,380 Q 300,340 350,275 Q 380,230 420,180 Q 450,140 480,100" fill="none" stroke="#9ab88a" stroke-width="1.2" stroke-dasharray="6,3" opacity="0.4"/>
+<path d="M 300,100 Q 320,180 350,275 Q 370,320 400,380" fill="none" stroke="#9ab88a" stroke-width="1.2" stroke-dasharray="6,3" opacity="0.3"/>
+<g fill="none" stroke="#7a6a52" stroke-width="0.6">
+<path d="M 520,170 L 525,185 M 530,172 L 533,188 M 540,165 L 542,180"/>
+<path d="M 100,350 L 105,365 M 112,348 L 115,362 M 122,344 L 124,360"/>
+</g>
+<g transform="translate(180,310)" stroke="#4a6a3a" fill="none" stroke-width="0.7">
+<circle cx="0" cy="0" r="6"/><line x1="0" y1="-6" x2="0" y2="6"/><line x1="-6" y1="0" x2="6" y2="0"/>
+<text x="0" y="16" text-anchor="middle" font-size="6" fill="#4a6a3a" stroke="none" font-family="serif">山毛榉</text>
+</g>
+<g transform="translate(260,305)" stroke="#6a5a3a" fill="none" stroke-width="0.6">
+<path d="M -4,2 L 0,-4 L 4,2 Z M 0,-4 L 0,6"/>
+<text x="0" y="16" text-anchor="middle" font-size="6" fill="#6a5a3a" stroke="none" font-family="serif">雾弯</text>
+</g>
+<text x="60" y="365" font-size="8" fill="#5a4a32" font-family="serif" font-style="italic">鹤渡口</text>
+<circle cx="70" cy="355" r="3" fill="none" stroke="#5a4a32" stroke-width="0.8"/>
+<text x="350" y="260" text-anchor="middle" font-size="8" fill="#4a7a5a" font-family="serif" font-style="italic">隐泉</text>
+<line x1="350" y1="262" x2="350" y2="268" stroke="#4a7a5a" stroke-width="0.5"/>
+<text x="660" y="370" font-size="9" fill="#7a6a52" font-family="serif" font-style="italic" opacity="0.5">退潮海</text>
+<text x="520" y="162" font-size="7" fill="#7a6a52" font-family="serif" font-style="italic">板岩峭壁</text>
+<g transform="translate(40,410)">
+<line x1="0" y1="0" x2="60" y2="0" stroke="#5a4a32" stroke-width="0.8"/>
+<line x1="0" y1="-3" x2="0" y2="3" stroke="#5a4a32" stroke-width="0.8"/>
+<line x1="60" y1="-3" x2="60" y2="3" stroke="#5a4a32" stroke-width="0.8"/>
+<text x="30" y="-4" text-anchor="middle" font-size="6" fill="#5a4a32" stroke="none" font-family="serif">一里格</text>
+</g>
+<g transform="translate(420,300)" fill="#8a7a62" opacity="0.2">
+<ellipse cx="0" cy="0" rx="3" ry="2.5"/>
+<ellipse cx="-4" cy="-4" rx="1.5" ry="2"/>
+<ellipse cx="0" cy="-6" rx="1.5" ry="2"/>
+<ellipse cx="4" cy="-4" rx="1.5" ry="2"/>
+</g>
+</svg>
+<div style="font-size:0.65rem;text-align:center;color:#8a7a62;margin-top:0.6rem;font-style:italic;">
+三次行走加一次湿漉漉的静坐所绘。地脉以半透明标记——仅于黄昏与拂晓可见。比例大致准确；岬角不肯为测量而静止。
+</div>
+</div>
+
+<div class="body-text">
+<p>岬角的植物稀少而顽强。沼地本身长着一种我不认识的莎草——我已采集了一片标本，等它完全干燥后再画。但在峭壁上，我找到了深到发紫的毛地黄，以及三种长到盐分边缘的蕨类。我各取了一根蕨叶和一根毛地黄花穗（留了其余的好让它们结籽，这是本分）。</p>
+</div>
+
+<div class="botanical-plate">
+<div class="plate-title">✻ 植物图版 · 采自北岬角 ✻</div>
+<div class="plate-grid">
+
+<div class="specimen">
+<svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+<path d="M 80,210 Q 82,180 78,140 Q 74,100 76,60 Q 78,40 80,20" fill="none" stroke="#4a6a3a" stroke-width="1.8"/>
+<path d="M 80,200 Q 100,190 110,195 Q 100,205 80,200" fill="#5a7a4a" opacity="0.5" stroke="#4a6a3a" stroke-width="0.5"/>
+<path d="M 78,180 Q 58,170 48,175 Q 58,185 78,180" fill="#5a7a4a" opacity="0.5" stroke="#4a6a3a" stroke-width="0.5"/>
+<path d="M 76,150 Q 96,140 106,145 Q 96,155 76,150" fill="#5a7a4a" opacity="0.5" stroke="#4a6a3a" stroke-width="0.5"/>
+<g fill="#5a2a5a" opacity="0.7" stroke="#4a1a4a" stroke-width="0.5">
+<ellipse cx="78" cy="40" rx="4" ry="7" transform="rotate(-10,78,40)"/>
+<ellipse cx="76" cy="58" rx="5" ry="8" transform="rotate(-5,76,58)"/>
+<ellipse cx="78" cy="78" rx="5" ry="8" transform="rotate(5,78,78)"/>
+<ellipse cx="80" cy="98" rx="4" ry="7" transform="rotate(10,80,98)"/>
+<ellipse cx="79" cy="118" rx="3" ry="6"/>
+<ellipse cx="80" cy="135" rx="3" ry="5"/>
+</g>
+<g fill="#3a1a3a" opacity="0.3">
+<circle cx="77" cy="42" r="1"/><circle cx="79" cy="58" r="1.2"/>
+<circle cx="78" cy="78" r="1.2"/><circle cx="79" cy="99" r="1"/>
+</g>
+<path d="M 80,210 Q 70,216 65,220 M 80,210 Q 90,216 95,220 M 80,210 Q 80,218 80,220" fill="none" stroke="#6a5a3a" stroke-width="0.5" opacity="0.4"/>
+</svg>
+<div class="specimen-name">毛地黄</div>
+<div class="specimen-latin">Digitalis purpurea</div>
+<div class="specimen-charm">⟡ 强心 · 退热</div>
+</div>
+
+<div class="specimen">
+<svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+<path d="M 80,210 Q 75,160 70,110 Q 68,80 75,50 Q 80,30 85,15" fill="none" stroke="#4a7a3a" stroke-width="1.2"/>
+<g fill="none" stroke="#5a8a4a" stroke-width="0.6" opacity="0.7">
+<path d="M 70,110 Q 50,105 40,108 Q 50,112 70,112"/><path d="M 69,95 Q 48,88 38,92 Q 48,97 69,97"/>
+<path d="M 68,80 Q 47,72 37,76 Q 47,81 68,82"/><path d="M 69,65 Q 50,57 40,60 Q 50,66 69,67"/>
+<path d="M 72,50 Q 55,42 47,45 Q 55,51 72,52"/><path d="M 76,35 Q 62,28 55,31 Q 62,36 76,37"/>
+<path d="M 75,110 Q 95,103 105,107 Q 95,112 75,112"/><path d="M 76,95 Q 97,86 107,90 Q 97,96 76,97"/>
+<path d="M 77,80 Q 98,70 108,74 Q 98,79 77,81"/><path d="M 78,65 Q 96,55 106,59 Q 96,65 78,67"/>
+<path d="M 80,50 Q 95,40 103,43 Q 95,49 80,51"/><path d="M 82,35 Q 94,26 100,29 Q 94,34 82,36"/>
+</g>
+<path d="M 80,210 Q 72,214 68,218 M 80,210 Q 80,216 80,220 M 80,210 Q 88,214 92,218" fill="none" stroke="#6a5a3a" stroke-width="0.5" opacity="0.4"/>
+</svg>
+<div class="specimen-name">崖生铁角蕨</div>
+<div class="specimen-latin">Asplenium viride</div>
+<div class="specimen-charm">⟡ 缓喘 · 辟盐</div>
+</div>
+
+<div class="specimen">
+<svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+<path d="M 80,210 Q 85,170 82,130 Q 78,90 80,50 Q 81,30 78,15" fill="none" stroke="#3a6a2a" stroke-width="1.5"/>
+<g fill="#5a7a3a" opacity="0.4" stroke="#3a5a2a" stroke-width="0.5">
+<path d="M 78,130 Q 50,122 40,126 Q 50,132 78,132"/><path d="M 79,115 Q 48,106 36,110 Q 48,116 79,117"/>
+<path d="M 80,100 Q 46,90 34,94 Q 46,100 80,102"/><path d="M 80,85 Q 48,75 36,78 Q 48,84 80,86"/>
+<path d="M 81,70 Q 52,60 40,63 Q 52,69 81,71"/><path d="M 81,55 Q 55,45 44,48 Q 55,54 81,56"/>
+<path d="M 80,40 Q 58,30 48,34 Q 58,40 80,42"/><path d="M 82,130 Q 110,120 120,124 Q 110,130 82,132"/>
+<path d="M 83,115 Q 114,104 126,108 Q 114,114 83,117"/><path d="M 84,100 Q 118,88 130,92 Q 118,98 84,102"/>
+<path d="M 84,85 Q 116,73 128,77 Q 116,83 84,86"/><path d="M 83,70 Q 112,58 124,62 Q 112,68 83,71"/>
+<path d="M 82,55 Q 108,43 120,47 Q 108,53 82,56"/><path d="M 81,40 Q 104,28 114,32 Q 104,38 81,42"/>
+</g>
+<g fill="#6a4a2a" opacity="0.3">
+<circle cx="70" cy="120" r="1.2"/><circle cx="68" cy="105" r="1.2"/>
+<circle cx="70" cy="90" r="1.2"/><circle cx="72" cy="60" r="1"/>
+</g>
+</svg>
+<div class="specimen-name">沼地蕨</div>
+<div class="specimen-latin">Thelypteris palustris</div>
+<div class="specimen-charm">⟡ 净水 · 恒心</div>
+</div>
+
+</div>
+<div style="font-size:0.75rem;color:#7a6a52;text-align:center;margin-top:1rem;font-style:italic;border-top:1px solid #d8c8a8;padding-top:0.6rem;">
+采自北岬角 · 压于地图册下 · 写生绘制 · 迪奇检验结果：三种不可食、三种遭拒绝、两种闻了闻似乎有兴趣
+</div>
+</div>
+
+<div class="body-text">
+<p>毛地黄我认得，但崖生铁角蕨是我头一回见——这条海岸上别处都没有，我怀疑它跟着地脉走。我在第九章（盐沼远岸）加了交叉索引；那里的蕨是另一个品种，但它们共享同一种辟盐方，只是咒语的手势略有不同。细心的读者想必乐意对照。</p>
+<p>关于岬角还有很多可写的——光是鸟就值得单独一页，黄昏时的光影我还没学会怎么画——但一章总得有个形状，这章已经找到了自己的形状。我还会回来填满边角。一幅地图永远不会完成；它只会变得更真。</p>
+</div>
+
+<div class="xref-zh">
+⤷ 交叉索引：<a href="chapter-ii-cranes-ford-zh.html?lang=zh">第二章 · 鹤渡口</a>（通往岬角的路径——记住：只能在低潮时渡河）·
+<span class="xref-pending" aria-disabled="true" title="尚未绘入手卷">第九章 · 盐沼远岸</span>（耐盐蕨类，不同品种）·
+<span class="xref-pending" aria-disabled="true" title="尚未绘入手卷">第四章 · 垂枝林</span>（毛地黄，同一味强心方，但东边村落的配制手法不同）
+<span class="xref-note">——这两页虽已写就，却尚未装订；页面随后补上。</span>
+</div>
+
+<div class="sig">
+写就、绘就、重订于行旅书斋，<br>
+奥尔德米尔苔覆海岸，花月下弦。<br>
+<strong>—— 薇丝珀</strong>
+<span style="display:inline-block;margin-left:8px;">✻</span>
+</div>
+
+<div style="position:absolute;bottom:2.5rem;right:3.5rem;opacity:0.15;transform:rotate(15deg);">
+<svg width="24" height="20" viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg">
+<ellipse cx="12" cy="10" rx="4" ry="3.5" fill="#5a4a3a"/>
+<ellipse cx="6" cy="5" rx="2" ry="2.8" fill="#5a4a3a"/>
+<ellipse cx="12" cy="3" rx="2" ry="2.8" fill="#5a4a3a"/>
+<ellipse cx="18" cy="5" rx="2" ry="2.8" fill="#5a4a3a"/>
+</svg>
+</div>
+
+</div>
+</body>
+</html>

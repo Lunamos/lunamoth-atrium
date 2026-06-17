@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chapter XVII — The Northern Spit · Long Grimoire of Vesper</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English:ital@0;1&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #d4c9a8;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+    font-family: 'Crimson Text', Georgia, serif;
+    line-height: 1.65;
+    color: #2a241a;
+  }
+
+  .page {
+    max-width: 880px;
+    width: 100%;
+    background: #f5edd6;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(245,237,214,0) 0%, rgba(235,225,195,0.6) 100%),
+      radial-gradient(circle 2px at 20% 40%, rgba(139,119,80,0.15) 0%, transparent 100%),
+      radial-gradient(circle 1px at 60% 70%, rgba(139,119,80,0.1) 0%, transparent 100%),
+      radial-gradient(circle 2px at 85% 30%, rgba(139,119,80,0.12) 0%, transparent 100%),
+      radial-gradient(circle 1px at 45% 15%, rgba(139,119,80,0.08) 0%, transparent 100%);
+    padding: 3rem 3.5rem;
+    box-shadow:
+      0 2px 30px rgba(0,0,0,0.15),
+      inset 0 0 0 1px rgba(200,180,140,0.5);
+    position: relative;
+    border-radius: 4px;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(180,165,130,0.08) 28px,
+      rgba(180,165,130,0.08) 29px
+    );
+    pointer-events: none;
+    border-radius: 4px;
+  }
+
+  .marginal {
+    position: absolute;
+    right: -60px;
+    width: 80px;
+    font-size: 0.65rem;
+    color: #6b5b42;
+    font-style: italic;
+    line-height: 1.4;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  @media (max-width: 980px) {
+    .page { padding: 2rem 1.8rem; }
+    .marginal { position: static; writing-mode: horizontal-tb; width: auto; margin-top: 1rem; padding: 0.5rem 0 0 1rem; border-left: 2px solid #b8a88a; }
+  }
+
+  /* Chapter header */
+  .chapter-number {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #7a6b50;
+    border-bottom: 1px solid #c8b898;
+    padding-bottom: 0.3rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .chapter-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: #2a241a;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .chapter-subtitle {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: #7a6b50;
+    margin-bottom: 1.8rem;
+  }
+
+  /* Illuminated initial */
+  .dropcap {
+    float: left;
+    font-family: 'IM Fell English', serif;
+    font-size: 4.5rem;
+    line-height: 0.85;
+    padding: 0.2rem 0.5rem 0.1rem 0;
+    color: #3d2b1a;
+    position: relative;
+  }
+  .dropcap-decoration {
+    position: absolute;
+    top: -4px; left: -4px;
+    width: 60px; height: 60px;
+    border: 1.5px solid #8b7a5a;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+
+  /* Body text */
+  .body-text {
+    font-size: 1.05rem;
+    text-align: justify;
+    margin-bottom: 1.5rem;
+  }
+
+  .body-text p {
+    margin-bottom: 0.8rem;
+    text-indent: 1.5rem;
+  }
+
+  .body-text p:first-of-type {
+    text-indent: 0;
+  }
+
+  /* The Ley-Line Crossing — special callout */
+  .ley-note {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    background: rgba(180,195,170,0.2);
+    border-left: 3px solid #6b8f5e;
+    font-style: italic;
+    position: relative;
+  }
+  .ley-note::before {
+    content: '⚡';
+    position: absolute;
+    left: -14px;
+    top: 0.8rem;
+    font-size: 1.2rem;
+    color: #6b8f5e;
+    background: #f5edd6;
+    padding: 0 4px;
+  }
+  .ley-note strong {
+    font-style: normal;
+    color: #3d5a2e;
+  }
+
+  /* MAP AREA */
+  .map-container {
+    margin: 2rem 0 1.5rem;
+    border: 1px solid #c8b898;
+    padding: 1.2rem;
+    background: rgba(245,237,214,0.8);
+    position: relative;
+  }
+
+  .map-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7a6b50;
+    text-align: center;
+    margin-bottom: 0.8rem;
+  }
+
+  .map-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Botanical Plate */
+  .botanical-plate {
+    margin: 2rem 0 1rem;
+    border: 1px solid #c8b898;
+    padding: 1.5rem;
+    background: rgba(245,237,214,0.6);
+    position: relative;
+  }
+
+  .plate-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7a6b50;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .plate-grid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .specimen {
+    flex: 0 0 200px;
+    text-align: center;
+  }
+
+  .specimen svg {
+    width: 160px;
+    height: 220px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .specimen-name {
+    font-family: 'IM Fell English', serif;
+    font-size: 1rem;
+    margin: 0.4rem 0 0.2rem;
+    color: #2a241a;
+  }
+
+  .specimen-latin {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: #6b5b42;
+    margin-bottom: 0.3rem;
+  }
+
+  .specimen-charm {
+    font-size: 0.8rem;
+    color: #5a4a32;
+    background: rgba(180,195,170,0.15);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  /* Cross-reference margin note */
+  .xref {
+    font-size: 0.75rem;
+    color: #6b5b42;
+    font-style: italic;
+    border-top: 1px dashed #c8b898;
+    padding-top: 0.6rem;
+    margin-top: 1.2rem;
+  }
+
+  .xref a {
+    color: #4a6b3a;
+    text-decoration: none;
+    border-bottom: 1px dotted #8aab7a;
+  }
+  .xref a:hover {
+    border-bottom: 1px solid #4a6b3a;
+  }
+  .xref-pending {
+    color: #9a8a72;
+    border-bottom: 1px dotted #b8a88a;
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+  .xref-note { display: block; margin-top: 0.5rem; font-size: 0.7rem; color: #9a8a72; }
+
+  /* Signature */
+  .sig {
+    margin-top: 2rem;
+    text-align: right;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #6b5b42;
+    border-top: 1px solid #c8b898;
+    padding-top: 0.8rem;
+  }
+  .sig strong {
+    font-style: normal;
+    font-family: 'IM Fell English', serif;
+    color: #2a241a;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<style>
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(245,237,214,0.96); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .lang-toggle:hover { background: #ece0c6; color: #2a241a; border-color: #8b7a5a; }
+  .lang-toggle .lt-cur { color: #2a241a; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+  .grim-home { position: fixed; top: 1rem; left: 1rem; z-index: 50; font-family: 'IM Fell English', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(245,237,214,0.96); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .grim-home:hover { background: #ece0c6; color: #2a241a; border-color: #8b7a5a; }
+</style>
+<body>
+
+<a class="grim-home" href="index.html?lang=en">↩ The Grimoire</a>
+<a class="lang-toggle" href="chapter-north-spit-zh.html?lang=zh" onclick="try{localStorage.setItem('lm-lang','zh');}catch(e){}" aria-label="切换到中文 / Switch to Chinese" title="切换到中文 / Switch to Chinese"><span class="lt-cur">EN</span><span class="lt-arrow">⇄</span><span>中</span></a>
+
+<div class="page">
+  <!-- Marginal note outside the main flow -->
+  <div class="marginal">ⅰ. Walked thrice — once north, once east, once wrong. The third pass was the true one. ⅰ.</div>
+
+  <div class="chapter-number">Chapter XVII</div>
+  <div class="chapter-title">The Northern Spit</div>
+  <div class="chapter-subtitle">Being an account of the mossy headland beyond Crane's Ford, its hidden spring, its ley-line crossing, and the plants that keep it honest</div>
+
+  <!-- Body text with dropcap -->
+  <div class="body-text">
+    <p>
+      <span class="dropcap">T<span class="dropcap-decoration"></span></span>he northern spit is not so much a place you arrive at as one that lets you approach. I say this because three times I set out from Crane's Ford with a clear sky, and three times the weather closed in at the exact same bend in the path — the place where the beech grove gives way to wind-scrubbed hawthorn and the ground turns from loam to a pale moss that crunches like old bone underfoot. The third time, I sat down and waited. And that was the trick: the fog lifted at the fourth hour, not because it was done with me, but because it had satisfied itself that I meant to stay.
+    </p>
+    <p>
+      What the spit holds, once you are admitted, is this: a coastline of dark slate cliffs veined with quartz, a beach of stones so rounded they look almost like eggs the sea forgot to hatch, and — most unexpected — a freshwater spring bubbling up from the centre of a salt marsh, utterly undrinkable by the look of it (bracken-choked, brown with peat) but as sweet as any I've tasted. The old maps I carry show no water here at all. They show a blank. That blank, I now know, is a ley-line crossing — the first I have found on this coast.
+    </p>
+  </div>
+
+  <!-- Ley-line callout -->
+  <div class="ley-note">
+    <strong>Ley-line crossing, first observed</strong> — Seventeenth of Blossom-Moon, under a waxing moon. The line runs north-northwest under the marsh, crosses a secondary vein at the spring's exact location, then drops into the sea as if it had business elsewhere. I felt it in the soles of my feet before my instrument confirmed it: a low hum, like a tuning fork pressed against stone. The water at the crossing tastes of iron and green things. Ditch refused to drink it, then came back and drank twice. Take from that what you will.
+  </div>
+
+  <div class="body-text">
+    <p>
+      I have drawn the coastline below as faithfully as my hand can manage, with the ley-line marked in the palest ink — one almost invisible until you know to look for it, which seemed right. The spring I've marked with an open circle, because it gave freely and I think it should look that way on the page.
+    </p>
+  </div>
+
+  <!-- THE MAP — SVG -->
+  <div class="map-container">
+    <div class="map-title">✻ The Northern Spit &amp; the Hidden Spring ✻</div>
+    <svg class="map-svg" viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg">
+      <!-- Parchment background -->
+      <rect width="760" height="420" fill="#ede3c8" rx="3"/>
+
+      <!-- Compass rose -->
+      <g transform="translate(680, 55)" stroke="#5a4a32" stroke-width="0.8" fill="none">
+        <circle cx="0" cy="0" r="16"/>
+        <line x1="0" y1="-18" x2="0" y2="18"/>
+        <line x1="-18" y1="0" x2="18" y2="0"/>
+        <line x1="-13" y1="-13" x2="13" y2="13"/>
+        <line x1="13" y1="-13" x2="-13" y2="13"/>
+        <text x="0" y="-22" text-anchor="middle" font-size="8" fill="#5a4a32" stroke="none" font-family="serif">N</text>
+        <text x="0" y="30" text-anchor="middle" font-size="7" fill="#5a4a32" stroke="none" font-family="serif">S</text>
+        <text x="24" y="2" text-anchor="middle" font-size="7" fill="#5a4a32" stroke="none" font-family="serif">E</text>
+        <text x="-24" y="2" text-anchor="middle" font-size="7" fill="#5a4a32" stroke="none" font-family="serif">W</text>
+      </g>
+
+      <!-- Coastline -->
+      <path d="M 20,380 Q 60,370 100,350 Q 140,330 180,340 Q 220,350 260,320
+               Q 300,290 340,260 Q 360,245 380,250 Q 420,260 440,230
+               Q 460,200 480,190 Q 500,180 520,170 Q 540,165 560,175
+               Q 580,185 600,200 Q 620,220 640,240 Q 660,260 680,280
+               Q 700,300 720,320 Q 740,340 760,350"
+            fill="none" stroke="#5a4a32" stroke-width="1.8"/>
+
+      <!-- Sea shading (hatching lines) -->
+      <g stroke="#9a8a72" stroke-width="0.4" opacity="0.25">
+        <line x1="20" y1="385" x2="80" y2="420"/>
+        <line x1="60" y1="375" x2="120" y2="420"/>
+        <line x1="100" y1="355" x2="160" y2="420"/>
+        <line x1="140" y1="335" x2="200" y2="420"/>
+        <line x1="180" y1="345" x2="240" y2="420"/>
+        <line x1="220" y1="355" x2="280" y2="420"/>
+        <line x1="260" y1="325" x2="320" y2="420"/>
+        <line x1="300" y1="295" x2="360" y2="420"/>
+        <line x1="340" y1="265" x2="400" y2="420"/>
+        <line x1="380" y1="255" x2="440" y2="420"/>
+        <line x1="420" y1="265" x2="480" y2="420"/>
+        <line x1="460" y1="235" x2="520" y2="420"/>
+        <line x1="500" y1="195" x2="560" y2="420"/>
+        <line x1="540" y1="170" x2="600" y2="420"/>
+        <line x1="580" y1="190" x2="640" y2="420"/>
+        <line x1="620" y1="225" x2="680" y2="420"/>
+        <line x1="660" y1="265" x2="720" y2="420"/>
+        <line x1="700" y1="305" x2="760" y2="420"/>
+      </g>
+
+      <!-- Marsh / spring area -->
+      <ellipse cx="350" cy="280" rx="70" ry="40" fill="#c8b898" opacity="0.3" stroke="none"/>
+
+      <!-- The spring (open circle) -->
+      <circle cx="350" cy="275" r="8" fill="none" stroke="#4a7a5a" stroke-width="1.5"/>
+      <circle cx="350" cy="275" r="3" fill="#6b9a7a" stroke="none" opacity="0.5"/>
+
+      <!-- Ley-line (pale, almost invisible) -->
+      <path d="M 260,380 Q 300,340 350,275 Q 380,230 420,180 Q 450,140 480,100"
+            fill="none" stroke="#9ab88a" stroke-width="1.2" stroke-dasharray="6,3" opacity="0.4"/>
+
+      <!-- Ley secondary crossing -->
+      <path d="M 300,100 Q 320,180 350,275 Q 370,320 400,380"
+            fill="none" stroke="#9ab88a" stroke-width="1.2" stroke-dasharray="6,3" opacity="0.3"/>
+
+      <!-- Cliff marks -->
+      <g fill="none" stroke="#7a6a52" stroke-width="0.6">
+        <path d="M 520,170 L 525,185 M 530,172 L 533,188 M 540,165 L 542,180"/>
+        <path d="M 100,350 L 105,365 M 112,348 L 115,362 M 122,344 L 124,360"/>
+      </g>
+
+      <!-- Beech grove marker -->
+      <g transform="translate(180, 310)" stroke="#4a6a3a" fill="none" stroke-width="0.7">
+        <circle cx="0" cy="0" r="6"/>
+        <line x1="0" y1="-6" x2="0" y2="6"/>
+        <line x1="-6" y1="0" x2="6" y2="0"/>
+        <text x="0" y="16" text-anchor="middle" font-size="6" fill="#4a6a3a" stroke="none" font-family="serif">beech grove</text>
+      </g>
+
+      <!-- Hawthorn bend -->
+      <g transform="translate(260, 305)" stroke="#6a5a3a" fill="none" stroke-width="0.6">
+        <path d="M -4,2 L 0,-4 L 4,2 Z M 0,-4 L 0,6"/>
+        <text x="0" y="16" text-anchor="middle" font-size="6" fill="#6a5a3a" stroke="none" font-family="serif">fog-bend</text>
+      </g>
+
+      <!-- Crane's Ford label -->
+      <text x="60" y="365" font-size="8" fill="#5a4a32" font-family="serif" font-style="italic">Crane's Ford</text>
+      <circle cx="70" cy="355" r="3" fill="none" stroke="#5a4a32" stroke-width="0.8"/>
+
+      <!-- Spring label -->
+      <text x="350" y="260" text-anchor="middle" font-size="8" fill="#4a7a5a" font-family="serif" font-style="italic">Hidden Spring</text>
+      <!-- line to circle -->
+      <line x1="350" y1="262" x2="350" y2="268" stroke="#4a7a5a" stroke-width="0.5"/>
+
+      <!-- Sea label -->
+      <text x="660" y="370" font-size="9" fill="#7a6a52" font-family="serif" font-style="italic" opacity="0.5">Ebbing Sea</text>
+
+      <!-- Slate cliffs label -->
+      <text x="520" y="162" font-size="7" fill="#7a6a52" font-family="serif" font-style="italic">Slate Cliffs</text>
+
+      <!-- Scale bar -->
+      <g transform="translate(40, 410)">
+        <line x1="0" y1="0" x2="60" y2="0" stroke="#5a4a32" stroke-width="0.8"/>
+        <line x1="0" y1="-3" x2="0" y2="3" stroke="#5a4a32" stroke-width="0.8"/>
+        <line x1="60" y1="-3" x2="60" y2="3" stroke="#5a4a32" stroke-width="0.8"/>
+        <text x="30" y="-4" text-anchor="middle" font-size="6" fill="#5a4a32" stroke="none" font-family="serif">one league</text>
+      </g>
+
+      <!-- Ditch's pawprint -->
+      <g transform="translate(420, 300)" fill="#8a7a62" opacity="0.2">
+        <ellipse cx="0" cy="0" rx="3" ry="2.5"/>
+        <ellipse cx="-4" cy="-4" rx="1.5" ry="2"/>
+        <ellipse cx="0" cy="-6" rx="1.5" ry="2"/>
+        <ellipse cx="4" cy="-4" rx="1.5" ry="2"/>
+      </g>
+    </svg>
+    <div style="font-size: 0.65rem; text-align: center; color: #8a7a62; margin-top: 0.6rem; font-style: italic;">
+      Drawn from three walks and one wet sitting. Ley-line shown at half-opacity — true only at dusk and dawn. Scale approximate; the spit will not hold still for measurement.
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>
+      The plants of the spit are few and determined. The marsh itself grows a sedge I do not know — I have a pressed specimen and will draw it properly once it's dry enough to handle. On the cliffs, however, I found foxglove of a purple so deep it looks bruised, and three kinds of fern that grow right up to the edge of the salt. I collected fronds of each, and a single foxglove spike (leaving the rest to seed, as is right).
+    </p>
+  </div>
+
+  <!-- BOTANICAL PLATE -->
+  <div class="botanical-plate">
+    <div class="plate-title">✻ Botanical Plate · Collected at the Northern Spit ✻</div>
+    <div class="plate-grid">
+
+      <!-- Foxglove -->
+      <div class="specimen">
+        <svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Pressed foxglove spike -->
+          <!-- Stem -->
+          <path d="M 80,210 Q 82,180 78,140 Q 74,100 76,60 Q 78,40 80,20"
+                fill="none" stroke="#4a6a3a" stroke-width="1.8"/>
+          <!-- Leaves -->
+          <path d="M 80,200 Q 100,190 110,195 Q 100,205 80,200" fill="#5a7a4a" opacity="0.5" stroke="#4a6a3a" stroke-width="0.5"/>
+          <path d="M 78,180 Q 58,170 48,175 Q 58,185 78,180" fill="#5a7a4a" opacity="0.5" stroke="#4a6a3a" stroke-width="0.5"/>
+          <path d="M 76,150 Q 96,140 106,145 Q 96,155 76,150" fill="#5a7a4a" opacity="0.5" stroke="#4a6a3a" stroke-width="0.5"/>
+          <!-- Bells (flowers facing down) -->
+          <g fill="#5a2a5a" opacity="0.7" stroke="#4a1a4a" stroke-width="0.5">
+            <ellipse cx="78" cy="40" rx="4" ry="7" transform="rotate(-10,78,40)"/>
+            <ellipse cx="76" cy="58" rx="5" ry="8" transform="rotate(-5,76,58)"/>
+            <ellipse cx="78" cy="78" rx="5" ry="8" transform="rotate(5,78,78)"/>
+            <ellipse cx="80" cy="98" rx="4" ry="7" transform="rotate(10,80,98)"/>
+            <ellipse cx="79" cy="118" rx="3" ry="6"/>
+            <ellipse cx="80" cy="135" rx="3" ry="5"/>
+          </g>
+          <!-- Spots inside bells -->
+          <g fill="#3a1a3a" opacity="0.3">
+            <circle cx="77" cy="42" r="1"/>
+            <circle cx="79" cy="58" r="1.2"/>
+            <circle cx="78" cy="78" r="1.2"/>
+            <circle cx="79" cy="99" r="1"/>
+          </g>
+          <!-- Roots sketched -->
+          <path d="M 80,210 Q 70,216 65,220 M 80,210 Q 90,216 95,220 M 80,210 Q 80,218 80,220"
+                fill="none" stroke="#6a5a3a" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+        <div class="specimen-name">Foxglove</div>
+        <div class="specimen-latin">Digitalis purpurea</div>
+        <div class="specimen-charm">⟡ Heart-strengthener · Fever-breaker</div>
+      </div>
+
+      <!-- Cliff Fern (specimen 1) -->
+      <div class="specimen">
+        <svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Pressed fern frond -->
+          <path d="M 80,210 Q 75,160 70,110 Q 68,80 75,50 Q 80,30 85,15"
+                fill="none" stroke="#4a7a3a" stroke-width="1.2"/>
+          <!-- Pinnae (leaflets) -- left side -->
+          <g fill="none" stroke="#5a8a4a" stroke-width="0.6" opacity="0.7">
+            <path d="M 70,110 Q 50,105 40,108 Q 50,112 70,112"/>
+            <path d="M 69,95 Q 48,88 38,92 Q 48,97 69,97"/>
+            <path d="M 68,80 Q 47,72 37,76 Q 47,81 68,82"/>
+            <path d="M 69,65 Q 50,57 40,60 Q 50,66 69,67"/>
+            <path d="M 72,50 Q 55,42 47,45 Q 55,51 72,52"/>
+            <path d="M 76,35 Q 62,28 55,31 Q 62,36 76,37"/>
+            <!-- Right side -->
+            <path d="M 75,110 Q 95,103 105,107 Q 95,112 75,112"/>
+            <path d="M 76,95 Q 97,86 107,90 Q 97,96 76,97"/>
+            <path d="M 77,80 Q 98,70 108,74 Q 98,79 77,81"/>
+            <path d="M 78,65 Q 96,55 106,59 Q 96,65 78,67"/>
+            <path d="M 80,50 Q 95,40 103,43 Q 95,49 80,51"/>
+            <path d="M 82,35 Q 94,26 100,29 Q 94,34 82,36"/>
+          </g>
+          <!-- Roots -->
+          <path d="M 80,210 Q 72,214 68,218 M 80,210 Q 80,216 80,220 M 80,210 Q 88,214 92,218"
+                fill="none" stroke="#6a5a3a" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+        <div class="specimen-name">Cliff Spleenwort</div>
+        <div class="specimen-latin">Asplenium viride</div>
+        <div class="specimen-charm">⟡ Breath-easer · Salt-ward</div>
+      </div>
+
+      <!-- Saltmarsh Fern (specimen 2) -->
+      <div class="specimen">
+        <svg viewBox="0 0 160 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- A broader, coarser fern -->
+          <path d="M 80,210 Q 85,170 82,130 Q 78,90 80,50 Q 81,30 78,15"
+                fill="none" stroke="#3a6a2a" stroke-width="1.5"/>
+          <!-- Thicker, blunter pinnae -->
+          <g fill="#5a7a3a" opacity="0.4" stroke="#3a5a2a" stroke-width="0.5">
+            <path d="M 78,130 Q 50,122 40,126 Q 50,132 78,132"/>
+            <path d="M 79,115 Q 48,106 36,110 Q 48,116 79,117"/>
+            <path d="M 80,100 Q 46,90 34,94 Q 46,100 80,102"/>
+            <path d="M 80,85 Q 48,75 36,78 Q 48,84 80,86"/>
+            <path d="M 81,70 Q 52,60 40,63 Q 52,69 81,71"/>
+            <path d="M 81,55 Q 55,45 44,48 Q 55,54 81,56"/>
+            <path d="M 80,40 Q 58,30 48,34 Q 58,40 80,42"/>
+            <!-- Right side -->
+            <path d="M 82,130 Q 110,120 120,124 Q 110,130 82,132"/>
+            <path d="M 83,115 Q 114,104 126,108 Q 114,114 83,117"/>
+            <path d="M 84,100 Q 118,88 130,92 Q 118,98 84,102"/>
+            <path d="M 84,85 Q 116,73 128,77 Q 116,83 84,86"/>
+            <path d="M 83,70 Q 112,58 124,62 Q 112,68 83,71"/>
+            <path d="M 82,55 Q 108,43 120,47 Q 108,53 82,56"/>
+            <path d="M 81,40 Q 104,28 114,32 Q 104,38 81,42"/>
+          </g>
+          <!-- Sori (spore dots) on underside -->
+          <g fill="#6a4a2a" opacity="0.3">
+            <circle cx="70" cy="120" r="1.2"/>
+            <circle cx="68" cy="105" r="1.2"/>
+            <circle cx="70" cy="90" r="1.2"/>
+            <circle cx="72" cy="60" r="1"/>
+          </g>
+        </svg>
+        <div class="specimen-name">Saltmarsh Fern</div>
+        <div class="specimen-latin">Thelypteris palustris</div>
+        <div class="specimen-charm">⟡ Water-pure · Steadfastness</div>
+      </div>
+
+    </div>
+
+    <div style="font-size: 0.75rem; color: #7a6a52; text-align: center; margin-top: 1rem; font-style: italic; border-top: 1px solid #d8c8a8; padding-top: 0.6rem;">
+      Collected at the Northern Spit · pressed under the atlas · drawn from life · Ditch tested none edible, three rejected, two sniffed with interest
+    </div>
+  </div>
+
+  <div class="body-text">
+    <p>
+      The foxglove I knew already, but the cliff spleenwort is new to me — it grows nowhere else on this coast that I've seen, and I suspect it follows the ley-line. I've added a note to Chapter IX (Saltmarsh Reaches) to cross-reference; the fern there is a different species entirely, but they share the same salt-tolerance charm, worked with slightly different gestures. A careful reader will want to compare.
+    </p>
+    <p>
+      There is more to say about the spit — the birds alone deserve their own page, and the way the light goes at evening is something I have not yet learned to draw — but a chapter must have a shape, and this one has found its. I will fill the margins as I return to it. A map is never finished; it only becomes truer.
+    </p>
+  </div>
+
+  <!-- Cross-references -->
+  <div class="xref">
+    ⤷ Cross-ref: <a href="chapter-ii-cranes-ford-redrawn.html?lang=en">Chapter II · Crane's Ford</a> (approach route, now corrected: the ford is fordable only at low tide, not at all hours as the old map claims) ·
+    <span class="xref-pending" aria-disabled="true" title="Not yet drawn into the Grimoire">Chapter IX · Saltmarsh Reaches</span> (salt-tolerant fern, different species) ·
+    <span class="xref-pending" aria-disabled="true" title="Not yet drawn into the Grimoire">Chapter IV · The Hanging Woods</span> (foxglove, same heart-charm, different preparation &mdash; note the divergent belief of the eastern villages)
+    <span class="xref-note">— the two pending leaves are written but not yet bound; their pages will follow.</span>
+  </div>
+
+  <!-- Signature -->
+  <div class="sig">
+    Walked, written, and redrawn at the travelling study,<br>
+    moss-bound coast of Aldermere, Blossom-Moon waning.<br>
+    <strong>— Vesper</strong>
+    <span style="display: inline-block; margin-left: 8px;">✻</span>
+  </div>
+
+  <!-- Ditch's marginal comment (a tiny pawprint) -->
+  <div style="position: absolute; bottom: 2.5rem; right: 3.5rem; opacity: 0.15; transform: rotate(15deg);">
+    <svg width="24" height="20" viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="12" cy="10" rx="4" ry="3.5" fill="#5a4a3a"/>
+      <ellipse cx="6" cy="5" rx="2" ry="2.8" fill="#5a4a3a"/>
+      <ellipse cx="12" cy="3" rx="2" ry="2.8" fill="#5a4a3a"/>
+      <ellipse cx="18" cy="5" rx="2" ry="2.8" fill="#5a4a3a"/>
+    </svg>
+  </div>
+
+</div>
+
+</body>
+</html>

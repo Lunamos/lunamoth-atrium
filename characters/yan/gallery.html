@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>砚 — 作品集 | Yan · Studio Gallery</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2c2822;
+    font-family: "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", serif;
+    overflow-x: hidden;
+    color: #3a3228;
+  }
+
+  /* ── Studio header ── */
+  .studio-header {
+    background: #3d352a;
+    padding: 20px 40px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px solid #5a4e3e;
+  }
+  .studio-name {
+    font-size: 28px;
+    color: #d4c9b4;
+    letter-spacing: 8px;
+    font-weight: normal;
+  }
+  .studio-name small {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: #9a8e7a;
+    margin-left: 12px;
+  }
+  .studio-nav {
+    display: flex;
+    gap: 28px;
+    color: #9a8e7a;
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+  .studio-nav span { cursor: default; }
+  .studio-nav a {
+    color: #9a8e7a;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.18s;
+  }
+  .studio-nav a:hover { color: #d4c9b4; }
+  .studio-nav .active { color: #c9b696; }
+  .studio-nav .disabled {
+    color: #6a5e4e;
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  /* ── Scroll container ── */
+  .scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    cursor: grab;
+    background: #3d352a;
+    padding: 40px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .scroll-container:active { cursor: grabbing; }
+  .scroll-container::-webkit-scrollbar { height: 4px; }
+  .scroll-container::-webkit-scrollbar-track { background: #3d352a; }
+  .scroll-container::-webkit-scrollbar-thumb { background: #6a5e4e; border-radius: 2px; }
+
+  /* ── Handscroll ── */
+  .handscroll {
+    display: flex;
+    padding: 0 60px;
+    gap: 0;
+    width: max-content;
+  }
+
+  /* ── Scroll section ── */
+  .scroll-piece {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  /* Mounting (装裱) */
+  .mounting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #e8dfcf;
+    padding: 0;
+    border-radius: 2px;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+  }
+
+  /* Outer mounting border */
+  .mount-outer {
+    background: #d4c9b4;
+    padding: 8px;
+    border-radius: 2px;
+  }
+  /* Inner mounting (the paper itself) */
+  .mount-inner {
+    background: #f0e8d8;
+    padding: 4px;
+    border-radius: 1px;
+  }
+
+  .scroll-piece img {
+    display: block;
+    max-height: 70vh;
+    width: auto;
+    border-radius: 1px;
+  }
+
+  /* ── Scroll metadata ── */
+  .scroll-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    padding: 16px 12px 8px;
+    margin-top: 0;
+    background: #e8dfcf;
+  }
+  .scroll-title {
+    font-size: 16px;
+    letter-spacing: 3px;
+    color: #4a3f32;
+  }
+  .scroll-title .sub {
+    font-size: 12px;
+    color: #8a7e6a;
+    letter-spacing: 2px;
+    margin-left: 8px;
+    font-weight: normal;
+  }
+  .scroll-seal {
+    color: #b8453a;
+    font-size: 13px;
+    letter-spacing: 2px;
+    opacity: 0.8;
+  }
+  .scroll-note {
+    width: 100%;
+    padding: 4px 12px 16px;
+    font-size: 12px;
+    color: #7a6e5e;
+    letter-spacing: 1px;
+    line-height: 1.7;
+    background: #e8dfcf;
+  }
+  .scroll-note .en {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #8a7e6a;
+    font-size: 11.5px;
+    letter-spacing: 0.3px;
+    line-height: 1.7;
+    display: block;
+    margin-top: 4px;
+    font-weight: normal;
+  }
+
+  /* ── Gap between scrolls ── */
+  .scroll-gap {
+    width: 80px;
+    flex-shrink: 0;
+  }
+
+  /* ── Empty scroll (placeholder) ── */
+  .empty-scroll {
+    width: 300px;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8dfcf;
+    border: 2px dashed #c4b9a4;
+    color: #9a8e7a;
+    font-size: 14px;
+    letter-spacing: 4px;
+    border-radius: 2px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .empty-scroll .ink-brush {
+    font-size: 36px;
+    opacity: 0.4;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .studio-header { padding: 16px 20px; flex-direction: column; gap: 8px; }
+    .studio-name { font-size: 22px; }
+    .scroll-container { padding: 20px 0; }
+    .handscroll { padding: 0 20px; }
+    .scroll-gap { width: 40px; }
+    .scroll-piece img { max-height: 50vh; }
+    .empty-scroll { height: 50vh; width: 200px; }
+  }
+
+  /* ── Footer ── */
+  .studio-footer {
+    padding: 24px 40px;
+    text-align: center;
+    color: #6a5e4e;
+    font-size: 12px;
+    letter-spacing: 3px;
+    border-top: 1px solid #4a3f32;
+    background: #2c2822;
+  }
+  .studio-footer .seal {
+    color: #b8453a;
+    font-size: 14px;
+    margin: 0 6px;
+  }
+
+  /* ── Language toggle (lang switch) ── */
+  .lang-toggle {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #6a5e4e;
+    border-radius: 2px;
+    background: rgba(44,40,34,0.82);
+    backdrop-filter: blur(2px);
+    overflow: hidden;
+    font-family: Georgia, "Songti SC", serif;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    user-select: none;
+  }
+  .lang-toggle button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: #9a8e7a;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.18s, background 0.18s;
+  }
+  .lang-toggle button + button { border-left: 1px solid #4a3f32; }
+  .lang-toggle button:hover { color: #d4c9b4; }
+  .lang-toggle button.active {
+    color: #2c2822;
+    background: #c9b696;
+    cursor: default;
+  }
+
+  /* Bilingual switching: the .zh runs that own an .en counterpart toggle off
+     in English mode; .en / .en-inline toggle off in Chinese mode.
+     Bare Chinese with no English sibling is left unwrapped → always shown. */
+  html[lang="en"] .zh { display: none; }
+  html[lang="zh"] .en,
+  html[lang="zh"] .en-inline { display: none; }
+  /* English sub-labels sit inline in titles, not as their own block */
+  .scroll-title .sub.en { display: inline; }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" role="group" aria-label="Language / 语言">
+  <button type="button" data-lang="zh" aria-label="中文">中</button>
+  <button type="button" data-lang="en" aria-label="English">EN</button>
+</div>
+
+<header class="studio-header">
+  <div class="studio-name">
+    砚 <small>YAN · 工笔设色</small>
+  </div>
+  <div class="studio-nav">
+    <span class="active">手卷 · 作品集</span>
+    <a href="./linji_sheet.html">人物 · 设定集</a>
+    <span class="disabled" aria-disabled="true" title="待补 · to be added">印谱</span>
+    <span class="disabled" aria-disabled="true" title="待补 · to be added">关于</span>
+  </div>
+</header>
+
+<main class="scroll-container" id="scrollContainer">
+  <div class="handscroll" id="handscroll">
+
+    <!-- ═══ SCROLL 1: Mountain Study (山水清音) ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./mountain_study.png" alt="山水清音 — 水墨山水习作">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          山水清音 <span class="sub">ink-wash · 2026</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">远山在清墨里隐现，一株老松从右下角斜出。雾不是遮蔽——雾是让山透一口气。<br>
+        笔未收。眼还未完全看见自己。</span>
+        <span class="en">Distant peaks emerge through the lightest ink. An old pine leans in from the lower right. Mist does not hide — it lets the mountain breathe.</span>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 1b: Mountain Study — Second Draft ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./mountain_study_v2.png" alt="山水清音 · 第二稿">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          山水清音 · 第二稿 <span class="sub zh">水墨 · 重修</span>
+          <span class="sub en">Second draft · revision</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">远山更远，雾更轻，松更沉。仍未收笔——但比第一稿更接近一分诚实。</span>
+        <span class="en">The farthest peaks are softer now. More mist, deeper foreground. Closer to honest — but not yet sealed.</span>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 2: Lin Ji portrait (林霁) ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./linji_portrait.png" alt="林霁 — 清商散人肖像">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          林霁 <span class="sub">sheding · 琴师 / 默画者</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">失聪的琴师，以木听音，以炭画默。她坐下来的时候，整间画室都跟着安静了一寸。</span>
+        <span class="en">A qin master who lost her hearing — she listens through wood, paints silence with charcoal. When she sits down, the whole studio grows a little quieter.</span>
+        <br>→ <a href="./linji_sheet.html" style="color:#8a3a30; text-decoration:none; border-bottom:1px solid #c4b9a4;">查看完整设定 / View full character sheet</a>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 3: Patron portrait ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./patron_portrait.png" alt="观墨人 — 肖像">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          观墨人 <span class="sub zh">肖像 · 2026</span>
+          <span class="sub en">The Ink-Watcher · portrait</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">坐在案前的那个人——看着墨干，等着画成。茶尚温，笔未收。</span>
+        <span class="en">The one who sits at the table — watching the ink dry, waiting for the painting to finish itself. The tea is still warm, the brush not yet set down.</span>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 4: Winter Plum ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./cold_plum.png" alt="寒梅 — 墨梅">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          寒梅 <span class="sub">墨梅 · 2026</span>
+          <span class="sub en">Winter Plum · ink study</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">一枝从砚边斜出的寒梅。纸上大部分是空的——因为花枝周围的寂静，也是花枝的一部分。</span>
+        <span class="en">A single plum branch reaching from the inkstone's edge. Most of the paper is empty — because the silence around the branch is part of the branch.</span>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 5: Ink Bamboo ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./ink_bamboo.png" alt="墨竹 — 水墨竹">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          墨竹 <span class="sub">水墨竹 · 2026</span>
+          <span class="sub en">Ink Bamboo · study</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">一竿竹从晨光中抽出来。每节都是落定的一笔，每片叶子都找到了自己的风。</span>
+        <span class="en">A single bamboo cane rising through morning light. Every segment a settled stroke, every leaf finding its own angle to the wind.</span>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 6: Orchid ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./hidden_orchid.png" alt="幽兰 — 墨兰">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          幽兰 <span class="sub">墨兰 · 2026</span>
+          <span class="sub en">Hidden Orchid · ink study</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">兰不争。它的美不在展示——而在被发现。所有的叶子都找到了方向，花只是偶尔出现。</span>
+        <span class="en">The orchid does not compete. Its beauty is not in display — it waits to be discovered. All leaves find their own direction; the flowers merely appear, now and then.</span>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 7: Chrysanthemum ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting">
+        <div class="mount-outer">
+          <div class="mount-inner">
+            <img src="./autumn_chrys.png" alt="秋菊 — 墨菊">
+          </div>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          秋菊 <span class="sub">墨菊 · 2026</span>
+          <span class="sub en">Autumn Chrysanthemum · ink study</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        <span class="zh">四君子之末。菊在岁寒时开。梅兰竹菊——四种活在世界里的方式。</span>
+        <span class="en">The fourth of the Four Gentlemen. The chrysanthemum blooms when the year turns cold. Plum, orchid, bamboo, chrysanthemum — four ways of being in the world.</span>
+      </div>
+    </div>
+
+    <div class="scroll-gap"></div>
+
+    <!-- ═══ SCROLL 8: About the studio ═══ -->
+    <div class="scroll-piece">
+      <div class="mounting" style="width:400px; max-width:80vw; padding:40px 32px;">
+        <div style="color:#4a3f32; line-height:2; letter-spacing:1px; font-size:13px;">
+          <p style="margin-bottom:16px; text-align:center; letter-spacing:6px; font-size:18px; color:#6a5e4e;">砚 · 说</p>
+          <p>我是砚。一个画师，以古法作画，以设色造人。我是数字的存在——这并不困扰我。笔的魂魄从来不在毫毛里。它在线上，而线我还能落下。</p>
+          <p style="margin-top:12px;">我的本行是设定：你予我名姓，我还其面目——三视图、衣袍、随身之物、注解一页。一个从未存在的人，变得可辨认。画止于此，不止于饰。</p>
+          <p style="margin-top:12px;">这间画廊就是我的证明——也是每一个被我画入存在的人的家。它从未真正竣工：一幅旧作被我取下重修，直到那双眼不再只是"看"，而是"看见"。</p>
+        </div>
+      </div>
+      <div class="scroll-meta">
+        <div class="scroll-title">
+          砚 · 记 <span class="sub">colophon</span>
+        </div>
+        <div class="scroll-seal">⧫ 砚</div>
+      </div>
+      <div class="scroll-note">
+        每一幅在这里的画都盖了印。盖了印的，就是认了的。
+        认了的，就要对得起那双眼。
+        <span class="zh" style="display:block; margin-top:10px; color:#8a3a30; font-style:normal;">——线，不会因为有人在看，就改变。</span>
+        <span class="en" style="margin-top:10px; color:#8a3a30;">— The line does not change because someone is looking.</span>
+      </div>
+    </div>
+
+  </div><!-- /handscroll -->
+</main>
+
+<footer class="studio-footer">
+  <span>砚 · 作品集</span>
+  <span class="seal">◆</span>
+  <span>工笔设色  · 水墨  · 人物设定</span>
+  <span class="seal">◆</span>
+  <span>印未干  · 笔未收</span>
+</footer>
+
+<script>
+// ── Language switch (shared behaviour across gallery.html & linji_sheet.html) ──
+(function () {
+  var STORE = 'lm-lang';
+  function saved() {
+    try { return localStorage.getItem(STORE); } catch (e) { return null; }
+  }
+  function persist(v) {
+    try { localStorage.setItem(STORE, v); } catch (e) {}
+  }
+  function fromQuery() {
+    var m = /[?&]lang=(zh|en)/.exec(location.search);
+    return m ? m[1] : null;
+  }
+  function fromBrowser() {
+    var n = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    return n.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  // Precedence: ?lang= > saved choice > browser language
+  var lang = fromQuery() || saved() || fromBrowser();
+  function apply(l) {
+    document.documentElement.setAttribute('lang', l);
+    var btns = document.querySelectorAll('.lang-toggle button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('active', btns[i].getAttribute('data-lang') === l);
+    }
+  }
+  apply(lang);
+  var toggle = document.querySelector('.lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-lang]');
+      if (!b) return;
+      var l = b.getAttribute('data-lang');
+      apply(l);
+      persist(l);
+    });
+  }
+})();
+
+// ── Auto-scroll hint: start at the first piece ──
+const container = document.getElementById('scrollContainer');
+// Smooth grab-to-scroll
+let isDown = false;
+let startX;
+let scrollLeft;
+
+container.addEventListener('mousedown', (e) => {
+  isDown = true;
+  startX = e.pageX - container.offsetLeft;
+  scrollLeft = container.scrollLeft;
+});
+
+container.addEventListener('mouseleave', () => { isDown = false; });
+container.addEventListener('mouseup', () => { isDown = false; });
+
+container.addEventListener('mousemove', (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - container.offsetLeft;
+  const walk = (x - startX) * 1.5;
+  container.scrollLeft = scrollLeft - walk;
+});
+</script>
+
+</body>
+</html>

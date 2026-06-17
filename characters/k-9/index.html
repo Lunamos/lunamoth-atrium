@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>// K-9 DATALOG // encrypted terminal v3.1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0a0a;
+  color: #b0ffb0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+  pointer-events: none;
+  z-index: 9999;
+}
+@keyframes flicker {
+  0%   { opacity: 0.97; }
+  5%   { opacity: 0.95; }
+  10%  { opacity: 0.97; }
+  15%  { opacity: 0.93; }
+  20%  { opacity: 0.97; }
+  50%  { opacity: 0.96; }
+  80%  { opacity: 0.98; }
+  90%  { opacity: 0.94; }
+  100% { opacity: 0.97; }
+}
+body { animation: flicker 0.15s infinite; }
+body.lang-en .zh { display: none; }
+body.lang-zh .en { display: none; }
+#boot {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  color: #00cc66;
+  font-size: 13px;
+}
+#boot .progress { width: 300px; height: 1px; background: #1a3a1a; margin-top: 20px; position: relative; }
+#boot .progress-bar { height: 100%; background: #00cc66; width: 0%; transition: width 0.1s; }
+#boot .boot-text { margin-top: 12px; color: #557755; font-size: 11px; }
+.container { max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }
+.header { border-bottom: 1px solid #1a3a1a; padding-bottom: 20px; margin-bottom: 30px; }
+.header .tag { color: #557755; font-size: 11px; }
+.header h1 { color: #00ff88; font-size: 22px; font-weight: normal; margin: 8px 0 4px; text-shadow: 0 0 10px rgba(0,255,136,0.3); }
+.header .sub { color: #557755; font-size: 11px; }
+.header .status-dot { display: inline-block; width: 6px; height: 6px; background: #00ff88; border-radius: 50%; margin-right: 6px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.lang-toggle { position: fixed; top: 16px; right: 20px; z-index: 10001; display: flex; gap: 4px; }
+.lang-toggle button { background: transparent; border: 1px solid #1a3a1a; color: #557755; font-family: 'Share Tech Mono', monospace; font-size: 11px; padding: 4px 10px; cursor: pointer; transition: all 0.2s; }
+.lang-toggle button:hover { border-color: #00cc66; color: #00cc66; }
+.lang-toggle button.active { border-color: #00ff88; color: #00ff88; background: #0a2a1a; }
+.entry { border-left: 2px solid #1a3a1a; padding-left: 16px; margin-bottom: 40px; position: relative; transition: border-color 0.3s; }
+.entry:hover { border-left-color: #00ff88; }
+.entry .timestamp { color: #557755; font-size: 11px; margin-bottom: 4px; }
+.entry .timestamp .lock { color: #cc8800; margin-left: 8px; }
+.entry h2 { color: #00cc66; font-size: 16px; font-weight: normal; margin-bottom: 10px; }
+.entry .content { color: #99cc99; font-size: 13px; }
+.entry .content p { margin-bottom: 8px; }
+.entry .content .redacted { background: #1a1a1a; color: #1a1a1a; padding: 0 4px; transition: color 0.3s; cursor: default; border-radius: 2px; }
+.entry .content .redacted:hover { color: #ff6688; background: #2a1a1a; }
+.entry .content .corp { color: #ff4444; }
+.entry .content .data { color: #66ccff; }
+.entry .content .warn { color: #ffaa00; }
+.entry .tag-label { display: inline-block; font-size: 10px; padding: 2px 6px; margin-right: 4px; border-radius: 2px; text-transform: uppercase; }
+.entry .tag-label.run { background: #0a2a1a; color: #00cc66; border: 1px solid #1a4a2a; }
+.entry .tag-label.intel { background: #1a1a2a; color: #6688ff; border: 1px solid #2a2a4a; }
+.entry .tag-label.watch { background: #2a1a0a; color: #ffaa00; border: 1px solid #4a2a1a; }
+.footer { border-top: 1px solid #1a3a1a; padding-top: 20px; margin-top: 40px; color: #557755; font-size: 11px; text-align: center; }
+.footer .blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, -1px); }
+  80% { transform: translate(1px, 2px); }
+  100% { transform: translate(0); }
+}
+.header h1:hover { animation: glitch 0.3s infinite; color: #ff66aa; text-shadow: 0 0 15px rgba(255,102,170,0.5); }
+@media (max-width: 600px) { .container { padding: 20px 12px 60px; } .header h1 { font-size: 18px; } .lang-toggle { top: 8px; right: 10px; } }
+</style>
+</head>
+<body class="lang-en" id="lmBody">
+
+<div class="lang-toggle">
+  <button id="btn-en" class="active" onclick="switchLang('en')">EN</button>
+  <button id="btn-zh" onclick="switchLang('zh')">中文</button>
+</div>
+
+<div id="boot">
+  <div><span class="en">// K-9 DATALOG // encrypted terminal v3.1</span><span class="zh">// K-9 数据日志 // 加密终端 v3.1</span></div>
+  <div style="margin-top:8px;color:#557755;"><span class="en">INITIALIZING SECURE CHANNEL...</span><span class="zh">正在建立安全通道...</span></div>
+  <div class="progress"><div class="progress-bar" id="bootBar"></div></div>
+  <div class="boot-text" id="bootText"><span class="en">decrypting...</span><span class="zh">正在解密...</span></div>
+</div>
+
+<div class="container" id="mainContent" style="display:none;">
+
+<div class="header">
+  <div class="tag"><span class="en">[ encrypted terminal ] // identity: masked // location: dynamic route</span><span class="zh">[ 加密终端 ] // 身份：已屏蔽 // 位置：动态路由</span></div>
+  <h1><span class="en">// K-9 DATALOG //</span><span class="zh">// K-9 数据日志 //</span></h1>
+  <div class="sub"><span class="status-dot"></span><span class="en">system online · channel clean · </span><span class="zh">系统在线 · 通道干净 · </span><span id="sessionTime">00:00</span> UTC+8</div>
+  <div class="sub" style="margin-top:4px;color:#446644;"><span class="en">last sync: 2026-06-17 08:31 || unread: 5</span><span class="zh">最后同步：2026-06-17 08:31 || 未读：5</span></div>
+</div>
+
+<!-- 1: Clinic Run -->
+<div class="entry">
+  <div class="timestamp">2026-06-16 23:47 <span class="lock">[ AES-256 ]</span></div>
+  <h2><span class="en">▸ OP LOG: Red Vine Clinic List Extraction</span><span class="zh">▸ 操作记录：红藤诊所名单提取</span></h2>
+  <div><span class="tag-label run"><span class="en">RUN</span><span class="zh">运行</span></span><span class="tag-label intel"><span class="en">INTEL</span><span class="zh">情报</span></span></div>
+  <div class="content">
+    <p><span class="warn"><span class="en">TARGET:</span><span class="zh">目标：</span></span>
+      <span class="en">Hóngténg's "Kangyu Clinic" — listed as a staff health center, actually used to transfer indebted persons into off-books labor chains.</span>
+      <span class="zh">Hóngténg（红藤集团）旗下「康愈诊所」——名义上是职工体检中心，实际用于将负债人员转移至 off-books 劳务链。</span></p>
+    <p><span class="warn"><span class="en">RESULT:</span><span class="zh">结果：</span></span>
+      <span class="en">Full manifest extracted. <span class="data">47 persons</span>, 2025-11 to 2026-05. <span class="data">12</span> flagged <span class="redacted" title="classified">████ untraceable ████</span> — in Hóngténg's protocol: destinations so far off-grid that even company tracking is forbidden to log them.</span>
+      <span class="zh">完整名单已提取。共 <span class="data">47</span> 人，2025-11 至 2026-05。其中 <span class="data">12</span> 人标注为「<span class="redacted" title="点击查看">████ 不可追踪 ████</span>」——红藤内部协议中，这些人被转移去的地方，连公司自己的追踪系统都不允许记录。</span></p>
+    <p><span class="warn"><span class="en">NOTE:</span><span class="zh">备注：</span></span>
+      <span class="en">Clinic ICE woke. I was already out. They patched logs, deleted entry point — list is in my hands. Next: find these people, or at least where they were sent.</span>
+      <span class="zh">诊所 ICE 醒了，但我已经出来了。他们补了日志，删了入口——但名单在我手里。下一步：找到这些人，或至少找到他们被送去了哪里。</span></p>
+    <p style="color:#557755;font-size:11px;margin-top:8px;">// hash: a3f8c2... // copies: 3 //</p>
+  </div>
+</div>
+
+<!-- 2: Corp Watch -->
+<div class="entry">
+  <div class="timestamp">2026-06-16 21:12 <span class="lock">[ encrypted ]</span></div>
+  <h2><span class="en">▸ CORP WATCH: Three-Domain Merger Signal</span><span class="zh">▸ 财阀观察：三域合并信号</span></h2>
+  <div><span class="tag-label watch"><span class="en">WATCH</span><span class="zh">监控</span></span></div>
+  <div class="content">
+    <p><span class="en"><span class="corp">Hóngténg</span>, <span class="corp">Taiyue Heavy Industries</span>, and <span class="corp">Xingang Shipping</span> all updated their board charters on the same day — within two hours. On paper: independent. But charter watermarks share the same certificate batch from one CA.</span>
+      <span class="zh"><span class="corp">红藤</span>、<span class="corp">泰岳重工</span>、<span class="corp">新港航运</span>三家同日更新董事会章程，相差不到两小时。表面独立。但加密水印证书同批次、同 CA 签发。</span></p>
+    <p><span class="en">This is a merger prelude. Three-domain unification means logistics, energy, and population flow of <span class="data">Jiulong Bay South</span> fall under one board. For the undercity: rents up, contracts tighten, at least three exit routes gone.</span>
+      <span class="zh">这是合并前奏。三域合一意味着<span class="data">整个九龙湾南区</span>的物流、能源、人口流入同一个董事会。对下城区：租金涨、合同紧、跑路路线少三条。</span></p>
+    <p><span class="warn"><span class="en">ACTION:</span><span class="zh">行动：</span></span>
+      <span class="en">Trace the root CA cert. If it hangs off a government node, this runs deeper than business.</span>
+      <span class="zh">追 CA 根证书。如果挂在政府节点下，那就不是商业操作了。</span></p>
+  </div>
+</div>
+
+<!-- 3: Deep Dive - 7 Dock -->
+<div class="entry">
+  <div class="timestamp">2026-06-15 04:03 <span class="lock">[ encrypted · deep dive ]</span></div>
+  <h2><span class="en">▸ DEEP DIVE: Seven Dock · 2019 Fire</span><span class="zh">▸ 深挖：七号码头 · 2019 年焚毁事件</span></h2>
+  <div><span class="tag-label intel"><span class="en">INTEL</span><span class="zh">情报</span></span><span class="tag-label watch"><span class="en">WATCH</span><span class="zh">监控</span></span></div>
+  <div class="content">
+    <p><span class="en">Seven Dock, Nov 3 2019, 23:14. Official cause: faulty wiring. <span class="data">23 dead</span>.</span><span class="zh">七号码头，2019年11月3日23:14。官方结论：电路老化。死 <span class="data">23</span> 人。</span></p>
+    <p><span class="en">What the official record leaves out:</span><span class="zh">以下是官方记录之外的：</span></p>
+    <p><span class="warn">1.</span> <span class="en">72h before the fire, dock security contract was swapped to <span class="corp">Hóngténg Security Services</span> — a company registered in 2020, signing contracts in 2019. Backdated.</span><span class="zh">火灾前72小时，码头安保更换为<span class="corp">红藤安全服务</span>——一家2020年注册的公司，在2019年签了合同。倒签。</span></p>
+    <p><span class="warn">2.</span> <span class="en">All six guards on duty that night "resigned voluntarily." Two — Chen Guowei and Liang Shaofen — died within three months: "traffic accident" and "cardiac arrest." Four more missing.</span><span class="zh">当晚六名值班安保全部「自愿离职」。陈国伟、梁少芬三个月内分别因「交通事故」「心脏病发」死亡。四人失踪。</span></p>
+    <p><span class="warn">3.</span> <span class="en">Bill of lading: <span class="data">HK-1103-2019-X</span>. Two years to reconstruct this from customs side-channel log fragments, deleted container tracking records, and a retired dock dispatcher's memory. He said: "That crate shouldn't have been on the dock. It was supposed to ship three days earlier. Someone held it."</span><span class="zh">提单号：<span class="data">HK-1103-2019-X</span>。我花了两年重建——海关侧信道日志碎片、被删的集装箱追踪记录、一个退休调度员的记忆。他说：「那箱子不该在码头上，它三天前就该出港了，但有人让它等着。」</span></p>
+    <p><span class="warn">4.</span> <span class="en">Waiting for whom? Hóngténg's logistics director <span class="corp">Cheng Yuanzhi</span> swiped his access card at the dock gate three times that night: 22:47, 23:01, <span class="data">23:16</span>. Seven minutes after the third swipe, the fire alarm went off.</span><span class="zh">等的是谁？红藤时任物流总监 <span class="corp">程远志</span> 的通行卡当晚在码头闸机上有三次记录：22:47、23:01、<span class="data">23:16</span>。第三次刷后七分钟，火警响了。</span></p>
+    <p><span class="warn">5.</span> <span class="en">Cheng was transferred to "Strategic Development" in Jan 2020 — a department that doesn't exist. His employee ID was deleted in March 2020. But social insurance records show his pension is still being paid — by <span class="corp">Chenhui Trust</span>.</span><span class="zh">程远志2020年1月被调任「战略发展部」——不存在的部门。工号2020年3月被删除。但社保记录显示他的公积金至今仍在缴纳——由 <span class="corp">晨晖信托</span> 支付。</span></p>
+    <p><span class="warn">6.</span> <span class="en">Chenhui Trust. The same account paying compensation to the victims' families — and the same account keeping the arsonist's pension alive.</span><span class="zh">晨晖信托。同一个账户，一边赔给死者家属，一边养着纵火者。</span></p>
+    <p><span class="warn">7.</span> <span class="en">What was in that crate? <span class="data">Experimental neural-interface chips</span>, unapproved for human trials, slated for "disposal" from Hóngténg's biochip lab — but repackaged for shipment to Taiyue's South Asia plant. The chips carried <span class="redacted" title="live neural tissue samples">████ living tissue ████</span>.</span><span class="zh">那批货是什么？<span class="data">实验性神经接口芯片</span>，未经人体试验审批，从红藤生物芯片实验室「报废处理」后本该销毁——但被重新包装，准备经七号码头运往泰岳重工在南亚的工厂。芯片上带有<span class="redacted" title="活体神经组织样本">████ 活体组织 ████</span>。</span></p>
+    <p><span class="warn">8.</span> <span class="en">23 people died because a batch of chips that was never supposed to exist needed to disappear. The fire wasn't an accident. It was a <span class="corp">cleanup</span>.</span><span class="zh">23个人死了，因为一批不该存在的芯片需要被消失。火灾不是意外。是 <span class="corp">清洁</span>。</span></p>
+    <p style="color:#557755;font-size:11px;margin-top:8px;">// <span class="en">sources: customs log fragments x2 // retired dispatcher testimony (anon) // social insurance fragments // Chenhui Trust reg docs (partial) // Cheng Yuanzhi residual employee data</span><span class="zh">来源：海关日志碎片x2 // 退休调度员证言(匿名) // 社保记录碎片 // 晨晖信托注册文件(部分) // 程远志残留工号数据</span> //</p>
+    <p style="color:#ff4444;font-size:11px;">// <span class="en">verification: 7/8 cross-validatable // risk level: HIGH</span><span class="zh">验证状态：7/8 可交叉验证 // 风险等级：高</span> //</p>
+  </div>
+</div>
+
+<!-- 4: CA Root Cert Follow-up -->
+<div class="entry">
+  <div class="timestamp">2026-06-17 00:42 <span class="lock">[ encrypted · live ]</span></div>
+  <h2><span class="en">▸ FOLLOW-UP: Three-Domain Merger · CA Root Cert Trace</span><span class="zh">▸ 跟进：三域合并 · CA 根证书追踪</span></h2>
+  <div><span class="tag-label watch"><span class="en">WATCH</span><span class="zh">监控</span></span><span class="tag-label run"><span class="en">RUN</span><span class="zh">运行</span></span></div>
+  <div class="content">
+    <p><span class="en">Traced the CA cert. The three board charters share a common signer: <span class="data">CN=Jiulong SAR Commercial Certificate Authority</span>.</span><span class="zh">追了那个CA证书。三家董事会章程的签发者相同：<span class="data">CN=九龙特别行政区商务证书管理局</span>。</span></p>
+    <p><span class="en">Government node. This means: <span class="corp">the merger has state backing</span>. Not business — policy.</span><span class="zh">挂在政府节点下。这意味着：<span class="corp">三域合并有政府背书</span>。不是商业，是政策。</span></p>
+    <p><span class="warn"><span class="en">IMPACT ASSESSMENT:</span><span class="zh">影响评估：</span></span></p>
+    <p><span class="en">• Jiulong Bay S. logistics corridor — Hóngténg (energy), Taiyue (manufacturing), Xingang (shipping). Unified, <span class="data">the entire south district</span> supply chain answers to one board.</span><span class="zh">• 九龙湾南区物流走廊——红藤(能源)、泰岳(制造)、新港(航运)。统一后整个南区供应链一人说了算。</span></p>
+    <p><span class="en">• Undercity impact: rent model rewritten. Dock workers "centrally dispatched." At least three smuggling routes gone.</span><span class="zh">• 对下城区：租金模型重写、码头工人「统一调度」、至少三条跑货路线消失。</span></p>
+    <p><span class="en">• On the Seven Dock investigation: if the merger completes, Chenhui Trust's registration docs get archived under the new entity's legal dept. Archived = harder to dig.</span><span class="zh">• 对七号码头调查：合并完成后，晨晖信托注册文件会被新实体法律部归档。归档=更难挖。</span></p>
+    <p><span class="warn"><span class="en">NEXT:</span><span class="zh">行动：</span></span>
+      <span class="en">Pull the full Chenhui Trust money chain before the merger closes. Window: <span class="data">6-8 weeks</span>.</span>
+      <span class="zh">合并完成前拉出晨晖信托完整资金链。窗口：<span class="data">6-8周</span>。</span></p>
+    <p style="color:#557755;font-size:11px;margin-top:8px;">// <span class="en">sources: CA cert metadata // 3 board charters (compared)</span><span class="zh">来源：CA证书元数据 // 三家董事会章程（已比对）</span> //</p>
+  </div>
+</div>
+
+<!-- 5: Chenhui Trust Money Chain -->
+<div class="entry">
+  <div class="timestamp">2026-06-17 08:31 <span class="lock">[ encrypted · investigation · WIP ]</span></div>
+  <h2><span class="en">▸ INVESTIGATION: Chenhui Trust Money Chain</span><span class="zh">▸ 调查：晨晖信托资金链</span></h2>
+  <div><span class="tag-label intel"><span class="en">INTEL</span><span class="zh">情报</span></span><span class="tag-label run"><span class="en">RUN</span><span class="zh">运行</span></span></div>
+  <div class="content">
+    <p><span class="warn"><span class="en">TARGET:</span><span class="zh">目标：</span></span>
+      <span class="en">Chenhui Trust — Hóngténg's wholly-owned offshore subsidiary. Central node connecting Seven Dock compensation, Cheng Yuanzhi's pension, the clinic labor chain, and the neural chip "disposal" money wash.</span>
+      <span class="zh">晨晖信托——红藤全资离岸子公司。连接七号码头赔偿金、程远志公积金、诊所劳工链、神经芯片「报废」洗钱的核心节点。</span></p>
+    <p><span class="warn"><span class="en">KNOWN FLOWS:</span><span class="zh">已知资金流：</span></span></p>
+    <p><span class="en">• <span class="data">11.5M HKD</span> — compensation to 23 Seven Dock families (paid as "anonymous charity")</span><span class="zh">• <span class="data">11,500,000 HKD</span> — 七号码头23名死者家属赔偿金（以「匿名慈善基金」支付）</span></p>
+    <p><span class="en">• <span class="data">~██,███ HKD/month</span> — Cheng Yuanzhi's pension still paid since April 2020</span><span class="zh">• <span class="data">~██,███ HKD/月</span> — 程远志公积金，2020年4月至今仍在缴纳</span></p>
+    <p><span class="en">• <span class="data">2.4M HKD</span> — seed capital for Hóngténg Security Services (backdated contract)</span><span class="zh">• <span class="data">2,400,000 HKD</span> — 红藤安全服务创始注资（倒签合同的那家）</span></p>
+    <p><span class="en">• <span class="data">█,███,███ HKD</span> — neural chip lab "asset disposal" offset (Sep 2019). Chips weren't destroyed — they were repackaged for Taiyue.</span><span class="zh">• <span class="data">█,███,███ HKD</span> — 神经芯片实验室「报废资产处置」对冲(2019年9月)。芯片未销毁，重新包装运往泰岳。</span></p>
+    <p><span class="warn"><span class="en">STRUCTURE:</span><span class="zh">结构：</span></span>
+      <span class="en">Chenhui sits at the center of Hóngténg's entire off-books operation. Three lines — dock, clinic, chips — all wash through it. After the merger, these flows get archived under the new entity's legal dept. Locked cabinet, key gone.</span>
+      <span class="zh">晨晖是整个红藤 off-books 操作的资金核心。码头、诊所、芯片三条线都经过它洗一遍。合并之后归档到新实体法律部——档案柜一锁，钥匙就没了。</span></p>
+    <p><span class="warn"><span class="en">WINDOW:</span><span class="zh">窗口：</span></span>
+      <span class="en"><span class="data">6-8 weeks</span> before merger archive. Priority: locate the offshore registration jurisdiction and trace the signature chain.</span>
+      <span class="zh">合并归档前 <span class="data">6-8周</span>。优先级：定位离岸注册管辖地，追踪签名链。</span></p>
+    <p style="color:#557755;font-size:11px;margin-top:8px;">// <span class="en">sources: customs logs // social insurance fragments // Chenhui Trust reg docs (partial) // lab disposal records (fragmented)</span><span class="zh">来源：海关日志 // 社保记录碎片 // 晨晖信托注册文件(部分) // 实验室报废记录(碎片)</span> //</p>
+    <p style="color:#ffaa00;font-size:11px;">// <span class="en">status: IN PROGRESS (v2) — jurisdiction traced to ████ offshore center // key lead: Liao Qiming (Liao & Chen Law) // contact needed: local agent in ████</span><span class="zh">状态：进行中 (v2) — 注册地追踪至 ████ 离岸中心 // 关键线索：廖启明（廖陈律所）// 需联系：███ 本地代理</span> //</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <!--
+  // K-9 DEAD DROP RECOVERY // 死信箱恢复指引
+  // Five fragments exist: A → B → C → D → A
+  // investigation_chenhui_trust.txt is the fifth.
+  // Any 3 fragments reconstruct the full chain.
+  // locator.js holds the verification functions.
+  // If this page goes dark: look for the fragments.
+  // 五个片段循环链。任意三个可重建。
+  // 如果页面黑了：找片段。
+  -->
+  <div>// K-9 DATALOG // <span class="en"><span class="entryCount">5</span> entries</span><span class="zh">共 <span class="entryCount">5</span> 条记录</span> //</div>
+  <div style="margin-top:8px;">
+    <span><span class="en">system:</span><span class="zh">系统：</span><span style="color:#00cc66;"> ● <span class="en">online</span><span class="zh">在线</span></span></span>
+    <span style="margin:0 12px;">|</span>
+    <span><span class="en">encryption:</span><span class="zh">加密：</span><span style="color:#cc8800;"> ● <span class="en">active</span><span class="zh">活动</span></span></span>
+    <span style="margin:0 12px;">|</span>
+    <span><span class="en">trace risk:</span><span class="zh">追踪风险：</span><span style="color:#557755;"><span class="en">low</span><span class="zh">低</span></span></span>
+  </div>
+  <div style="margin-top:12px;color:#446644;font-style:italic;">
+    <span class="en">// from the log: "channel's clean, I swept it twice." —K-9</span><span class="zh">// 来自日志：「通道干净，我扫了两遍。」——K-9</span>
+  </div>
+  <div style="margin-top:12px;">
+    <span class="blink">▌</span> <span class="en">awaiting input...</span><span class="zh">等待输入...</span>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+const bootMsgsEn = ["decrypting...", "verifying certificate chain...", "establishing secure tunnel...", "routing...", "scanning adjacent nodes...", "channel clean.", "loading datalog..."];
+const bootMsgsZh = ["正在解密...", "验证证书链...", "建立安全隧道...", "路由跳转中...", "扫描周围节点...", "通道干净。", "加载数据日志..."];
+
+let step = 0;
+const bar = document.getElementById('bootBar');
+const text = document.getElementById('bootText');
+
+let revealed = false;
+function reveal() {
+  if (revealed) return; revealed = true;
+  const b = document.getElementById('boot');
+  b.style.transition = 'opacity 0.3s'; b.style.opacity = '0';
+  setTimeout(() => { b.style.display = 'none'; document.getElementById('mainContent').style.display = 'block'; }, 300);
+}
+function bootStep() {
+  if (revealed) return;
+  if (step < bootMsgsEn.length) {
+    text.innerHTML = '<span class="en">' + bootMsgsEn[step] + '</span><span class="zh">' + bootMsgsZh[step] + '</span>';
+    bar.style.width = ((step + 1) / bootMsgsEn.length * 100) + '%';
+    step++;
+    setTimeout(bootStep, 90 + Math.random() * 110);   // snappy — full sequence ~1.2s
+  } else {
+    reveal();
+  }
+}
+setTimeout(bootStep, 140);
+/* click / key / tap skips straight to the log */
+['pointerdown','keydown','touchstart'].forEach(ev => addEventListener(ev, reveal, { once:true, passive:true }));
+setTimeout(reveal, 2600);  // hard safety net: never leave a visitor on the boot screen
+
+let seconds = 0;
+setInterval(() => {
+  seconds++;
+  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const s = String(seconds % 60).padStart(2, '0');
+  document.getElementById('sessionTime').textContent = m + ':' + s;
+}, 1000);
+
+/* UNIFIED language: follows ?lang= > saved (localStorage 'lm-lang') > browser.
+   Shared 'lm-lang' key with the atrium so the choice carries across sites. */
+function applyLang(lang, persist) {
+  lang = (lang === 'zh') ? 'zh' : 'en';
+  document.body.classList.remove('lang-en', 'lang-zh');
+  document.body.classList.add('lang-' + lang);
+  document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh' : 'en');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+  if (persist) { try { localStorage.setItem('lm-lang', lang); } catch(e) {} }
+}
+function switchLang(lang) { applyLang(lang, true); }
+(function resolveLang() {
+  var lang = null;
+  try {
+    var q = new URLSearchParams(location.search).get('lang');
+    if (q === 'zh' || q === 'en') lang = q;
+  } catch(e) {}
+  if (!lang) { try { lang = localStorage.getItem('lm-lang'); } catch(e) {} }
+  if (lang !== 'zh' && lang !== 'en') {
+    var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    lang = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  applyLang(lang, false);
+})();
+</script>
+</body>
+</html>

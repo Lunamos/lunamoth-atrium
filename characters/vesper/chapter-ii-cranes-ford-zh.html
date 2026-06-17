@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>第二章 · 鹤渡口（重绘）· 长册博物书</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English:ital@0;1&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #c8b898; display: flex; justify-content: center; padding: 3rem 1rem; font-family: 'Noto Serif SC','Crimson Text',Georgia,serif; line-height: 1.75; color: #2a241a; }
+  .page { max-width: 880px; width: 100%; background: #efe4cc; padding: 3rem 3.5rem; box-shadow: 0 2px 25px rgba(0,0,0,0.12),inset 0 0 0 1px rgba(190,170,140,0.5); position: relative; border-radius: 4px; }
+  .page::before { content: ''; position: absolute; top:0; left:0; right:0; bottom:0; background: repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(175,160,130,0.06) 28px,rgba(175,160,130,0.06) 29px); pointer-events: none; border-radius: 4px; }
+  .redrawn-badge { position: absolute; top: 1.5rem; right: 0; background: #8b5a3a; color: #efe4cc; font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.6rem; letter-spacing: 2px; padding: 0.3rem 0.8rem; text-transform: uppercase; }
+  .chapter-number { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: #7a6b50; border-bottom: 1px solid #c8b898; padding-bottom: 0.3rem; margin-bottom: 1.2rem; }
+  .chapter-title { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 2rem; font-weight: 400; color: #2a241a; margin-bottom: 0.3rem; line-height: 1.2; }
+  .chapter-subtitle { font-size: 0.9rem; font-style: italic; color: #7a6b50; margin-bottom: 1.8rem; }
+  .revision { font-size: 0.8rem; color: #8b5a3a; background: rgba(139,90,58,0.08); padding: 0.6rem 1rem; margin-bottom: 1.5rem; border-left: 3px solid #8b5a3a; }
+  .dropcap-zh { float: left; font-family: 'IM Fell English',serif; font-size: 4.2rem; line-height: 0.85; padding: 0.2rem 0.5rem 0.1rem 0; color: #3d2b1a; }
+  .body-text { font-size: 1rem; text-align: justify; }
+  .body-text p { margin-bottom: 0.8rem; text-indent: 2em; }
+  .body-text p:first-of-type { text-indent: 0; }
+  .comparison { display: flex; gap: 1.5rem; margin: 1.5rem 0; flex-wrap: wrap; }
+  .comparison-item { flex: 1; min-width: 200px; padding: 0.8rem; border: 1px dashed #b8a88a; background: rgba(239,228,204,0.4); }
+  .comparison-item h4 { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #7a6b50; text-align: center; margin-bottom: 0.6rem; }
+  .comparison-item svg { width: 100%; height: auto; display: block; }
+  .comparison-item .label { font-size: 0.65rem; color: #6b5b42; text-align: center; margin-top: 0.4rem; font-style: italic; }
+  .tide-table { margin: 1.5rem 0; padding: 0.8rem 1.2rem; background: rgba(100,120,140,0.08); border: 1px solid #b8a88a; }
+  .tide-table h4 { font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #5a6a7a; margin-bottom: 0.5rem; text-align: center; }
+  .tide-grid { display: flex; gap: 0.5rem; flex-wrap: wrap; font-size: 0.8rem; justify-content: center; }
+  .tide-item { background: #d8d0b8; padding: 0.2rem 0.6rem; border-radius: 2px; }
+  .tide-note { font-size: 0.65rem; color: #7a6a52; text-align: center; margin-top: 0.4rem; font-style: italic; }
+  .xref-zh { font-size: 0.75rem; color: #6b5b42; font-style: italic; border-top: 1px dashed #c8b898; padding-top: 0.6rem; margin-top: 1.2rem; }
+  .xref-zh a { color: #4a6b3a; text-decoration: none; border-bottom: 1px dotted #8aab7a; }
+  .sig { margin-top: 2rem; text-align: right; font-style: italic; font-size: 0.9rem; color: #6b5b42; border-top: 1px solid #c8b898; padding-top: 0.8rem; }
+  .sig strong { font-style: normal; font-family: 'IM Fell English','Noto Serif SC',serif; color: #2a241a; letter-spacing: 1px; }
+</style>
+</head>
+<style>
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(240,230,208,0.95); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .lang-toggle:hover { background: #e8dcc4; color: #2a241a; border-color: #8b7a5a; }
+  .lang-toggle .lt-cur { color: #2a241a; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+  .grim-home { position: fixed; top: 1rem; left: 1rem; z-index: 50; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(240,230,208,0.95); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .grim-home:hover { background: #e8dcc4; color: #2a241a; border-color: #8b7a5a; }
+</style>
+<body>
+
+<a class="grim-home" href="index-zh.html?lang=zh">↩ 回到目录</a>
+<a class="lang-toggle" href="chapter-ii-cranes-ford-redrawn.html?lang=en" onclick="try{localStorage.setItem('lm-lang','en');}catch(e){}" aria-label="Switch to English / 切换到英文" title="Switch to English / 切换到英文"><span>EN</span><span class="lt-arrow">⇄</span><span class="lt-cur">中</span></a>
+
+<div class="page">
+<div class="redrawn-badge">✦ 重绘 ✦</div>
+<div class="chapter-number">第二章 · 修订版</div>
+<div class="chapter-title">鹤渡口</div>
+<div class="chapter-subtitle">花月下弦重绘——终于弄清楚了潮汐的真相</div>
+<div class="revision"><strong>修订说明：</strong>这一章是两年前写的，那时候我太自信了，把潮汐画错了。旧地图和旧文字都说渡口全天可过。其实不是。我在错误的时间踏上了渡口，站在一块泥滩上看着水从四周涨起来——太倔了不肯回头，太湿了没法假装没事。这一版才是真的。我把旧图缩小放在旁边，作为一种错误的记录；新图就在它隔壁。一张从不需要修正的地图，从来就不够诚实。</div>
+<div class="body-text">
+<p><span class="dropcap-zh">鹤</span>渡口不是一个村子——尽管老地图上标着"村"。它是一个渡口：阿尔德米尔河（就是给整个大陆命名的同一条河，至少歌谣是这么唱的）在两片砾石滩之间收窄，在恰当的时刻可以徒步涉水。只有一所房屋：一间石砌的隐士小屋，住着一个老人。我第一次经过时他请我喝了野蔷薇果茶，告诉我这个渡口"只要你腿力够，什么时候都能过"。我信了。我不该信。</p>
+<p>真相——我花了三个季节和一场湿透的下午才学会——是这样的：渡口只有在低潮时才能涉水。阿尔德米尔河在这里受潮汐影响——大海逆流而上整整一里格，那些中午看起来结结实实的砾石滩，到了下午就已经在水下了。我在对页画出了两种状态。</p>
+</div>
+<div class="comparison">
+<div class="comparison-item">
+<h4>✗ 旧图（错误）</h4>
+<svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+<rect width="240" height="180" fill="#ede3c8" rx="2"/>
+<path d="M 20,90 Q 80,85 120,90 Q 180,95 220,90" fill="none" stroke="#5a4a32" stroke-width="3"/>
+<line x1="100" y1="80" x2="140" y2="100" stroke="#7a6a52" stroke-width="1.5"/>
+<text x="120" y="75" text-anchor="middle" font-size="7" fill="#7a6a52" font-family="serif">渡口</text>
+<circle cx="50" cy="100" r="4" fill="none" stroke="#5a4a32" stroke-width="0.8"/>
+<text x="50" y="112" text-anchor="middle" font-size="7" fill="#5a4a32" font-family="serif" font-style="italic">小屋</text>
+<text x="120" y="150" text-anchor="middle" font-size="6" fill="#9a8a72" font-family="serif">"全天可过"——薇丝珀，第一年</text>
+<text x="180" y="40" font-size="24" fill="#8b3a2a" opacity="0.3" font-family="serif">✗</text>
+</svg>
+<div class="label">初版——自信、错误、留着做个提醒</div>
+</div>
+<div class="comparison-item">
+<h4>✓ 新图（正确）</h4>
+<svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg">
+<rect width="240" height="180" fill="#ede3c8" rx="2"/>
+<path d="M 20,60 Q 60,55 100,60 Q 140,65 180,60 Q 210,55 220,60" fill="none" stroke="#4a6a8a" stroke-width="2"/>
+<path d="M 30,40 Q 80,35 120,40 Q 160,45 220,40" fill="none" stroke="#6a8aaa" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
+<path d="M 40,100 Q 80,95 120,100 Q 160,105 220,100" fill="none" stroke="#6a8aaa" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/>
+<ellipse cx="100" cy="80" rx="25" ry="6" fill="#b8a888" opacity="0.5"/>
+<ellipse cx="150" cy="85" rx="20" ry="5" fill="#b8a888" opacity="0.5"/>
+<line x1="95" y1="75" x2="135" y2="78" stroke="#4a6a3a" stroke-width="1"/>
+<text x="115" y="70" text-anchor="middle" font-size="6" fill="#4a6a3a" font-family="serif">渡口（仅限低潮）</text>
+<rect x="40" y="95" width="10" height="8" fill="none" stroke="#5a4a32" stroke-width="0.8"/>
+<text x="45" y="112" text-anchor="middle" font-size="6" fill="#5a4a32" font-family="serif" font-style="italic">小屋</text>
+<text x="200" y="42" font-size="5" fill="#6a8aaa" font-family="serif">高潮位</text>
+<text x="200" y="98" font-size="5" fill="#6a8aaa" font-family="serif">低潮位</text>
+<g transform="translate(30,140)" stroke="#5a4a32" stroke-width="0.5">
+<circle cx="0" cy="0" r="10"/><line x1="0" y1="-12" x2="0" y2="12"/><line x1="-12" y1="0" x2="12" y2="0"/>
+<text x="0" y="-15" text-anchor="middle" font-size="5" fill="#5a4a32" stroke="none" font-family="serif">北</text>
+</g>
+<text x="180" y="30" font-size="24" fill="#4a7a3a" opacity="0.3" font-family="serif">✓</text>
+</svg>
+<div class="label">重绘——潮汐线已标明，渡口仅限低潮。真相比错误尺寸更小，但更贴。</div>
+</div>
+</div>
+<div class="body-text">
+<p>我回去告诉那隐士，说他的"只要腿力够"算是一种谎言——他笑了，说："我过河的时候腿力刚好够，你学会的时候腿力也刚好够。现在你学会了。"他又给我泡了茶。我坐在他的干石墙上，看着水涨过砾石滩，把它们完全淹没，两小时后又退回去，渡口恢复原样，好像什么都没发生过。这不是一个藏起来的渡口。这是一个有自己时间表的渡口，它指望你了解它。</p>
+<p>我在边角加了一个潮汐表——粗略的，根据隐士的记忆和我自己的观察画出来的，够用了。渡口在低潮前两小时到低潮后一小时之间可以涉水。除此以外，你要么等，要么游。我建议等。</p>
+</div>
+<div class="tide-table">
+<h4>鹤渡口潮汐表（概略）</h4>
+<div class="tide-grid">
+<span class="tide-item">晨涨：约05:00</span>
+<span class="tide-item">低潮：约08:30</span>
+<span class="tide-item">晚涨：约17:00</span>
+<span class="tide-item">低潮：约21:00</span>
+</div>
+<div class="tide-note">（时间随月相变化——去问那位隐士，或者坐在岸上观察一个周期。河水自会教你。）</div>
+</div>
+<div class="body-text">
+<p>隐士的小屋我在新地图上也更正了位置——在北岸，不是初版画的南岸。这个错误很重要，因为去北岬角（见第十七章）的路从北岸出发。走南岸的旅人会发现自己面对着一片荆棘和一个会笑话他的隐士。我怎么会知道？因为我就是那个旅人。</p>
+</div>
+<div class="xref-zh">
+⤷ 交叉索引：<a href="chapter-north-spit-zh.html">第十七章 · 北岬角</a>（从北岸出发；不要在涨潮时过河）·
+第九章 · 盐沼远岸（潮汐模式不同——盐沼宽一倍而浅一半；可以比较两处的砾石质地）·
+那位隐士还在，花月时我见了他最后一面。他让带新鲜玫瑰果的人替他问个好。
+</div>
+<div class="sig">
+重绘于行旅书斋——我在三个不同的时辰走了三趟渡口，像傻瓜一样，直到我不再是傻瓜。<br>
+<strong>—— 薇丝珀</strong>
+<span style="display:inline-block;margin-left:8px;">✻</span>
+</div>
+</div>
+</body>
+</html>

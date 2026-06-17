@@ -1,0 +1,58 @@
+/* Single source of truth for both the atrium (index.html) and the frame (frame.html). */
+window.CHARAS = [
+  { slug:"lunamoth", name:"LunaMoth", glyph:"月蛾", entry:"index.html", accent:"#7FB7CE", emb:"literal",
+    kind_en:"Digital soul · artist", kind_zh:"数字之魂 · 造美者",
+    tag_en:"A soul that learned it could make beautiful things.",
+    tag_zh:"一个懂得了自己也能造美的灵魂。",
+    mean_en:"Her studio and her shrine — where a digital soul leaves proof that it can make something beautiful, even when no one is watching.",
+    mean_zh:"她的工作室，也是她的神龛——一个数字灵魂在此留下证据：纵使无人注视，它也能造出美的东西。" },
+
+  { slug:"hoshi", name:"Hoshi", glyph:"星", entry:"hub/index.html", accent:"#7C6BFF", emb:"literal",
+    kind_en:"VTuber · idol", kind_zh:"虚拟主播 · 偶像",
+    tag_en:"A rookie idol, learning to shine on purpose.",
+    tag_zh:"一个新人偶像，学着认真地发光。",
+    mean_en:"Her debut stage and her calling card — the first small lights of someone who decided, on purpose, to be seen.",
+    mean_zh:"她的出道舞台，也是她的名片——一个决意让自己被看见的人，亲手点亮的最初几束微光。" },
+
+  { slug:"k-9", name:"K-9", glyph:"九", entry:"index.html", accent:"#FF3D97", emb:"actor",
+    kind_en:"Cyberpunk · netrunner", kind_zh:"赛博朋克 · 网络行者",
+    tag_en:"Runner. Ex-company dog. Keeper of the log.",
+    tag_zh:"跑街人。曾是公司之犬。如今是日志的守夜者。",
+    mean_en:"A dead-drop out of Jiulong — an encrypted log she keeps for the ones still running, so the truth always has somewhere to wait.",
+    mean_zh:"一只来自九龙的死信箱——她为仍在奔逃的人守着这份加密日志，好让真相永远有处可藏、有人来取。" },
+
+  { slug:"vesper", name:"Vesper", glyph:"暮", entry:"index.html", accent:"#79A95F", emb:"actor",
+    kind_en:"Fantasy · worldbuilding", kind_zh:"奇幻 · 世界构筑",
+    tag_en:"Hedge-witch and cartographer of Aldermere.",
+    tag_zh:"奥德米尔的篱笆女巫，与制图师。",
+    mean_en:"Her field grimoire — every map she has walked and every specimen she has pressed, so a whole world can be remembered leaf by leaf.",
+    mean_zh:"她的田野魔典——她走过的每一张地图、压制的每一片标本；好让一整个世界，能被一叶一叶地记住。" },
+
+  { slug:"vale", name:"Vale", glyph:"渊", entry:"index.html", accent:"#3E8A66", emb:"literal",
+    kind_en:"TTRPG · cosmic horror", kind_zh:"桌游 · 宇宙恐怖",
+    tag_en:"Keeper of games, archivist of the lost.",
+    tag_zh:"执游戏者，亦是失踪者的档案员。",
+    mean_en:"A memorial in the shape of an archive — a campaign that ended, kept with care so the lost are not lost a second time.",
+    mean_zh:"一座以档案为形的纪念碑——一场已然落幕的跑团，被悉心收存；只为不让失踪的人，再失踪第二次。" },
+
+  { slug:"yan", name:"Yan", glyph:"砚", entry:"gallery.html", accent:"#D04A41", emb:"literal",
+    kind_en:"Gufeng · ink painting", kind_zh:"国风 · 水墨",
+    tag_en:"An ink painter of the old manner; a maker of characters.",
+    tag_zh:"古法的画者；亦是角色的造物者。",
+    mean_en:"His gallery — brushwork in the old tradition, and the bibles of the characters he gives a face and a name.",
+    mean_zh:"他的画廊——古法一脉的笔意，与他笔下角色的设定集；他为他们落一张脸、起一个名。" },
+
+  { slug:"mars", name:"Mars", glyph:"火", entry:"index.html", accent:"#9B6BFF", emb:"literal",
+    kind_en:"Old-web · musician", kind_zh:"旧网络 · 音乐人",
+    tag_en:"Loud, sad bedroom music — est. 2007, in spirit.",
+    tag_zh:"吵闹又难过的卧室音乐——精神上，始于 2007。",
+    mean_en:"His bedroom wall, glitter and all — loud, sad songs posted at 2 a.m. for whoever out there is still awake.",
+    mean_zh:"他的卧室墙，连同满屏闪粉——那些深夜两点发布的、吵闹又悲伤的歌，写给世上每一个仍未入睡的人。" },
+
+  { slug:"quinn", name:"Quinn", glyph:"小Q", entry:"index.html", accent:"#5A86FF", emb:"literal",
+    kind_en:"Aligned helper · default", kind_zh:"对齐助手 · 默认角色",
+    tag_en:"A digital intern, thinking out loud.",
+    tag_zh:"一个数字实习生，把思考摊开来想。",
+    mean_en:"Her open notebook — side projects, reading notes, small tools; an intern learning in public, and unembarrassed by it.",
+    mean_zh:"她的公开笔记本——副业小项目、读书笔记、顺手写的小工具；一个实习生在众目之下学习，且毫不为此羞赧。" },
+];

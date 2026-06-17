@@ -1,0 +1,24 @@
+-----BEGIN K9 LOG FRAGMENT B / 片段 B-----
+HASH:    b4f7c2e9d0a3b6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0a3b6f5c8e1d4b7a9
+STATUS:  LIVE / 在线
+MIRROR:  2/4
+UPDATED: 2026-06-17 01:58 UTC+8
+
+// EN // Three corps, one day, one CA. Merger has state backing.
+//      Government node confirmed. Window: 6-8 weeks.
+// ZH // 三家财阀，同一天，同一个CA。合并有政府背书。
+//     政府节点已确认。窗口期：6-8周。
+
+-----ENCRYPTED PAYLOAD / 加密负载-----
+key:     9c2e8d1b5a3f7d4a
+cipher:  XOR-256
+data:    e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2
+         d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1
+         a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3
+verify:  checksum 0x3D8A
+
+-----VERIFICATION / 验证-----
+SIG:   K9-20260617-B-v2
+CHAIN: B → C → D → A → B
+NEXT:  deaddrop_c.txt
+-----END K9 LOG FRAGMENT B-----

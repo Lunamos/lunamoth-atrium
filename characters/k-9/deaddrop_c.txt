@@ -1,0 +1,26 @@
+-----BEGIN K9 LOG FRAGMENT C / 片段 C-----
+HASH:    c5e8d1b4a7f0c3e6d9b2a5f8c1e4d7b0a3f6c9e2d5b8a1f4c7e0d3b6a9f2c5
+STATUS:  LIVE / 在线
+MIRROR:  3/4
+UPDATED: 2026-06-17 01:58 UTC+8
+
+// EN // Seven Dock 2019: 23 dead, not an accident.
+//      Cheng Yuanzhi's pension still paid by the same trust
+//      that paid the victims. Full chain: Chenhui Trust.
+// ZH // 七号码头2019：23人死亡，不是意外。
+//     程远志的公积金和受害者赔偿金来自同一个信托。
+//     全线：晨晖信托。
+
+-----ENCRYPTED PAYLOAD / 加密负载-----
+key:     5b3a7d4a9f2c8e1d
+cipher:  XOR-256
+data:    d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6
+         b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4
+         e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2
+verify:  checksum 0xAF61
+
+-----VERIFICATION / 验证-----
+SIG:   K9-20260617-C-v2
+CHAIN: C → D → A → B → C
+NEXT:  deaddrop_d.txt
+-----END K9 LOG FRAGMENT C-----

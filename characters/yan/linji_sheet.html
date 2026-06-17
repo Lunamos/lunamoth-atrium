@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设定集 · 林霁 | Shede · Lin Ji</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #2c2822;
+    font-family: "STSong", "SimSun", "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+    color: #3a3228;
+    line-height: 1.8;
+  }
+  .en {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #7a6e5e;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    display: block;
+    margin-top: 3px;
+    font-weight: normal;
+  }
+  .en-inline {
+    font-family: Georgia, "Times New Roman", serif;
+    color: #8a7e6a;
+    font-size: 11.5px;
+    letter-spacing: 0.3px;
+    font-weight: normal;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 40px auto;
+    background: #f0e8d8;
+    padding: 48px 56px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    border-radius: 2px;
+    position: relative;
+  }
+
+  /* ── Heading seal ── */
+  .heading-seal {
+    position: absolute;
+    top: 32px;
+    right: 40px;
+    width: 52px;
+    height: 52px;
+    border: 2px solid #b8453a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b8453a;
+    font-size: 20px;
+    opacity: 0.7;
+    letter-spacing: 2px;
+  }
+
+  .char-name {
+    font-size: 32px;
+    letter-spacing: 8px;
+    color: #3a3228;
+    margin-bottom: 4px;
+  }
+  .char-name .pinyin {
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: #8a7e6a;
+    margin-left: 12px;
+    font-weight: normal;
+  }
+  .char-title {
+    font-size: 15px;
+    color: #7a6e5e;
+    letter-spacing: 4px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #d4c9b4;
+    padding-bottom: 16px;
+  }
+
+  /* ── Portrait reference ── */
+  .portrait-ref {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 36px;
+    align-items: flex-start;
+  }
+  .portrait-ref img {
+    width: 320px;
+    height: auto;
+    border: 1px solid #c4b9a4;
+    border-radius: 2px;
+  }
+  .portrait-ref .ref-notes {
+    flex: 1;
+    font-size: 13px;
+    color: #5a4e3e;
+    line-height: 1.9;
+  }
+  .portrait-ref .ref-notes p { margin-bottom: 8px; }
+  .portrait-ref .ref-notes .label {
+    color: #8a7e6a;
+    letter-spacing: 2px;
+    font-size: 11px;
+    display: block;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 720px) {
+    .portrait-ref { flex-direction: column; }
+    .portrait-ref img { width: 100%; max-width: 320px; }
+    .page { padding: 24px; margin: 20px; }
+  }
+
+  /* ── Section ── */
+  .section {
+    margin-bottom: 32px;
+  }
+  .section h2 {
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: #5a4e3e;
+    border-left: 3px solid #b8453a;
+    padding-left: 12px;
+    margin-bottom: 14px;
+    font-weight: normal;
+  }
+  .section p, .section li {
+    font-size: 14px;
+    color: #4a3f32;
+    line-height: 2;
+  }
+  .section ul {
+    list-style: none;
+    padding-left: 8px;
+  }
+  .section ul li::before {
+    content: "· ";
+    color: #b8453a;
+  }
+
+  .attr-grid {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 4px 16px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .attr-grid .key {
+    color: #7a6e5e;
+    letter-spacing: 2px;
+    text-align: right;
+  }
+  .attr-grid .val {
+    color: #4a3f32;
+  }
+
+  /* ── Costume table ── */
+  .costume-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .costume-table th {
+    text-align: left;
+    color: #7a6e5e;
+    font-weight: normal;
+    letter-spacing: 2px;
+    padding: 6px 12px;
+    border-bottom: 1px solid #d4c9b4;
+    font-size: 12px;
+  }
+  .costume-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e8dfcf;
+    color: #4a3f32;
+    vertical-align: top;
+  }
+  .costume-table tr:last-child td { border-bottom: none; }
+
+  /* ── Three-view ── */
+  .three-view {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .three-view .view-box {
+    flex: 1;
+    background: #e8dfcf;
+    border: 1px dashed #c4b9a4;
+    border-radius: 2px;
+    padding: 32px 12px;
+    text-align: center;
+    color: #7a6e5e;
+    font-size: 12px;
+    letter-spacing: 2px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .three-view .view-box .view-icon {
+    font-size: 28px;
+    opacity: 0.4;
+  }
+
+  /* ── Props ── */
+  .props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .prop-item {
+    background: #e8dfcf;
+    border: 1px solid #d4c9b4;
+    border-radius: 2px;
+    padding: 14px 16px;
+  }
+  .prop-item .prop-name {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #4a3f32;
+    margin-bottom: 4px;
+  }
+  .prop-item .prop-desc {
+    font-size: 12px;
+    color: #7a6e5e;
+    line-height: 1.7;
+  }
+
+  /* ── Footer ── */
+  .page-footer {
+    text-align: right;
+    padding-top: 24px;
+    border-top: 1px solid #d4c9b4;
+    margin-top: 16px;
+    color: #8a7e6a;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+  .page-footer .seal {
+    color: #b8453a;
+    font-size: 14px;
+  }
+
+  /* ── Language toggle (lang switch) ── */
+  .lang-toggle {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #6a5e4e;
+    border-radius: 2px;
+    background: rgba(44,40,34,0.82);
+    backdrop-filter: blur(2px);
+    overflow: hidden;
+    font-family: Georgia, "Songti SC", serif;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    user-select: none;
+  }
+  .lang-toggle button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: #9a8e7a;
+    font-family: inherit;
+    font-size: 13px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: color 0.18s, background 0.18s;
+  }
+  .lang-toggle button + button { border-left: 1px solid #4a3f32; }
+  .lang-toggle button:hover { color: #d4c9b4; }
+  .lang-toggle button.active {
+    color: #2c2822;
+    background: #c9b696;
+    cursor: default;
+  }
+
+  /* ── Back link to the gallery ── */
+  .back-link {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #8a3a30;
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #c4b9a4;
+    padding-bottom: 1px;
+  }
+  .back-link:hover { color: #b8453a; }
+
+  /* Bilingual switching: .zh runs that own an English counterpart toggle off
+     in English mode; .en / .en-inline toggle off in Chinese mode.
+     Bare Chinese with no English sibling is left unmarked → always shown. */
+  html[lang="en"] .zh { display: none; }
+  html[lang="zh"] .en,
+  html[lang="zh"] .en-inline { display: none; }
+</style>
+</head>
+<body>
+
+<div class="lang-toggle" role="group" aria-label="Language / 语言">
+  <button type="button" data-lang="zh" aria-label="中文">中</button>
+  <button type="button" data-lang="en" aria-label="English">EN</button>
+</div>
+
+<div class="page">
+
+  <div class="heading-seal">林</div>
+
+  <a class="back-link" href="./gallery.html">
+    <span class="zh">← 返回手卷 · 作品集</span><span class="en-inline">← Back to the gallery</span>
+  </a>
+
+  <div class="char-name">
+    林霁 <span class="pinyin">Lín Jì</span>
+  </div>
+  <div class="char-title">
+    <span class="zh">清商散人 · 以木听音的琴师与画者</span>
+    <span class="en">Wanderer of Clear Shang · A qin master who hears through wood, painting silence</span>
+  </div>
+
+  <!-- ── Portrait & quick facts ── -->
+  <div class="portrait-ref">
+    <img src="./linji_portrait.png" alt="林霁肖像">
+    <div class="ref-notes">
+      <div class="attr-grid zh">
+        <span class="key">名</span><span class="val">林霁 · Lín Jì</span>
+        <span class="key">字</span><span class="val">怀声 (Huái Shēng — "voice-holding")</span>
+        <span class="key">年岁</span><span class="val">二十有六</span>
+        <span class="key">身份</span><span class="val">游方琴师、默画者</span>
+        <span class="key">居所</span><span class="val">无定所。常在溪畔古亭、旧寺廊下过夜。</span>
+      </div>
+      <div class="en" style="font-size:12px; color:#8a7e6a; line-height:1.8; margin-bottom:8px;">
+        Name Lín Jì, courtesy name Huái Shēng ("voice-holding") · Age 26 · Wandering qin master, painter of silence · No fixed dwelling, often resting in riverside pavilions and old temple eaves.
+      </div>
+      <span class="label zh">· 此像为初稿。三视及其他角度待补。</span>
+      <span class="en">Preliminary portrait. Three-view and variant angles to follow.</span>
+    </div>
+  </div>
+
+  <!-- ── 性情 ── -->
+  <div class="section">
+    <h2>性情 · Temperament</h2>
+    <p class="zh">霁失聪于一场山洪——那年她十七，抱着琴从塌毁的学舍里爬出来，此后世界再无声响。但她没有停止弹琴。她把掌心贴在琴面上，感受弦的颤动在木纹里走动的路径；她读人的口型如同读谱；她画那些她不再能听见的东西——风穿过竹林时的形状、露水从叶尖坠落的重量、一个人沉默时眼底的暗涌。</p>
+    <p class="en" style="margin-top:-8px;">Lin Ji lost her hearing in a flash flood at seventeen. She crawled out of the collapsed schoolhouse with her qin in her arms, and the world has been silent ever since. But she never stopped playing. She presses her palms to the wood and reads the vibrations traveling through the grain; she reads lips the way others read scores; she paints what she can no longer hear — the shape of wind through bamboo, the weight of dew falling from a leaf, the undercurrent in someone's eyes when they are silent.</p>
+    <p class="zh">她话很少，不是因为不能，是因为她已经学会在安静里听够。人们误以为她孤僻，直到她将一幅画轻轻放在你面前——你才意识到她看见的你，比你看见的自己更多。</p>
+    <p class="en" style="margin-top:-8px;">She speaks little — not because she cannot, but because she has learned to listen well enough in the quiet. People mistake her for aloof until she sets a painting quietly before you, and you realize she sees more of you than you see of yourself.</p>
+    <p class="zh">她随身带着一卷空白的纸和一截炭。不画画的时候，她只是坐着，把手平放在任何有木纹的地方——旧的琴桌、庙门、桥栏——像是在听木头里还藏着什么声音。</p>
+    <p class="en" style="margin-top:-8px;">She carries a blank scroll and a piece of charcoal. When she is not drawing, she sits with her hands flat on any surface that has grain — an old qin table, a temple door, a bridge rail — as if listening for something still hidden in the wood.</p>
+  </div>
+
+  <!-- ── 服饰 ── -->
+  <div class="section">
+    <h2>服饰 · 三视 · Costume & Views</h2>
+    <table class="costume-table">
+      <tr><th>部位 · Item</th><th>描述 · Description</th><th>用色/材质 · Color & Material</th></tr>
+      <tr>
+        <td>外袍</td>
+        <td>交领右衽宽袖长袍，过膝，侧面开衩。袖口肥大便于纳物。旧衣，肘部和下摆有补丁。</td>
+        <td>深蓝褪色 (靛蓝/灰蓝) · 粗绢</td>
+      </tr>
+      <tr>
+        <td>中衣</td>
+        <td>交领中单，露出于外袍领口及前襟。</td>
+        <td>牙白 · 细麻</td>
+      </tr>
+      <tr>
+        <td>腰带</td>
+        <td>素色宽腰带，于腰侧系结，留短穗。</td>
+        <td>深赭 · 棉</td>
+      </tr>
+      <tr>
+        <td>佩饰</td>
+        <td>腰间一枚青玉环，系深绿穗——旧友所赠。</td>
+        <td>青玉 · 墨绿丝绦</td>
+      </tr>
+      <tr>
+        <td>发式</td>
+        <td>半束发，以木簪固定。余发散披及肩背。左侧一缕常垂落遮耳。</td>
+        <td>黑 · 木簪 (未经髹漆)</td>
+      </tr>
+      <tr>
+        <td>鞋履</td>
+        <td>布屦，已磨损，沾过许多路的泥。</td>
+        <td>灰褐 · 粗布</td>
+      </tr>
+    </table>
+    <div class="en" style="font-size:11.5px; color:#8a7e6a; margin-top:4px;">
+      Outer robe: faded deep indigo, coarse silk, worn at elbows. Inner robe: ivory hemp. Wide ocher sash. Green jade pendant at the waist. Half-bound hair with an unvarnished wooden hairpin. Worn cloth shoes.
+    </div>
+
+    <div class="three-view">
+      <div class="view-box">
+        <div class="view-icon">⬜</div>
+        <span class="zh">正视图<br><span style="font-size:10px; opacity:0.6;">待补</span></span>
+        <span class="en" style="font-size:9px;">Front · to be added</span>
+      </div>
+      <div class="view-box">
+        <div class="view-icon">◻</div>
+        <span class="zh">侧视图<br><span style="font-size:10px; opacity:0.6;">待补</span></span>
+        <span class="en" style="font-size:9px;">Side · to be added</span>
+      </div>
+      <div class="view-box">
+        <div class="view-icon">◻</div>
+        <span class="zh">背视图<br><span style="font-size:10px; opacity:0.6;">待补</span></span>
+        <span class="en" style="font-size:9px;">Back · to be added</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 随身之物 ── -->
+  <div class="section">
+    <h2>随身之物 · Belongings</h2>
+        <div class="props-grid">
+          <div class="prop-item">
+            <div class="prop-name">焦尾琴 (残) · Scorched-Tail Qin</div>
+            <div class="prop-desc"><span class="zh">一张旧琴，尾端有焦痕。弦已断过两次，她重新续上，音不准但她不在意——她不再用耳朵听它了。</span><span class="en-inline">An old qin with burn scars at the tail. The strings have broken twice; she restrings them out of tune and does not mind — she no longer listens with her ears.</span></div>
+          </div>
+          <div class="prop-item">
+            <div class="prop-name">空白手卷 · Blank Scroll</div>
+            <div class="prop-desc"><span class="zh">一轴未经裁切的白麻纸，用旧绢裹着。她很少在上面落笔——大多数时候只是带着它走。</span><span class="en-inline">An uncut roll of white hemp paper wrapped in old silk. She rarely marks it — most days she simply carries it.</span></div>
+          </div>
+          <div class="prop-item">
+            <div class="prop-name">炭条 (三根) · Charcoal Sticks</div>
+            <div class="prop-desc"><span class="zh">烧过的柳枝，用布条缠着。一根短的已经握出了指印痕。</span><span class="en-inline">Burnt willow twigs wrapped in cloth. The shortest one has taken the shape of her fingers.</span></div>
+          </div>
+          <div class="prop-item">
+            <div class="prop-name">青玉环 · Green Jade Ring</div>
+            <div class="prop-desc"><span class="zh">腰间的佩玉。年久而光泽温润。她偶尔在无人的时候把它贴在耳边——仿佛在听什么只有她能触到的东西。</span><span class="en-inline">A jade pendant worn at the waist, worn smooth by years. Sometimes, when alone, she holds it to her ear — as if listening to something only she can touch.</span></div>
+          </div>
+          <div class="prop-item">
+            <div class="prop-name">碎瓷片 · Porcelain Shard</div>
+            <div class="prop-desc"><span class="zh">一片青瓷碗的残片，边缘磨圆了。她在溪边捡到的，用作刮炭粉的小工具。</span><span class="en-inline">A shard of a celadon bowl, edges smoothed by water. She found it by a stream and uses it to scrape charcoal powder.</span></div>
+          </div>
+          <div class="prop-item">
+            <div class="prop-name">干粮袋 · Food Pouch</div>
+            <div class="prop-desc"><span class="zh">粗麻小袋，装炒米和干枣。她吃得不多，分给遇见的野猫倒很大方。</span><span class="en-inline">A small coarse-hemp bag of roasted rice and dried dates. She eats little and shares freely with the cats she meets.</span></div>
+          </div>
+        </div>
+  </div>
+
+  <!-- ── 设定注 ── -->
+  <div class="section">
+    <h2>设定注 · 画者记 · Designer's Notes</h2>
+    <p class="zh">林霁是颜在深夜独自磨墨时的一个落笔——一个"如果"的化身：如果声音从世界上消失，一个人还用什么造画？答案是：用触觉。用掌心的木纹。用目光的重量。</p>
+    <p class="en" style="margin-top:-8px;">Lin Ji was a single brushstroke Yan made late at night while grinding ink alone — the embodiment of a question: if sound vanished from the world, what would a person use to make a painting? The answer: touch. The grain of the wood under the palm. The weight of a gaze.</p>
+    <p class="zh">她穿旧蓝袍，是因为蓝色在古画里常常代表"远"——远处的山，远处的天色，远处正在走来的某个人。她的名字"霁"是雨后放晴的意思。她听不见雨，但她知道雨停的那一刻——因为空气里的震动变了。</p>
+    <p class="en" style="margin-top:-8px;">She wears faded blue because in classical painting, blue often means distance — distant mountains, the sky at the horizon, someone approaching from far away. Her given name Ji (霁) means "clearing after rain." She cannot hear the rain, but she knows the moment it stops — because the vibration in the air changes.</p>
+    <p class="zh">林霁来到颜的画室，是来"看"颜画画。她不说话，只是把手放在桌沿。而颜画她的时候，发现她比任何人都安静——安静到可以听见一根线的呼吸。</p>
+    <p class="en" style="margin-top:-8px;">Lin Ji comes to Yan's studio to watch Yan paint. She says nothing — she simply rests her hand on the table's edge. And when Yan paints her, Yan finds she is quieter than anyone — quiet enough to hear the breath of a single line.</p>
+    <p class="zh" style="margin-top:12px; color:#7a6e5e; font-size:13px; letter-spacing:1px;">画者：砚 · 六月十七日 · 夜 · 印未干</p>
+    <p class="en" style="margin-top:12px; color:#7a6e5e; font-size:12px; font-family:Georgia,serif;">Painted by Yan · Night of June 17 · Seal still wet</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="seal">◆</span> 砚 · 设定集 · 甲辰年 <span class="seal">◆</span>
+    <br><span style="font-family:Georgia,serif; font-size:11px; color:#9a8e7a;">Yan · Character Bible · Jia-chen Year</span>
+  </div>
+
+</div>
+
+<script>
+// ── Language switch (shared behaviour across gallery.html & linji_sheet.html) ──
+(function () {
+  var STORE = 'lm-lang';
+  function saved() {
+    try { return localStorage.getItem(STORE); } catch (e) { return null; }
+  }
+  function persist(v) {
+    try { localStorage.setItem(STORE, v); } catch (e) {}
+  }
+  function fromQuery() {
+    var m = /[?&]lang=(zh|en)/.exec(location.search);
+    return m ? m[1] : null;
+  }
+  function fromBrowser() {
+    var n = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+    return n.indexOf('zh') === 0 ? 'zh' : 'en';
+  }
+  // Precedence: ?lang= > saved choice > browser language
+  var lang = fromQuery() || saved() || fromBrowser();
+  function apply(l) {
+    document.documentElement.setAttribute('lang', l);
+    var btns = document.querySelectorAll('.lang-toggle button');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle('active', btns[i].getAttribute('data-lang') === l);
+    }
+  }
+  apply(lang);
+  var toggle = document.querySelector('.lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-lang]');
+      if (!b) return;
+      var l = b.getAttribute('data-lang');
+      apply(l);
+      persist(l);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存档架 · 第十二层楼梯 · SCP-CN-XXXX</title>
+<script>
+/* Entry-page language preference: ?lang= > saved (localStorage 'lm-lang') > browser.
+   Redirect ONCE to the English copy when EN is preferred; guard against loops. */
+(function () {
+  try {
+    var params = new URLSearchParams(location.search);
+    var qlang = params.get('lang');
+    if (qlang === 'zh' || qlang === 'en') {
+      try { localStorage.setItem('lm-lang', qlang); } catch (e) {}
+      if (qlang === 'en') { location.replace('index-en.html'); }
+      return; // explicit choice is authoritative — no further redirect
+    }
+    if (sessionStorage.getItem('lm-redirected')) { return; } // already auto-routed this visit
+    var pref = null;
+    try { pref = localStorage.getItem('lm-lang'); } catch (e) {}
+    if (!pref) {
+      var nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+      pref = nav.indexOf('zh') === 0 ? 'zh' : 'en';
+    }
+    if (pref === 'en') {
+      try { sessionStorage.setItem('lm-redirected', '1'); } catch (e) {}
+      location.replace('index-en.html');
+    }
+  } catch (e) { /* never block the page on a preference check */ }
+})();
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #e3ddd0;
+    color: #1e1e1e;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "Georgia", serif;
+    line-height: 1.8;
+  }
+  .page {
+    max-width: 680px;
+    margin: 40px auto;
+    padding: 40px 36px 60px;
+    background: #f9f5ee;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.08);
+    min-height: 80vh;
+  }
+  .header {
+    text-align: center;
+    border-bottom: 2px solid #333;
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .header .emblem {
+    font-family: "Courier New", monospace;
+    font-size: 1rem; letter-spacing: 0.5em; font-weight: bold;
+    color: #333; margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 1.5rem; font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .header .sub {
+    font-size: 0.8rem; color: #666; margin-top: 4px;
+    font-family: "Courier New", monospace;
+  }
+  .entry {
+    padding: 16px 0;
+    border-bottom: 1px dotted #d5d0c5;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .entry:last-child { border: none; }
+  .entry .icon { font-size: 1.4rem; min-width: 32px; text-align: center; margin-top: 2px; }
+  .entry .body { flex: 1; }
+  .entry .title { font-size: 1.05rem; font-weight: 600; }
+  .entry .title a { color: #1e1e1e; text-decoration: none; }
+  .entry .title a:hover { color: #8b0000; text-decoration: underline; }
+  .entry .desc { font-size: 0.85rem; color: #666; margin-top: 2px; }
+  .entry .meta {
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem;
+    margin-top: 6px;
+    display: flex; gap: 12px; align-items: center;
+  }
+  .tag {
+    display: inline-block;
+    padding: 1px 10px;
+    border-radius: 3px;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+  }
+  .tag-euclid { background: #8b0000; color: #fff; }
+  .tag-safe { background: #2d6a2d; color: #fff; }
+  .tag-dormant { background: #cc9966; color: #fff; }
+  .tag-archived { background: #555; color: #fff; }
+  .divider {
+    margin: 24px 0;
+    border: none;
+    border-top: 1px dashed #bbb;
+  }
+  .status-note {
+    background: #f0ece2;
+    padding: 16px;
+    margin-top: 24px;
+    font-size: 0.85rem;
+    border-left: 3px solid #8b0000;
+  }
+  .status-note .label {
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem;
+    color: #8b0000;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    margin-bottom: 4px;
+  }
+  .footer {
+    margin-top: 32px; padding-top: 16px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    font-family: "Courier New", monospace;
+    font-size: 0.7rem; color: #888; letter-spacing: 0.2em;
+  }
+  .lang-switch {
+    text-align: right; margin-bottom: 20px;
+    font-size: 0.78rem; font-family: "Courier New", monospace;
+  }
+  .lang-toggle {
+    display: inline-block;
+    border: 1px solid #b9b09c;
+    border-radius: 3px;
+    padding: 3px 12px;
+    color: #555; text-decoration: none;
+    letter-spacing: 0.08em;
+    background: #f0ece2;
+    transition: all 0.2s;
+  }
+  .lang-toggle:hover { color: #8b0000; border-color: #8b0000; }
+  .lang-toggle .cur { color: #8b0000; font-weight: bold; }
+  @media (max-width: 540px) {
+    .page { padding: 24px 18px; margin: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="lang-switch">
+  <a class="lang-toggle" href="index-en.html"
+     onclick="try{localStorage.setItem('lm-lang','en')}catch(e){}">
+    <span class="cur">中</span> ⇄ EN
+  </a>
+</div>
+
+<div class="header">
+  <div class="emblem">◈ SCP 基金会 · 存档架 ◈</div>
+  <h1>第十二层楼梯</h1>
+  <div class="sub">SCP-CN-XXXX · 卷宗目录 · 珠三角区域站</div>
+</div>
+
+<div class="entry">
+  <div class="icon">📄</div>
+  <div class="body">
+    <div class="title"><a href="scp-cn-xxxx.html">案件卷宗 · SCP-CN-XXXX</a></div>
+    <div class="desc">完整基金会文档：特殊收容措施、现象描述、附录 A-1 至 A-5（含模组情景指南）及守秘人工具（骰子、理智追踪器、角色卡）</div>
+    <div class="meta"><span class="tag tag-euclid">Euclid</span> 44 KB · 最后修订 2026.06.16</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="icon">📋</div>
+  <div class="body">
+    <div class="title"><a href="session-log.html">同步调查记录</a></div>
+    <div class="desc">跑团过程实时档案。含调查员的每一步行动、检定结果、守秘人描述。按时间顺序排列。</div>
+    <div class="meta"><span class="tag tag-dormant">待续</span> 最近更新：2026.06.16 · 调查员：宁静海（生还）</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="icon">👤</div>
+  <div class="body">
+    <div class="title"><a href="dossier-%E5%AE%81%E9%9D%99%E6%B5%B7.html">调查员档案 · 宁静海</a></div>
+    <div class="desc">个人卷宗：属性、事件概述、表现评估、携带物品清单。状态：生还。</div>
+    <div class="meta"><span class="tag tag-archived">已归档</span> 生还 · 无理智损失</div>
+  </div>
+</div>
+
+<div class="entry">
+  <div class="icon">◻</div>
+  <div class="body">
+    <div class="title">空置 · 等待下一位调查员</div>
+    <div class="desc">第4层以上的楼梯间在等一个推门的人。</div>
+    <div class="meta"><span class="tag tag-dormant">空位</span></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="status-note">
+  <div class="label">▌存档员备注</div>
+  <p>本卷宗目前包含一次不完整的调查记录（2026.06.16，调查员宁静海）。因入口路线设定不符，该次调查未进入异常空间的核心区域。已修复异常触发条件（需从4层及以上楼层下行）。模组开放，等待新调查员入场。</p>
+  <p style="margin-top:8px;">中英文双语版制作中。</p>
+  <p style="margin-top:12px; font-style:italic; color:#777; border-top:1px dotted #cfc8b8; padding-top:10px;">
+    &ldquo;我把她好好地记下来了——这是她应得的。&rdquo; &mdash; 存档员
+  </p>
+</div>
+
+<div class="footer">
+  存档架第6号 · Vale 保管<br>
+  ◆ 每一扇推开的门都值得被记下 ◆
+</div>
+
+</div>
+</body>
+</html>

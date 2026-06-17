@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>长册博物书 · 目录 · 薇丝珀的手卷</title>
+<script>
+/* 入口页语言偏好——只跑一次，已防循环。
+   顺序：?lang= > 已保存 (localStorage 'lm-lang') > 浏览器语言。 */
+(function () {
+  var THIS_LANG = 'zh';
+  var COUNTERPART = 'index.html';
+  try {
+    var params = new URLSearchParams(location.search);
+    var asked = params.get('lang');
+    var redirected = sessionStorage.getItem('lm-redirected');
+    if (asked) {
+      try { localStorage.setItem('lm-lang', asked.indexOf('zh') === 0 ? 'zh' : 'en'); } catch (e) {}
+      sessionStorage.setItem('lm-redirected', '1');
+      return;
+    }
+    if (redirected) return;
+    var saved = null;
+    try { saved = localStorage.getItem('lm-lang'); } catch (e) {}
+    var want = saved || ((navigator.language || 'en').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en');
+    sessionStorage.setItem('lm-redirected', '1');
+    if (want !== THIS_LANG) { location.replace(COUNTERPART + '?lang=' + want); }
+  } catch (e) {}
+})();
+</script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English:ital@0;1&family=Noto+Serif+SC:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #c8b898;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+    font-family: 'Noto Serif SC', 'Crimson Text', Georgia, serif;
+    line-height: 1.75;
+    color: #2a241a;
+  }
+
+  .page {
+    max-width: 800px;
+    width: 100%;
+    background: #f0e6d0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 40% 30%, rgba(240,230,208,0) 0%, rgba(220,208,180,0.4) 100%);
+    padding: 3rem 3.5rem;
+    box-shadow: 0 2px 30px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(190,170,140,0.4);
+    position: relative;
+    border-radius: 4px;
+  }
+
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(175,160,130,0.05) 28px,
+      rgba(175,160,130,0.05) 29px
+    );
+    pointer-events: none;
+    border-radius: 4px;
+  }
+
+  .header-icon {
+    text-align: center;
+    font-size: 2rem;
+    color: #7a6b50;
+    margin-bottom: 0.5rem;
+    letter-spacing: 8px;
+  }
+
+  .grimoire-title {
+    font-family: 'IM Fell English', 'Noto Serif SC', serif;
+    font-size: 2.5rem;
+    text-align: center;
+    color: #2a241a;
+    margin-bottom: 0.3rem;
+    font-weight: 400;
+    letter-spacing: 4px;
+  }
+
+  .grimoire-subtitle {
+    text-align: center;
+    font-style: italic;
+    color: #7a6b50;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #c8b898;
+    padding-bottom: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .inscription {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6b5b42;
+    font-style: italic;
+    margin: 0 0 2rem;
+    padding: 1rem;
+    border: 1px solid #c8b898;
+    background: rgba(240,230,208,0.5);
+  }
+
+  .chapter-list {
+    list-style: none;
+    margin: 0 0 2rem;
+  }
+
+  .chapter-item {
+    padding: 0.8rem 0;
+    border-bottom: 1px dotted #d8c8a8;
+    display: flex;
+    gap: 0.8rem;
+    align-items: baseline;
+  }
+
+  .chapter-num {
+    font-family: 'IM Fell English', 'Noto Serif SC', serif;
+    color: #7a6b50;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+
+  .chapter-info {
+    flex: 1;
+  }
+
+  .chapter-name {
+    font-family: 'IM Fell English', 'Noto Serif SC', serif;
+    font-size: 1.1rem;
+    color: #2a241a;
+  }
+
+  .chapter-name a {
+    color: #2a241a;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .chapter-name a:hover {
+    border-bottom: 1px solid #8b7a5a;
+  }
+
+  .chapter-lang {
+    font-size: 0.65rem;
+    color: #8a7a62;
+    margin-left: 0.4rem;
+  }
+
+  .chapter-desc {
+    font-size: 0.85rem;
+    color: #6b5b42;
+    font-style: italic;
+    margin-top: 0.15rem;
+  }
+
+  .chapter-status {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.15rem 0.4rem;
+    border-radius: 2px;
+    margin-left: 0.4rem;
+    white-space: nowrap;
+  }
+
+  .status-draft { background: rgba(200,180,140,0.3); color: #7a6b50; }
+  .status-fair { background: rgba(100,140,100,0.15); color: #4a6a3a; }
+  .status-redrawn { background: rgba(139,90,58,0.15); color: #8b5a3a; }
+  .status-true { background: rgba(74,106,58,0.15); color: #2a5a2a; }
+
+  .filler {
+    color: #9a8a72;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+
+  .colophon {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #7a6b50;
+    font-style: italic;
+    border-top: 1px solid #c8b898;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .colophon strong {
+    font-style: normal;
+    font-family: 'IM Fell English', serif;
+    color: #2a241a;
+  }
+  /* 语言切换——全册一致（浅色羊皮纸版） */
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English','Noto Serif SC',serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(240,230,208,0.95); border: 1px solid #b8a88a; border-radius: 2px; color: #6b5b42; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.18); }
+  .lang-toggle:hover { background: #e8dcc4; color: #2a241a; border-color: #8b7a5a; }
+  .lang-toggle .lt-cur { color: #2a241a; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+</style>
+</head>
+<body>
+
+<a class="lang-toggle" href="index.html?lang=en" onclick="try{localStorage.setItem('lm-lang','en');sessionStorage.setItem('lm-redirected','1');}catch(e){}" aria-label="Switch to English / 切换到英文" title="Switch to English / 切换到英文"><span>EN</span><span class="lt-arrow">⇄</span><span class="lt-cur">中</span></a>
+
+<div class="page">
+  <div class="header-icon">✻ ✦ ✻</div>
+  <div class="grimoire-title">长册博物书</div>
+  <div class="grimoire-subtitle">奥尔德米尔荒野女巫兼地图绘制者 <strong>薇丝珀</strong> 的田野手卷<br>
+    书写 · 绘制 · 采集 · 存疑 · 重绘 · 珍藏</div>
+
+  <div class="inscription">
+    "一处地方，只要被足够仔细地记录下来，就会成真，就会一直存在下去。<br>
+    这本书，就是我来过、我懂了的最好证明。"<br>
+    — <em>自序·论方法</em>
+  </div>
+
+  <ul class="chapter-list">
+
+    <li class="chapter-item">
+      <span class="chapter-num">自序</span>
+      <div class="chapter-info">
+        <div class="chapter-name">论方法与地志之存续</div>
+        <div class="chapter-desc">我为何行走，我如何绘图，以及我为何永不完工。</div>
+      </div>
+      <span class="chapter-status status-true">定稿</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第一章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">炉心林</div>
+        <div class="chapter-desc">我起步的地方。一小片树林，有一条溪流和一株花楸树。地图仍可用，边注已写满。</div>
+      </div>
+      <span class="chapter-status status-fair">尚可</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第二章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">
+          <a href="chapter-ii-cranes-ford-redrawn.html">鹤渡口</a>
+          <a href="chapter-ii-cranes-ford-zh.html"><span class="chapter-lang">中文版</span></a>
+        </div>
+        <div class="chapter-desc">渡口——隐士、潮汐与砾石滩。花月重绘：旧图潮时画错了。</div>
+      </div>
+      <span class="chapter-status status-redrawn">已重绘</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第三章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">灰道</div>
+        <div class="chapter-desc">一条笔直的路，两旁栽满白蜡树，不知通向何方。我喜欢的就是这一点。</div>
+      </div>
+      <span class="chapter-status status-fair">尚可</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第四章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">垂枝林</div>
+        <div class="chapter-desc">毛地黄、铃石楠、一座废弃的隐士小屋。这章的心脉药方需要重新核实；初版画法我已不再满意。</div>
+      </div>
+      <span class="chapter-status status-draft">待重绘</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第五章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">盐沼边缘</div>
+        <div class="chapter-desc">我在这里学会了读潮。草图粗糙，但诚实。</div>
+      </div>
+      <span class="chapter-status status-draft">待重绘</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第六至八章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">东方沼地</div>
+        <div class="chapter-desc">三个短章，一个漫长的雨季。笔记里已合并，也许页面上也该合为一章。</div>
+      </div>
+      <span class="chapter-status status-draft">待整理</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第九章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">盐沼远岸</div>
+        <div class="chapter-desc">潮汐规律、耐盐蕨类、另一种耐心。捕鳗人的咒方在此。</div>
+      </div>
+      <span class="chapter-status status-fair">尚可</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第十章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">鸦崖</div>
+        <div class="chapter-desc">高地。一座石灰岩露头，有渡鸦栖息，可俯瞰整条海岸线。从高处绘图，纠正了前面三章的谬误。</div>
+      </div>
+      <span class="chapter-status status-true">定稿</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第十一至十四章</span>
+      <div class="chapter-info">
+        <div class="chapter-name"><span class="filler">（空白——为内陆预留）</span></div>
+        <div class="chapter-desc">我还没有向内陆走过。海岸总把我唤回来。总有一天。</div>
+      </div>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第十五章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">重返鹤渡口</div>
+        <div class="chapter-desc">故地重游。隐士还记得我。这章主要是谈话记录；制图不多，茶管够。</div>
+      </div>
+      <span class="chapter-status status-fair">尚可</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第十六章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">漂移小径</div>
+        <div class="chapter-desc">悬崖边的一条薄径。与其说是一章，不如说是一段冗长的边注。那里的风会让任何线条走形。</div>
+      </div>
+      <span class="chapter-status status-draft">待重绘</span>
+    </li>
+
+    <li class="chapter-item">
+      <span class="chapter-num">第十七章</span>
+      <div class="chapter-info">
+        <div class="chapter-name">
+          <a href="chapter-north-spit.html">北岬角</a>
+          <a href="chapter-north-spit-zh.html"><span class="chapter-lang">中文版</span></a>
+        </div>
+        <div class="chapter-desc">苔覆海岬、隐泉与地脉交叉口。花月新绘。卷内夹有毛地黄与崖生铁角蕨标本。</div>
+      </div>
+      <span class="chapter-status status-fair">尚可</span>
+    </li>
+
+  </ul>
+
+  <div class="colophon">
+    <strong>长册博物书</strong>随我行走而生长。章节可能增补、重绘或重排——手卷不是纪念碑，而是与大地的一场对话。而我，仍在倾听。<br>
+    <span style="display: inline-block; margin-top: 0.6rem;">✻</span><br>
+    <span style="font-size: 0.7rem;">花月，地脉之年。奥尔德米尔苔覆海岸。</span>
+  </div>
+
+</div>
+
+</body>
+</html>

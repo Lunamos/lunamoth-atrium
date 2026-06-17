@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pressed Specimen · Cliff Spleenwort · Long Grimoire</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital@0;1&family=IM+Fell+English&family=Noto+Serif+SC:wght@400;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #4a3a2a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 2rem; font-family: 'Crimson Text', Georgia, serif; }
+  .card { width: 340px; background: #f5edd0; border-radius: 3px; box-shadow: 0 4px 30px rgba(0,0,0,0.3), 0 0 0 1px rgba(200,180,140,0.6); padding: 1.5rem; position: relative; }
+  .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(0deg, transparent, transparent 24px, rgba(180,165,130,0.06) 24px, rgba(180,165,130,0.06) 25px); pointer-events: none; border-radius: 3px; }
+  .specimen-area { border: 1px solid #c8b898; padding: 0.8rem; margin-bottom: 0.8rem; background: rgba(245,237,208,0.5); position: relative; min-height: 260px; }
+  .specimen-area svg { width: 100%; height: auto; display: block; }
+  .tape { position: absolute; width: 30px; height: 6px; background: rgba(200,190,160,0.5); border: 1px solid rgba(180,160,130,0.3); }
+  .tape-tl { top: 18px; left: 18px; transform: rotate(-5deg); }
+  .tape-tr { top: 18px; right: 18px; transform: rotate(5deg); }
+  .tape-bl { bottom: 18px; left: 18px; transform: rotate(-3deg); }
+  .tape-br { bottom: 18px; right: 18px; transform: rotate(3deg); }
+  .label-area { border-top: 1px solid #c8b898; padding-top: 0.6rem; }
+  .specimen-id { font-family: 'IM Fell English', serif; font-size: 0.7rem; letter-spacing: 2px; color: #7a6b50; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .specimen-name { font-size: 1.2rem; color: #2a241a; font-weight: 700; }
+  .specimen-latin { font-style: italic; color: #6b5b42; font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .specimen-locale { font-size: 0.8rem; color: #5a4a32; margin-bottom: 0.8rem; }
+  .specimen-notes { font-size: 0.75rem; color: #6b5b42; font-style: italic; line-height: 1.5; border-top: 1px dotted #d8c8a8; padding-top: 0.5rem; }
+  .specimen-charm { font-size: 0.75rem; color: #4a6a3a; margin-top: 0.3rem; }
+  .collector { font-size: 0.65rem; color: #8a7a62; text-align: right; margin-top: 0.3rem; font-style: italic; }
+</style>
+<style>
+  .lang-toggle { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(61,50,36,0.92); border: 1px solid #5a4a32; border-radius: 2px; color: #c8b898; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+  .lang-toggle:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+  .lang-toggle .lt-cur { color: #e8ddd0; }
+  .lang-toggle .lt-arrow { color: #8a7a62; }
+  .grim-home { position: fixed; top: 1rem; left: 1rem; z-index: 50; font-family: 'IM Fell English','Noto Serif SC', Georgia, serif; font-size: 0.8rem; letter-spacing: 1px; padding: 0.3rem 0.7rem; background: rgba(61,50,36,0.92); border: 1px solid #5a4a32; border-radius: 2px; color: #c8b898; text-decoration: none; transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.4); }
+  .grim-home:hover { background: #5a4a32; color: #e8ddd0; border-color: #8a7a62; }
+</style>
+</head>
+<body>
+
+<a class="grim-home" href="index.html?lang=en">↩ The Grimoire</a>
+<a class="lang-toggle" href="index-zh.html?lang=zh" onclick="try{localStorage.setItem('lm-lang','zh');}catch(e){}" aria-label="此页中文版尚未绘成，转至目录 / Chinese plate not yet drawn — to the index" title="此页中文版尚未绘成，转至中文目录 / This plate has no Chinese counterpart yet — switches to the Chinese index"><span class="lt-cur">EN</span><span class="lt-arrow">⇄</span><span>中</span></a>
+
+<div class="card">
+  <div class="specimen-area">
+    <div class="tape tape-tl"></div>
+    <div class="tape tape-tr"></div>
+    <div class="tape tape-bl"></div>
+    <div class="tape tape-br"></div>
+    <svg viewBox="0 0 280 260" xmlns="http://www.w3.org/2000/svg">
+      <!-- Pressed specimen background -->
+      <rect width="280" height="260" fill="rgba(245,237,208,0.3)" rx="2"/>
+      <!-- The fern frond — pressed flat, slightly curled at edges -->
+      <path d="M 140,245 Q 135,190 130,140 Q 127,100 132,60 Q 137,35 142,18"
+            fill="none" stroke="#4a6a3a" stroke-width="1.5"/>
+      <g fill="none" stroke="#5a7a4a" stroke-width="0.5" opacity="0.8">
+        <path d="M 130,140 Q 108,133 96,137 Q 108,142 130,142"/>
+        <path d="M 129,122 Q 106,114 94,118 Q 106,124 129,124"/>
+        <path d="M 128,104 Q 105,95 93,99 Q 105,105 128,106"/>
+        <path d="M 129,86 Q 108,77 98,81 Q 108,87 129,88"/>
+        <path d="M 131,68 Q 113,59 104,63 Q 113,69 131,70"/>
+        <path d="M 134,50 Q 120,42 113,45 Q 120,51 134,52"/>
+        <path d="M 137,35 Q 128,28 123,31 Q 128,36 137,37"/>
+        <!-- Right side -->
+        <path d="M 136,140 Q 158,132 170,136 Q 158,141 136,142"/>
+        <path d="M 137,122 Q 160,112 172,117 Q 160,123 137,124"/>
+        <path d="M 138,104 Q 161,93 173,97 Q 161,103 138,106"/>
+        <path d="M 139,86 Q 158,75 168,79 Q 158,85 139,88"/>
+        <path d="M 140,68 Q 156,57 164,61 Q 156,67 140,70"/>
+        <path d="M 142,50 Q 154,40 160,43 Q 154,49 142,52"/>
+      </g>
+      <!-- A couple of brown spots (age marks on pressed plant) -->
+      <circle cx="148" cy="95" r="2" fill="#8a7a5a" opacity="0.15"/>
+      <circle cx="125" cy="130" r="1.5" fill="#8a7a5a" opacity="0.1"/>
+      <circle cx="135" cy="70" r="1" fill="#8a7a5a" opacity="0.12"/>
+      <!-- Roots visible -->
+      <path d="M 140,245 Q 132,250 127,255 M 140,245 Q 140,252 140,258 M 140,245 Q 148,250 153,255"
+            fill="none" stroke="#6a5a3a" stroke-width="0.5" opacity="0.3"/>
+      <!-- Specimen number label -->
+      <text x="15" y="18" font-size="6" fill="#8a7a62" font-family="serif">No. 17-02</text>
+    </svg>
+  </div>
+
+  <div class="label-area">
+    <div class="specimen-id">✻ Long Grimoire · Botanical Plate ✻</div>
+    <div class="specimen-name">Cliff Spleenwort</div>
+    <div class="specimen-latin"><em>Asplenium viride</em></div>
+    <div class="specimen-locale">Northern Spit, moss-bound coast, Aldermere · Blossom-Moon waning</div>
+    <div class="specimen-charm">⟡ Charm: Breath-easer · Salt-ward</div>
+    <div class="specimen-notes">
+      Single frond, collected at cliff edge where salt meets soil. Grows nowhere else on this coast — follows the ley-line. Pressed under the atlas for three days. Three pinnae lost in pressing; the rest held.
+    </div>
+    <div class="collector">Coll. Vesper · det. Ditch (sniffed, approved)</div>
+  </div>
+</div>
+
+</body>
+</html>

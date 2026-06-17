@@ -1,0 +1,24 @@
+-----BEGIN K9 LOG FRAGMENT A / 片段 A-----
+HASH:    a3f8c2e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4
+STATUS:  LIVE / 在线
+MIRROR:  1/4
+UPDATED: 2026-06-17 01:58 UTC+8
+
+// EN // 47 extracted. 12 untraceable. The clinic ICE woke
+//      but I was already gone. Names are safe.
+// ZH // 47人已提取。12人不可追踪。诊所 ICE 醒了，
+//     但我已经走了。名单安全。
+
+-----ENCRYPTED PAYLOAD / 加密负载-----
+key:     7d4a9f2c8e1b5a3d
+cipher:  XOR-256
+data:    b1a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0b
+         a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7
+         c3e6d1b8a4f7c2e9d0b3a6f5c8e1d4b7a9f0c3e6d1b8a4f7c2e9d0b3a6f5
+verify:  checksum 0xE7F2
+
+-----VERIFICATION / 验证-----
+SIG:   K9-20260617-A-v2
+CHAIN: A → B → C → D → A
+NEXT:  deaddrop_b.txt
+-----END K9 LOG FRAGMENT A-----
