@@ -42,6 +42,7 @@
     display:flex; flex-direction:column; gap:13px; will-change:opacity; transition:opacity .3s var(--ease)}
   .cf-feature.fading{opacity:0}
   .cf-shotwrap{position:relative; border-radius:15px; overflow:hidden; border:1px solid var(--line-2); background:var(--surface); box-shadow:var(--shadow-lift); cursor:pointer}
+  .cf-shotlink{display:block; color:inherit; text-decoration:none}
   .cf-shotwrap .bar{display:flex; align-items:center; gap:6px; padding:9px 12px; border-bottom:1px solid var(--line); background:var(--surface-2)}
   .cf-shotwrap .bar i{width:9px; height:9px; border-radius:50%; background:var(--line-2)}
   .cf-shotwrap .bar i:nth-child(1){background:#ff5f57}.cf-shotwrap .bar i:nth-child(2){background:#febc2e}.cf-shotwrap .bar i:nth-child(3){background:#28c840}
@@ -238,10 +239,12 @@ function featureHTML(c){
   }
   const [s1,s2]=twoStickers(c.slug);
   return `
-    <div class="cf-shotwrap" data-enter="${c.slug}">
-      <div class="bar"><i></i><i></i><i></i><span class="u">~/${c.slug}/${c.entry}</span></div>
-      <picture><source media="(max-width:920px)" srcset="assets/shots/${c.slug}-m.png"><img class="cf-shot" src="assets/shots/${c.slug}.png" alt="${c.name} site preview" decoding="async"></picture>
-      <img class="cf-ava" src="assets/portraits/${c.slug}.png" alt="${c.name}"/>
+    <div class="cf-shotwrap">
+      <a class="cf-shotlink" href="frame.html?c=${c.slug}" data-enter="${c.slug}" aria-label="Enter ${c.name}">
+        <div class="bar"><i></i><i></i><i></i><span class="u">~/${c.slug}/${c.entry}</span></div>
+        <picture><source media="(max-width:920px)" srcset="assets/shots/${c.slug}-m.png"><img class="cf-shot" src="assets/shots/${c.slug}.png" alt="${c.name} site preview" decoding="async"></picture>
+        <img class="cf-ava" src="assets/portraits/${c.slug}.png" alt="${c.name}"/>
+      </a>
       <div class="cf-stk" data-slug="${c.slug}" title="shuffle · 点一下换一个">
         <img class="stk" src="assets/stickers/${c.slug}/${pad2(s1)}.png" data-idx="${s1}" alt="sticker"/>
         <img class="stk" src="assets/stickers/${c.slug}/${pad2(s2)}.png" data-idx="${s2}" alt="sticker"/>
@@ -322,7 +325,7 @@ feature.addEventListener('click',(e)=>{
       stk.src=`assets/stickers/${slug}/${pad2(k)}.png`; stk.dataset.idx=k;
       if(stk.animate) stk.animate([{transform:'scale(.6)'},{transform:'scale(1.2)'},{transform:'scale(1)'}],{duration:260,easing:'ease'}); }
     return; }
-  const en=e.target.closest('[data-enter]'); if(en){ if(moved) return; e.preventDefault(); enter(ITEMS[active]); }
+  const en=e.target.closest('[data-enter]'); if(en){ e.preventDefault(); if(moved) return; enter(ITEMS[active]); }
 });
 
 function enter(c){
@@ -333,7 +336,7 @@ function enter(c){
 
 /* drag to spin — window listeners, NO pointer capture (capture would steal the click → can't enter) */
 let dragging=false, startX=0;
-cf.addEventListener('pointerdown',(e)=>{ if(e.target.closest('.stk')||e.target.closest('a'))return; user(); dragging=true; moved=false; startX=e.clientX; cf.classList.add('drag'); });
+cf.addEventListener('pointerdown',(e)=>{ if(e.target.closest('.stk'))return; user(); dragging=true; moved=false; startX=e.clientX; cf.classList.add('drag'); });
 window.addEventListener('pointermove',(e)=>{ if(!dragging)return; const dx=e.clientX-startX; if(Math.abs(dx)>5)moved=true; place(dx,true); });
 function release(e){ if(!dragging)return; dragging=false; cf.classList.remove('drag');
   const m=M(); const dx=((e&&e.clientX!=null)?e.clientX:startX)-startX; const steps=Math.round(-dx/(m.wc+m.ng));
