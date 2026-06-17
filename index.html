@@ -32,6 +32,7 @@
     transform-origin:bottom center; transform:translateX(-9999px) scale(.8); opacity:0;
     transition:transform .6s var(--ease), opacity .5s var(--ease); will-change:transform,opacity; cursor:pointer}
   .cf-fig img{height:300px; width:auto; object-fit:contain; filter:grayscale(.42) drop-shadow(0 14px 16px rgba(20,22,46,.18)); transition:filter .5s var(--ease)}
+  .cf-fig picture, .cf-shotwrap picture{display:contents}
   .cf-fig.active{z-index:5}
   .cf-fig.active img{filter:drop-shadow(0 24px 28px rgba(20,22,46,.3))}
   .cf-fig .silh{width:172px; height:300px; border:2px dashed var(--line-2); border-radius:84px 84px 26px 26px; display:grid; place-items:center;
@@ -98,12 +99,21 @@
   @keyframes flit{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-12px) rotate(6deg)}}
 
   @media(max-width:920px){
-    .cf{--panelw:360px; --wc:150px; height:600px}
-    .cf-fig img{height:240px}
-    .cf-shot{height:206px}
-    .cf-stk .stk{width:48px; height:50px}
+    .cf{--panelw:340px; --wc:140px; --fgap:14px; --ngap:14px; height:560px}
+    .cf-fig img{height:230px}
+    .cf-shot{height:196px}
+    .cf-stk .stk{width:46px; height:48px}
   }
-  @media(max-width:560px){ .hero{padding:50px 0 6px} .cf{--panelw:280px; --wc:120px} }
+  @media(max-width:620px){
+    .hero{padding:50px 0 6px}
+    .cf{--panelw:228px; --wc:96px; --fgap:8px; --ngap:8px; height:536px}
+    .cf-fig img{height:172px}
+    .cf-shot{height:150px}
+    .cf-ava{width:42px; height:42px; left:10px; bottom:10px}
+    .cf-stk{top:28px; right:8px} .cf-stk .stk{width:38px; height:40px}
+    .cf-info .nm{font-size:1.3rem} .cf-tag{font-size:.92rem}
+    .cf-cta{flex-wrap:wrap}
+  }
 </style>
 </head>
 <body>
@@ -212,7 +222,7 @@ ITEMS.forEach((c,i)=>{
   el.dataset.i=i;
   el.innerHTML = c.ghost
     ? `<div class="silh"><span>?</span></div>`
-    : `<img src="assets/sprites/${c.slug}.png" alt="${c.name}" decoding="async"/>`;
+    : `<picture><source media="(max-width:920px)" srcset="assets/sprites/${c.slug}-m.png"><img src="assets/sprites/${c.slug}.png" alt="${c.name}" decoding="async"></picture>`;
   figsWrap.appendChild(el);
 });
 const figEls=[...figsWrap.children];
@@ -230,7 +240,7 @@ function featureHTML(c){
   return `
     <div class="cf-shotwrap" data-enter="${c.slug}">
       <div class="bar"><i></i><i></i><i></i><span class="u">~/${c.slug}/${c.entry}</span></div>
-      <img class="cf-shot" src="assets/shots/${c.slug}.png" alt="${c.name} site preview" decoding="async"/>
+      <picture><source media="(max-width:920px)" srcset="assets/shots/${c.slug}-m.png"><img class="cf-shot" src="assets/shots/${c.slug}.png" alt="${c.name} site preview" decoding="async"></picture>
       <img class="cf-ava" src="assets/portraits/${c.slug}.png" alt="${c.name}"/>
       <div class="cf-stk" data-slug="${c.slug}" title="shuffle · 点一下换一个">
         <img class="stk" src="assets/stickers/${c.slug}/${pad2(s1)}.png" data-idx="${s1}" alt="sticker"/>
