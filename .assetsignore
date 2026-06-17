@@ -1,0 +1,10 @@
+# Files Cloudflare (Wrangler static assets) must NOT upload.
+# Same syntax as .gitignore. Keeps the .git packfile (>25 MiB) out of the deploy.
+.git/
+.github/
+.gitignore
+.assetsignore
+/README.md
+*.log
+.wrangler/
+node_modules/
