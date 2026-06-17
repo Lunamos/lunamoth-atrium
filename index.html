@@ -233,7 +233,7 @@ function featureHTML(c){
     return `<div class="cf-ghost-panel">
       <div class="cf-info"><div class="nm">${L('Your OC','你的角色')}</div></div>
       <p class="cf-tag">${L(c.tag_en,c.tag_zh)}</p>
-      <div class="cf-cta"><a class="btn btn-primary" href="#any">${L('How a character moves in','角色如何住进来')} <span class="arr">→</span></a></div>
+      <div class="cf-cta"><a class="btn btn-primary" href="https://github.com/Lunamos/LunaMoth" target="_blank" rel="noopener">${L('How a character moves in','角色如何住进来')} <span class="arr">→</span></a></div>
     </div>`;
   }
   const [s1,s2]=twoStickers(c.slug);
@@ -251,7 +251,7 @@ function featureHTML(c){
       <span class="live"><span class="d"></span>${L('living','在线生活')}</span></div>
     <div class="cf-tag">${L(c.tag_en,c.tag_zh)}</div>
     <div class="cf-cta">
-      <button class="btn btn-primary" data-enter="${c.slug}">${L('Enter '+c.name+'’s world','进入 '+c.name+' 的世界')} <span class="arr">→</span></button>
+      <a class="btn btn-primary" href="frame.html?c=${c.slug}" data-enter="${c.slug}">${L('Enter '+c.name+'’s world','进入 '+c.name+' 的世界')} <span class="arr">→</span></a>
       <span class="chip brand">${L(c.kind_en,c.kind_zh)}</span>
     </div>`;
 }
@@ -312,34 +312,34 @@ figsWrap.addEventListener('click',(e)=>{
   if(dist(i)!==0){ setActive(i); } else { enter(ITEMS[i]); }
 });
 
-/* feature: stickers shuffle (non-duplicate); anything else with data-enter → enter */
+/* feature: stickers shuffle (non-duplicate); the Enter link / preview → enter */
 feature.addEventListener('click',(e)=>{
   const stk=e.target.closest('.stk');
-  if(stk){ e.stopPropagation();
+  if(stk){ e.stopPropagation(); if(moved) return;
     const wrap=stk.closest('.cf-stk'); const slug=wrap.dataset.slug; const n=STK[slug]||1;
     const taken=new Set([...wrap.querySelectorAll('.stk')].map(x=>+x.dataset.idx));
     if(n>taken.size){ let k=rnd(n),g=0; while(taken.has(k)&&g++<40)k=rnd(n);
       stk.src=`assets/stickers/${slug}/${pad2(k)}.png`; stk.dataset.idx=k;
       if(stk.animate) stk.animate([{transform:'scale(.6)'},{transform:'scale(1.2)'},{transform:'scale(1)'}],{duration:260,easing:'ease'}); }
     return; }
-  if(e.target.closest('[data-enter]')) enter(ITEMS[active]);
+  const en=e.target.closest('[data-enter]'); if(en){ if(moved) return; e.preventDefault(); enter(ITEMS[active]); }
 });
 
 function enter(c){
-  if(c.ghost){ document.getElementById('any').scrollIntoView({behavior:'smooth'}); return; }
+  if(!c || c.ghost) return;        // the open seat's CTA is a plain GitHub link
   const ov=document.getElementById('leaving'); ov.classList.add('on');
   setTimeout(()=>{ location.href='frame.html?c='+encodeURIComponent(c.slug); }, 460);
 }
 
-/* drag to spin (figs + panel follow the finger; transform only) */
+/* drag to spin — window listeners, NO pointer capture (capture would steal the click → can't enter) */
 let dragging=false, startX=0;
-cf.addEventListener('pointerdown',(e)=>{ if(e.target.closest('.stk'))return; user(); dragging=true; moved=false; startX=e.clientX; cf.classList.add('drag'); cf.setPointerCapture(e.pointerId); });
-cf.addEventListener('pointermove',(e)=>{ if(!dragging)return; const dx=e.clientX-startX; if(Math.abs(dx)>5)moved=true; place(dx,true); });
+cf.addEventListener('pointerdown',(e)=>{ if(e.target.closest('.stk')||e.target.closest('a'))return; user(); dragging=true; moved=false; startX=e.clientX; cf.classList.add('drag'); });
+window.addEventListener('pointermove',(e)=>{ if(!dragging)return; const dx=e.clientX-startX; if(Math.abs(dx)>5)moved=true; place(dx,true); });
 function release(e){ if(!dragging)return; dragging=false; cf.classList.remove('drag');
   const m=M(); const dx=((e&&e.clientX!=null)?e.clientX:startX)-startX; const steps=Math.round(-dx/(m.wc+m.ng));
   setActive(active+steps); }
-cf.addEventListener('pointerup',release);
-cf.addEventListener('pointercancel',release);
+window.addEventListener('pointerup',release);
+window.addEventListener('pointercancel',release);
 
 /* auto-rotate forever, after a long rest */
 let idleT=null, autoT=null; const REST=18000, STEP_MS=4600;
