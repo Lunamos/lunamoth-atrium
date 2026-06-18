@@ -6,6 +6,24 @@
 <title>LunaMoth — a character's creation</title>
 <link rel="icon" href="assets/moth.svg" />
 <link rel="stylesheet" href="assets/style.css" />
+<script>
+/* The rail sprite is the LCP element but it's injected by JS later, so the
+   preload scanner can't find it until charas.js runs. Preload it here, as
+   early as possible, picking the same size the <picture> below will choose
+   (≤920px → -m) so there's never a double download. */
+(function(){
+  try{
+    var s=new URLSearchParams(location.search).get('c');
+    if(!s||!/^[a-z0-9-]+$/.test(s)) return;
+    var small=window.matchMedia('(max-width:920px)').matches;
+    var l=document.createElement('link');
+    l.rel='preload'; l.as='image';
+    l.href='assets/sprites/'+s+(small?'-m':'')+'.png';
+    l.setAttribute('fetchpriority','high');
+    document.head.appendChild(l);
+  }catch(e){}
+})();
+</script>
 <style>
   body{height:100vh; overflow:hidden}
   .frame-top{position:relative; z-index:40}
@@ -40,6 +58,7 @@
   .spritebox .halo{position:absolute; width:280px; height:280px; border-radius:50%;
     background:radial-gradient(circle, color-mix(in srgb,var(--c) 38%, transparent) 0%, transparent 64%); filter:blur(10px)}
   .spritebox img{position:relative; height:300px; width:auto; filter:drop-shadow(0 24px 28px rgba(20,22,46,.26))}
+  .spritebox picture{display:contents}
 
   .means .h{font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--c,var(--brand)); margin:12px 0 9px}
   .means .b{color:var(--ink-soft); font-size:.93rem; line-height:1.62}
@@ -181,7 +200,7 @@ function build(){
       </div>
     </div>
     <p class="tagi">${L(c.tag_en,c.tag_zh)}</p>
-    <div class="spritebox"><div class="halo"></div><img src="assets/sprites/${c.slug}.png" alt="${c.name}"/></div>
+    <div class="spritebox"><div class="halo"></div><picture><source media="(max-width:920px)" srcset="assets/sprites/${c.slug}-m.png"><img src="assets/sprites/${c.slug}.png" alt="${c.name}" width="512" height="1200" fetchpriority="high" decoding="async"/></picture></div>
     <div class="means">
       <div class="h">${L('what this place is to them','这个地方，对它意味着')}</div>
       <div class="b">${L(c.mean_en,c.mean_zh)}</div>
