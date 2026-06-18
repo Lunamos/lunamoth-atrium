@@ -76,6 +76,13 @@
     .viewer{height:auto; padding:16px}
     .browser{height:78vh}
   }
+  /* narrow phones: the header row was overflowing (label + back text + toggles too wide) */
+  @media(max-width:600px){
+    .frame-top .row{padding:10px 12px; gap:8px}
+    .charlabel{display:none}
+    .back .en-only,.back .zh-only{display:none !important}
+    .back{padding:9px 12px}
+  }
 </style>
 </head>
 <body>
