@@ -191,6 +191,8 @@ function build(){
 function leave(e){ e.preventDefault(); const lo=document.getElementById('layout'); lo.classList.remove('in');
   setTimeout(()=>location.href='index.html',360); }
 document.addEventListener('click',(e)=>{ const b=e.target.closest('#back,#back2'); if(b) leave(e); });
+/* browser Forward restores this page from the bfcache mid-leave (layout faded out) — re-reveal it */
+window.addEventListener('pageshow',(e)=>{ if(e.persisted) document.getElementById('layout').classList.add('in'); });
 
 /* toggles */
 const langBtn=document.getElementById('lang');

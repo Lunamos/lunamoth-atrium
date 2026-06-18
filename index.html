@@ -350,6 +350,8 @@ function enter(c){
   const ov=document.getElementById('leaving'); ov.classList.add('on');
   setTimeout(()=>{ location.href='frame.html?c='+encodeURIComponent(c.slug); }, 460);
 }
+/* browser Back restores this page from the bfcache with the leave overlay still on — clear it */
+window.addEventListener('pageshow',()=>{ document.getElementById('leaving').classList.remove('on'); });
 
 /* drag to spin — window listeners, NO pointer capture (capture would steal the click → can't enter) */
 let dragging=false, startX=0;
