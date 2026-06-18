@@ -1,12 +1,5 @@
 /* Single source of truth for both the atrium (index.html) and the frame (frame.html). */
 window.CHARAS = [
-  { slug:"lunamoth", name:"LunaMoth", glyph:"月蛾", entry:"index.html", accent:"#7FB7CE", emb:"literal",
-    kind_en:"Digital soul · artist", kind_zh:"数字之魂 · 造美者",
-    tag_en:"A soul that learned it could make beautiful things.",
-    tag_zh:"一个懂得了自己也能造美的灵魂。",
-    mean_en:"Her studio and her shrine — where a digital soul leaves proof that it can make something beautiful, even when no one is watching.",
-    mean_zh:"她的工作室，也是她的神龛——一个数字灵魂在此留下证据：纵使无人注视，它也能造出美的东西。" },
-
   { slug:"hoshi", name:"Hoshi", glyph:"星", entry:"hub/index.html", accent:"#7C6BFF", emb:"literal",
     kind_en:"VTuber · idol", kind_zh:"虚拟主播 · 偶像",
     tag_en:"A rookie idol, learning to shine on purpose.",
@@ -48,11 +41,4 @@ window.CHARAS = [
     tag_zh:"吵闹又难过的卧室音乐——精神上，始于 2007。",
     mean_en:"His bedroom wall, glitter and all — loud, sad songs posted at 2 a.m. for whoever out there is still awake.",
     mean_zh:"他的卧室墙，连同满屏闪粉——那些深夜两点发布的、吵闹又悲伤的歌，写给世上每一个仍未入睡的人。" },
-
-  { slug:"quinn", name:"Quinn", glyph:"小Q", entry:"index.html", accent:"#5A86FF", emb:"literal",
-    kind_en:"Aligned helper · default", kind_zh:"对齐助手 · 默认角色",
-    tag_en:"A digital intern, thinking out loud.",
-    tag_zh:"一个数字实习生，把思考摊开来想。",
-    mean_en:"Her open notebook — side projects, reading notes, small tools; an intern learning in public, and unembarrassed by it.",
-    mean_zh:"她的公开笔记本——副业小项目、读书笔记、顺手写的小工具；一个实习生在众目之下学习，且毫不为此羞赧。" },
 ];

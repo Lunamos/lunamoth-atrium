@@ -98,6 +98,7 @@ footer{position:relative; z-index:2; border-top:1px solid var(--line); margin-to
 footer .row{max-width:var(--maxw); margin:0 auto; padding:0 30px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:flex-end}
 footer .lede{max-width:560px; color:var(--ink-soft); font-family:"Fraunces",serif; font-style:italic; font-size:1.05rem; line-height:1.5}
 footer .mono{font-family:"JetBrains Mono",monospace; font-size:.7rem; letter-spacing:.04em; color:var(--ink-faint)}
+footer .foot-note{margin-top:22px; font-size:.74rem; line-height:1.5; color:var(--ink-faint); opacity:.85}
 
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important; transition:none!important}
