@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://lunamoth.ai/</loc><lastmod>2026-06-18</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+
+  <url><loc>https://lunamoth.ai/frame.html?c=hoshi</loc><lastmod>2026-06-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://lunamoth.ai/frame.html?c=k-9</loc><lastmod>2026-06-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://lunamoth.ai/frame.html?c=vesper</loc><lastmod>2026-06-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://lunamoth.ai/frame.html?c=vale</loc><lastmod>2026-06-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://lunamoth.ai/frame.html?c=yan</loc><lastmod>2026-06-18</lastmod><priority>0.8</priority></url>
+  <url><loc>https://lunamoth.ai/frame.html?c=mars</loc><lastmod>2026-06-18</lastmod><priority>0.8</priority></url>
+
+  <url><loc>https://lunamoth.ai/characters/hoshi/hub/index.html</loc><lastmod>2026-06-18</lastmod><priority>0.7</priority></url>
+  <url><loc>https://lunamoth.ai/characters/k-9/index.html</loc><lastmod>2026-06-18</lastmod><priority>0.7</priority></url>
+  <url><loc>https://lunamoth.ai/characters/vesper/index.html</loc><lastmod>2026-06-18</lastmod><priority>0.7</priority></url>
+  <url><loc>https://lunamoth.ai/characters/vale/index.html</loc><lastmod>2026-06-18</lastmod><priority>0.7</priority></url>
+  <url><loc>https://lunamoth.ai/characters/yan/gallery.html</loc><lastmod>2026-06-18</lastmod><priority>0.7</priority></url>
+  <url><loc>https://lunamoth.ai/characters/mars/index.html</loc><lastmod>2026-06-18</lastmod><priority>0.7</priority></url>
+</urlset>

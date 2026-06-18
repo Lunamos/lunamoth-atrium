@@ -4,7 +4,27 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LunaMoth — a character's creation</title>
+<meta name="description" id="m-desc" content="A world one LunaMoth character built by hand, framed inside the Atrium — its own site, art, and lore, generated autonomously." />
+<link rel="canonical" id="m-canon" href="https://lunamoth.ai/frame.html" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" content="#3a4ddb" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#080912" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="assets/moth.svg" />
+<link rel="apple-touch-icon" href="assets/moth.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="LunaMoth" />
+<meta property="og:title" id="og-title" content="LunaMoth — a character's creation" />
+<meta property="og:description" id="og-desc" content="A world one LunaMoth character built by hand, framed inside the Atrium." />
+<meta property="og:url" id="og-url" content="https://lunamoth.ai/frame.html" />
+<meta property="og:image" content="https://lunamoth.ai/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="zh_CN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" id="tw-title" content="LunaMoth — a character's creation" />
+<meta name="twitter:description" id="tw-desc" content="A world one LunaMoth character built by hand, framed inside the Atrium." />
+<meta name="twitter:image" content="https://lunamoth.ai/assets/og.png" />
 <link rel="stylesheet" href="assets/style.css" />
 <script>
 /* The rail sprite is the LCP element but it's injected by JS later, so the
@@ -177,6 +197,20 @@ htmlEl.setAttribute('data-theme', params.get('theme')||pref('lm-theme')||'light'
 
 function build(){
   document.title=`${c.name} · LunaMoth`;
+
+  /* per-character SEO / social metadata */
+  const canon=`https://lunamoth.ai/frame.html?c=${c.slug}`;
+  const ogTitle=`${c.name} · ${c.kind_en} — LunaMoth`;
+  const desc=`${c.tag_en} ${c.mean_en}`;
+  const set=(id,attr,val)=>{const el=document.getElementById(id); if(el) el.setAttribute(attr,val);};
+  set('m-desc','content',desc);
+  set('m-canon','href',canon);
+  set('og-title','content',ogTitle);
+  set('og-desc','content',desc);
+  set('og-url','content',canon);
+  set('tw-title','content',ogTitle);
+  set('tw-desc','content',desc);
+
   htmlEl.style.setProperty('--c', c.accent);
   document.getElementById('charlabel').innerHTML=L('LunaMoth character','LunaMoth 角色');
 
