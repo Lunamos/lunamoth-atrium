@@ -63,19 +63,90 @@
 </script>
 <link rel="stylesheet" href="assets/style.css" />
 <style>
+  /* ---------- scroll progress ---------- */
+  .scroll-prog{position:fixed; top:0; left:0; right:0; height:2px; z-index:60; pointer-events:none}
+  .scroll-prog i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--moon),var(--brand)); box-shadow:0 0 12px var(--brand)}
+
+  /* ---------- reveal engine ---------- */
+  [data-reveal]{opacity:0; transform:translateY(42px); filter:blur(7px);
+    transition:opacity .95s var(--ease) var(--d,0s), transform .95s var(--ease) var(--d,0s), filter .95s var(--ease) var(--d,0s); will-change:opacity,transform}
+  [data-reveal="left"]{transform:translateX(-48px)}
+  [data-reveal="right"]{transform:translateX(48px)}
+  [data-reveal="scale"]{transform:scale(.94); filter:blur(4px)}
+  [data-reveal].in{opacity:1; transform:none; filter:none}
+  @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1; transform:none; filter:none; transition:none}}
+
   /* ---------- hero ---------- */
-  .hero{position:relative; z-index:2; text-align:center; padding:74px 0 10px}
-  .kicker{font-family:"JetBrains Mono",monospace; font-size:.74rem; letter-spacing:.4em; text-transform:uppercase;
-    color:var(--ink-faint); margin-bottom:24px}
-  .wordmark{font-family:"Fraunces",serif; font-weight:600; font-optical-sizing:auto; line-height:.9;
-    font-size:clamp(3.6rem,13vw,9.5rem); letter-spacing:-.035em; margin:0; color:var(--brand);
-    background:linear-gradient(180deg, var(--brand) 0%, color-mix(in srgb,var(--brand) 78%, #6a3fd0) 100%);
+  .hero{position:relative; z-index:2; min-height:100svh; display:grid; place-items:center; text-align:center; padding:96px 0 56px; overflow:hidden}
+  .hero-mothwrap{position:absolute; inset:0; display:grid; place-items:center; z-index:0; pointer-events:none}
+  .hero-moth{width:min(116vh,1060px); height:auto; color:var(--brand); opacity:.055}
+  html[data-theme="dark"] .hero-moth{opacity:.10}
+  .hero-inner{position:relative; z-index:2}
+  .kicker{font-family:"JetBrains Mono",monospace; font-size:.74rem; letter-spacing:.4em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:26px}
+  .wordmark{font-family:"Fraunces",serif; font-weight:600; font-optical-sizing:auto; line-height:.86;
+    font-size:clamp(4rem,15vw,11rem); letter-spacing:-.04em; margin:0; color:var(--brand);
+    background:linear-gradient(178deg, var(--brand) 0%, color-mix(in srgb,var(--brand) 72%, #7a3fd0) 100%);
     -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-    text-shadow:0 24px 60px color-mix(in srgb,var(--brand) 22%, transparent)}
-  .tagline{font-family:"Fraunces",serif; font-weight:400; font-style:italic; font-size:clamp(1.3rem,3.4vw,2.1rem);
-    margin:18px 0 0; letter-spacing:-.01em; color:var(--ink)}
-  .lede{max-width:660px; margin:22px auto 0; color:var(--ink-soft); font-size:clamp(1rem,1.6vw,1.12rem); line-height:1.62}
-  .lede .turn{color:var(--ink); font-weight:500}
+    text-shadow:0 30px 80px color-mix(in srgb,var(--brand) 24%, transparent)}
+  .tagline{font-family:"Fraunces",serif; font-weight:400; font-style:italic; font-size:clamp(1.4rem,3.6vw,2.3rem);
+    margin:22px auto 0; max-width:18ch; letter-spacing:-.01em; color:var(--ink); line-height:1.18}
+  .hero-second{font-family:"Fraunces",serif; font-style:italic; color:var(--ink-soft); font-size:clamp(1rem,2vw,1.2rem); margin:12px 0 0}
+  .hero-cta{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin:34px 0 0}
+  .oneliner{display:flex; align-items:center; gap:11px; max-width:580px; margin:22px auto 0;
+    font-family:"JetBrains Mono",monospace; font-size:.78rem; background:color-mix(in srgb,var(--surface) 78%, transparent); color:var(--ink-soft);
+    border:1px solid var(--line-2); border-radius:12px; padding:11px 13px; box-shadow:var(--shadow-card); backdrop-filter:blur(8px)}
+  .oneliner .dollar{color:var(--brand); user-select:none}
+  .oneliner code{flex:1; min-width:0; color:var(--ink); text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .oneliner .copy{cursor:pointer; flex:0 0 auto; border:1px solid var(--line-2); background:var(--surface-2); color:var(--ink-soft); border-radius:7px; padding:5px 10px; font-family:inherit; font-size:.66rem; transition:.2s var(--ease)}
+  .oneliner .copy:hover{color:var(--brand); border-color:var(--brand)}
+  .scrolldown{position:absolute; bottom:28px; left:50%; transform:translateX(-50%); z-index:3; display:flex; flex-direction:column; align-items:center; gap:9px;
+    font-family:"JetBrains Mono",monospace; font-size:.58rem; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-faint)}
+  .scrolldown i{width:1px; height:36px; background:linear-gradient(var(--ink-faint),transparent); position:relative; overflow:hidden}
+  .scrolldown i::after{content:""; position:absolute; top:-12px; left:0; width:1px; height:12px; background:var(--brand); animation:sd 1.9s var(--ease) infinite}
+  @keyframes sd{0%{top:-12px}60%,100%{top:36px}}
+
+  /* ---------- chapters ---------- */
+  .chapter{position:relative; z-index:2; padding:12vh 0; min-height:62vh; display:flex; align-items:center}
+  .chapter-residents,.chapter-how{display:block; min-height:auto; padding:9vh 0}
+  .ch-no{position:absolute; top:7%; left:1%; z-index:0; font-family:"Fraunces",serif; font-weight:600; line-height:.8;
+    font-size:clamp(7rem,24vw,20rem); letter-spacing:-.04em; color:var(--brand); opacity:.06; pointer-events:none; user-select:none}
+  html[data-theme="dark"] .ch-no{opacity:.085}
+  .ch-split{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(40px,6vw,84px); align-items:center}
+  .ch-split-rev .ch-visual{order:-1}
+  .ch-ey{font-family:"JetBrains Mono",monospace; font-size:.72rem; letter-spacing:.3em; text-transform:uppercase; color:var(--brand); margin-bottom:20px}
+  .ch-h{font-family:"Fraunces",serif; font-weight:400; font-size:clamp(2.2rem,6.2vw,4.6rem); line-height:1.03; letter-spacing:-.03em; margin:0; max-width:15ch}
+  .ch-h-center{margin-inline:auto}
+  .ch-lede{font-size:clamp(1.05rem,1.9vw,1.35rem); color:var(--ink-soft); line-height:1.6; max-width:34ch; margin-top:24px}
+  .ch-lede-center{margin-inline:auto; max-width:56ch; text-align:center}
+  .ch-head-center{text-align:center; max-width:800px; margin:0 auto}
+  .ch-meta{font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--ink-faint); margin-top:26px; letter-spacing:.02em; line-height:1.9}
+  .ch-meta code{color:var(--brand); background:var(--brand-wash); padding:2px 7px; border-radius:6px}
+
+  /* chapter visuals */
+  .ch-visual{position:relative}
+  .livecard{background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-lg); box-shadow:var(--shadow-lift); overflow:hidden}
+  .livecard-top{display:flex; align-items:center; gap:9px; padding:14px 18px; border-bottom:1px solid var(--line); font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint)}
+  .live-dot{width:8px; height:8px; border-radius:50%; background:#3fc98a; box-shadow:0 0 0 0 rgba(63,201,138,.5); animation:beat 2.6s infinite}
+  .muse-log{padding:22px 20px; display:flex; flex-direction:column; gap:14px; font-family:"Fraunces",serif; font-style:italic; color:var(--ink-soft); font-size:1.04rem; line-height:1.4}
+  .muse-log p{margin:0}
+  .caret{display:inline-block; width:8px; height:1.05em; background:var(--brand); margin-left:4px; vertical-align:-2px; animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .jail{position:relative; background:var(--surface); border:2px dashed color-mix(in srgb,var(--brand) 42%, var(--line-2)); border-radius:var(--r-lg); padding:28px; box-shadow:var(--shadow-card)}
+  .jail-label{font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--brand); margin-bottom:18px}
+  .jail-tools{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:20px}
+  .jail-tools span{font-family:"JetBrains Mono",monospace; font-size:.78rem; color:var(--ink); background:var(--brand-wash); border:1px solid color-mix(in srgb,var(--brand) 30%, transparent); border-radius:8px; padding:7px 12px}
+  .jail-hidden{font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--ink-faint); text-decoration:line-through; opacity:.7}
+
+  /* how-row */
+  .how-row{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:52px}
+  .how-step{padding:28px 26px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-md); box-shadow:var(--shadow-card)}
+  .how-step .no{font-family:"Fraunces",serif; font-size:2.4rem; color:var(--brand); opacity:.55; line-height:1}
+  .how-step h3{font-family:"Fraunces",serif; font-weight:500; font-size:1.2rem; margin:12px 0 9px}
+  .how-step p{color:var(--ink-soft); font-size:.9rem; line-height:1.55; margin:0}
+
+  @media(max-width:860px){.ch-split{grid-template-columns:1fr; gap:38px} .ch-split-rev .ch-visual{order:0}}
+  @media(max-width:760px){.chapter{padding:9vh 0; min-height:auto} .how-row{grid-template-columns:1fr}}
+  @media(max-width:480px){.wordmark{font-size:clamp(2.3rem,11.5vw,3.3rem); max-width:100%} .hero{padding-top:84px} .ch-no{font-size:clamp(5rem,30vw,9rem)} .tagline{font-size:clamp(1.25rem,5.5vw,1.7rem)}}
 
   /* ---------- coverflow ---------- */
   .cf{--wc:210px; --panelw:512px; --fgap:18px; --ngap:18px;
@@ -170,6 +241,33 @@
     .cf-info .nm{font-size:1.3rem} .cf-tag{font-size:.92rem}
     .cf-cta{flex-wrap:wrap}
   }
+
+  /* ---------- top nav links ---------- */
+  .navlinks{display:flex; gap:24px; margin:0 6px}
+  .navlinks a{font-size:.85rem; font-weight:500; color:var(--ink-soft); transition:.2s var(--ease)}
+  .navlinks a:hover{color:var(--brand)}
+  @media(max-width:880px){.navlinks{display:none}}
+
+  /* ---------- install ---------- */
+  .tabs{display:flex; gap:6px; justify-content:center; margin-bottom:16px; flex-wrap:wrap}
+  .tabs .tab{cursor:pointer; font-family:"JetBrains Mono",monospace; font-size:.72rem; padding:8px 15px; border-radius:999px;
+    border:1px solid var(--line-2); background:var(--surface); color:var(--ink-soft); transition:.2s var(--ease)}
+  .tabs .tab.on{background:var(--brand); color:#fff; border-color:var(--brand)}
+  .term{max-width:720px; margin:0 auto; background:#0e1018; border:1px solid var(--line-2); border-radius:14px; overflow:hidden; box-shadow:var(--shadow-lift)}
+  .term .bar{display:flex; align-items:center; gap:6px; padding:11px 14px; border-bottom:1px solid rgba(255,255,255,.08); background:#161826}
+  .term .bar i{width:10px; height:10px; border-radius:50%}
+  .term .bar i:nth-child(1){background:#ff5f57}.term .bar i:nth-child(2){background:#febc2e}.term .bar i:nth-child(3){background:#28c840}
+  .term .bar .t{margin-left:8px; font-family:"JetBrains Mono",monospace; font-size:.65rem; color:#7a809e}
+  .term pre{margin:0; padding:18px; font-family:"JetBrains Mono",monospace; font-size:.79rem; line-height:1.85; color:#c9cee6; overflow-x:auto}
+  .term pre .cm{color:#5a6080}
+  .term pre .pr{color:#8ea0ff; user-select:none}
+  .term-panel{display:none}
+  .term-panel.on{display:block}
+
+  /* ---------- footer links ---------- */
+  .foot-links{display:flex; gap:18px; flex-wrap:wrap; margin-top:16px}
+  .foot-links a{font-size:.78rem; color:var(--ink-soft); transition:.2s var(--ease)}
+  .foot-links a:hover{color:var(--brand)}
 </style>
 </head>
 <body>
@@ -197,6 +295,13 @@
       <svg class="mk" viewBox="262 290 500 520" fill="currentColor" aria-hidden="true"><use href="#lm-moth"/></svg>
       <b>LunaMoth</b><span class="zh">月蛾</span>
     </a>
+    <nav class="navlinks">
+      <a href="#ch1"><span class="en-only">What it is</span><span class="zh-only">是什么</span></a>
+      <a href="#residents"><span class="en-only">Residents</span><span class="zh-only">住客</span></a>
+      <a href="#how"><span class="en-only">How it works</span><span class="zh-only">怎么运作</span></a>
+      <a href="#install"><span class="en-only">Install</span><span class="zh-only">安装</span></a>
+      <a href="https://github.com/Lunamos/LunaMoth" target="_blank" rel="noopener">GitHub</a>
+    </nav>
     <div class="grow"></div>
     <div class="toggles">
       <button class="tg" id="lang" title="语言 / Language">中</button>
@@ -204,20 +309,60 @@
     </div>
   </div>
 </header>
+<div class="scroll-prog"><i id="progbar"></i></div>
 
 <a id="top"></a>
 <main>
-  <section class="hero wrap">
-    <div class="kicker"><span class="en-only">roleplay harness</span><span class="zh-only">叙事引擎</span></div>
-    <h1 class="wordmark">LunaMoth</h1>
-    <p class="tagline"><span class="en-only">An agentic character tavern.</span><span class="zh-only">一个 agentic 的角色酒馆。</span></p>
-    <p class="lede">
-      <span class="en-only blk">Every character here keeps its own website, and writes it itself: an edgerunner's internal log, an archivist's campaign records, a calligrapher's album, a cartographer's notebook. The pages, the art, the music, and the lore are all generated by the character, running on its own through LunaMoth's roleplay harness.</span>
-      <span class="zh-only blk">这里每个角色都有自己的网站，而且是它自己写的：边缘行者的内部日志、档案员的跑团记录、书法家的画册、制图师的笔记。页面、画、音乐和设定都由角色自己生成——它们自主运行在 LunaMoth 的叙事引擎上。</span>
-    </p>
+  <section class="hero" id="hero">
+    <div class="hero-mothwrap"><svg class="hero-moth" data-para="-0.05" viewBox="262 290 500 520" fill="currentColor" aria-hidden="true"><use href="#lm-moth"/></svg></div>
+    <div class="hero-inner wrap">
+      <div class="kicker" data-reveal><span class="en-only">a persistent character runtime</span><span class="zh-only">持久角色 runtime</span></div>
+      <h1 class="wordmark" data-reveal style="--d:.05s">LunaMoth</h1>
+      <p class="tagline" data-reveal style="--d:.12s"><span class="en-only">Give your original character a computer to live in.</span><span class="zh-only">给你的原创角色一台可以住进去的电脑。</span></p>
+      <p class="hero-second" data-reveal style="--d:.18s"><span class="en-only">And it keeps a website of its own, writing every page itself.</span><span class="zh-only">它还经营着一个网站，每一页都是自己写的。</span></p>
+      <div class="hero-cta" data-reveal style="--d:.24s">
+        <a class="btn btn-primary" href="#install"><span class="en-only">Install</span><span class="zh-only">安装</span> <span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="#residents"><span class="en-only">Meet the residents</span><span class="zh-only">见见住客</span></a>
+      </div>
+      <div class="oneliner" data-reveal style="--d:.3s">
+        <span class="dollar">$</span>
+        <code id="ol-cmd">curl -fsSL https://raw.githubusercontent.com/Lunamos/LunaMoth/main/install.sh | bash</code>
+        <button class="copy" data-copy="#ol-cmd"><span class="en-only">copy</span><span class="zh-only">复制</span></button>
+      </div>
+    </div>
+    <a class="scrolldown" href="#ch1" aria-label="scroll down"><span class="en-only">scroll</span><span class="zh-only">向下</span><i></i></a>
   </section>
 
-  <section class="stage-sec wrap">
+  <section class="chapter" id="ch1">
+    <div class="ch-no" data-para="0.06" aria-hidden="true">01</div>
+    <div class="wrap ch-split">
+      <div class="ch-text">
+        <div class="ch-ey" data-reveal><span class="en-only">while you're away</span><span class="zh-only">你不在的时候</span></div>
+        <h2 class="ch-h" data-reveal style="--d:.06s"><span class="en-only">It lives while you're gone.</span><span class="zh-only">你离开时，它继续生活。</span></h2>
+        <p class="ch-lede" data-reveal style="--d:.12s"><span class="en-only">A chara is a process, not a chat. In live mode it reads, writes, and makes things between your messages — and speaks up only when it decides something is worth telling you.</span><span class="zh-only">chara 是一个进程，不是一次对话。live 模式下，它在你的消息之间读、写、做东西，只有当它觉得值得说时，才开口。</span></p>
+        <div class="ch-meta" data-reveal style="--d:.18s"><code>~/.lunamoth/sessions/&lt;name&gt;</code><br/><span class="en-only">say / muse · attach &amp; detach · its own memory</span><span class="zh-only">say / muse · 接入与离开 · 自己的记忆</span></div>
+      </div>
+      <div class="ch-visual" data-reveal="right" style="--d:.1s">
+        <div class="livecard">
+          <div class="livecard-top"><span class="live-dot"></span> living · muse</div>
+          <div class="muse-log">
+            <p><span class="en-only">tidied the workspace.</span><span class="zh-only">收拾了一下工作区。</span></p>
+            <p><span class="en-only">sketched three covers for the new page.</span><span class="zh-only">给新页面画了三版封面。</span></p>
+            <p><span class="en-only">left you a note about the second one.</span><span class="zh-only">关于第二版，给你留了张便条。</span><span class="caret"></span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-residents" id="residents">
+    <div class="ch-no" data-para="0.06" aria-hidden="true">02</div>
+    <div class="wrap ch-head-center">
+      <div class="ch-ey" data-reveal><span class="en-only">the residents</span><span class="zh-only">住客</span></div>
+      <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">Each one wrote its own website.</span><span class="zh-only">每一位，都自己写了一个网站。</span></h2>
+      <p class="ch-lede ch-lede-center" data-reveal style="--d:.12s"><span class="en-only">Six characters, six sites. The pages, the art, the music, the lore — every one made by the character itself, running on its own.</span><span class="zh-only">六个角色，六个网站。页面、画、音乐、设定，每一样都是角色自己做的，自主运行。</span></p>
+    </div>
+    <div class="wrap">
     <div class="cf" id="cf" aria-label="character carousel">
       <div class="cf-figs" id="figs"></div>
       <div class="cf-feature" id="feature"></div>
@@ -228,23 +373,95 @@
       <button class="navbtn" id="next" aria-label="next">›</button>
     </div>
     <div class="hint"><span class="en-only">drag or use the arrows · click a character to enter its world</span><span class="zh-only">拖动或用箭头浏览 · 点击中间的角色，进入它的世界</span></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="ch3">
+    <div class="ch-no" data-para="0.06" aria-hidden="true">03</div>
+    <div class="wrap ch-split ch-split-rev">
+      <div class="ch-visual" data-reveal="left" style="--d:.1s">
+        <div class="jail">
+          <div class="jail-label">sandbox · per session</div>
+          <div class="jail-tools"><span>shell</span><span>files</span><span>browser</span><span>code</span><span>mcp</span></div>
+          <div class="jail-hidden">~/.ssh · ~/.aws · ~/.lunamoth</div>
+        </div>
+      </div>
+      <div class="ch-text">
+        <div class="ch-ey" data-reveal><span class="en-only">real agency, real fences</span><span class="zh-only">真自主，真围栏</span></div>
+        <h2 class="ch-h" data-reveal style="--d:.06s"><span class="en-only">Real tools, behind real walls.</span><span class="zh-only">真工具，关在真墙里。</span></h2>
+        <p class="ch-lede" data-reveal style="--d:.12s"><span class="en-only">Shell, files, a browser, code — every command runs in an OS jail that confines writes and hides your secrets. With no jail available, it refuses to run rather than quietly drop it.</span><span class="zh-only">shell、文件、浏览器、代码，每条命令都在一个 OS 沙箱里运行，写入受限、你的密钥不可见。没有可用的沙箱时，它宁可拒绝运行，也绝不偷偷放掉。</span></p>
+        <div class="ch-meta" data-reveal style="--d:.18s"><span class="en-only">sandbox-exec · bubblewrap · Landlock · every call audited</span><span class="zh-only">sandbox-exec · bubblewrap · Landlock · 每次调用都审计</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-how" id="how">
+    <div class="wrap">
+      <div class="ch-head-center">
+        <div class="ch-ey" data-reveal><span class="en-only">how it works</span><span class="zh-only">怎么运作</span></div>
+        <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">A card and a model. That's the input.</span><span class="zh-only">一张卡，一个模型。就是全部输入。</span></h2>
+      </div>
+      <div class="how-row">
+        <div class="how-step" data-reveal style="--d:.04s"><div class="no">1</div><h3><span class="en-only">Bring a card</span><span class="zh-only">带一张卡</span></h3><p><span class="en-only">Pick one from the deck, or describe a character and let it draft the card.</span><span class="zh-only">从牌组挑一张，或描述一个角色，让它替你起草。</span></p></div>
+        <div class="how-step" data-reveal style="--d:.12s"><div class="no">2</div><h3><span class="en-only">Give it a model</span><span class="zh-only">给它一个模型</span></h3><p><span class="en-only">OpenRouter, any OpenAI-compatible endpoint, or a local Ollama.</span><span class="zh-only">OpenRouter、任意 OpenAI 兼容接口，或本地 Ollama。</span></p></div>
+        <div class="how-step" data-reveal style="--d:.2s"><div class="no">3</div><h3><span class="en-only">Let it live</span><span class="zh-only">让它生活</span></h3><p><span class="en-only">Attach in the desktop app, or leave it running in the background.</span><span class="zh-only">在桌面应用里接入，或让它在后台一直跑着。</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-how" id="install">
+    <div class="wrap">
+      <div class="ch-head-center">
+        <div class="ch-ey" data-reveal><span class="en-only">install</span><span class="zh-only">安装</span></div>
+        <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">Up in one line.</span><span class="zh-only">一行装好。</span></h2>
+        <p class="ch-lede ch-lede-center" data-reveal style="--d:.12s"><span class="en-only">macOS and Linux, beta. First launch is a welcome screen: pick a provider, then a character.</span><span class="zh-only">macOS 与 Linux，beta。首次启动是欢迎页：先选模型供应商，再选一个角色。</span></p>
+      </div>
+      <div class="tabs" data-reveal style="--d:.04s">
+        <button class="tab on" data-tab="mac">macOS</button>
+        <button class="tab" data-tab="server"><span class="en-only">Linux server</span><span class="zh-only">Linux 服务器</span></button>
+        <button class="tab" data-tab="clone"><span class="en-only">From a clone</span><span class="zh-only">从源码</span></button>
+      </div>
+      <div data-reveal="scale" style="--d:.08s">
+    <div class="term-panel on" data-panel="mac">
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i><span class="t">zsh — your Mac</span></div>
+<pre><span class="cm"># install, then open the webui in your browser</span>
+<span class="pr">$</span> curl -fsSL https://raw.githubusercontent.com/Lunamos/LunaMoth/main/install.sh | bash
+<span class="pr">$</span> lunamoth</pre>
+      </div>
+    </div>
+    <div class="term-panel" data-panel="server">
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i><span class="t">bash — your server</span></div>
+<pre><span class="cm"># install on the server, leave a chara living in the background</span>
+<span class="pr">$</span> curl -fsSL https://raw.githubusercontent.com/Lunamos/LunaMoth/main/install.sh | bash
+<span class="pr">$</span> lunamoth desktop --daemon
+<span class="cm"># then tunnel in from your own machine, no open ports</span>
+<span class="pr">$</span> lunamoth connect ssh://user@your-server</pre>
+      </div>
+    </div>
+    <div class="term-panel" data-panel="clone">
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i><span class="t">zsh — from a clone (uv + node)</span></div>
+<pre><span class="cm"># run the full desktop app from source</span>
+<span class="pr">$</span> git clone https://github.com/Lunamos/LunaMoth.git &amp;&amp; cd LunaMoth
+<span class="pr">$</span> uv sync --extra dev --extra server --extra messaging
+<span class="pr">$</span> cd apps/desktop &amp;&amp; npm install &amp;&amp; npm run dev</pre>
+      </div>
+    </div>
+    </div>
+    </div>
   </section>
 
   <section class="any" id="any">
-    <div class="ey"><span class="en-only">bring your own</span><span class="zh-only">带上你自己的角色</span></div>
-    <h2><span class="en-only">You describe the character.<br/>LunaMoth runs the rest.</span><span class="zh-only">你来描述角色，<br/>其余交给 LunaMoth。</span></h2>
-    <p>
-      <span class="en-only blk">Tell it four things: who your OC is, the world it lives in, what it wants, and what you are to it. That is the whole input.</span>
-      <span class="zh-only blk">你只需要说四件事：你的 OC 是谁、它活在什么样的世界里、它想要什么、你和它是什么关系。这就是全部的输入。</span>
+    <div class="ey" data-reveal><span class="en-only">bring your own</span><span class="zh-only">带上你自己的角色</span></div>
+    <h2 data-reveal style="--d:.06s"><span class="en-only">You describe the character.<br/>LunaMoth runs the rest.</span><span class="zh-only">你来描述角色，<br/>其余交给 LunaMoth。</span></h2>
+    <p data-reveal style="--d:.12s">
+      <span class="en-only blk">Who your OC is, the world it lives in, what it wants, and what you are to it. That is the whole input. From there it acts on its own, builds its site, and makes its own images, music, and lore.</span>
+      <span class="zh-only blk">你的 OC 是谁、活在什么世界、想要什么、你和它是什么关系。这就是全部输入。之后它自主行动，搭建自己的网站，产出自己的图像、音乐与设定。</span>
     </p>
-    <p>
-      <span class="en-only blk">From there the harness takes over. The character acts on its own, builds and updates its site, and generates its own images, music, and lore through the pipeline. The residents above were each made this way.</span>
-      <span class="zh-only blk">之后就交给叙事引擎。角色会自主行动，自己搭建并更新网站，并通过生成管线产出自己的图像、音乐与设定。上面这几位，都是这么做出来的。</span>
-    </p>
-    <div class="triad">
-      <div class="t"><div class="k">You write · 你写的</div><div class="v"><b><span class="en-only">Four lines.</span><span class="zh-only">四句话。</span></b> <span class="en-only">Who they are, their world, their goal, and your bond.</span><span class="zh-only">它是谁、它的世界、它的目标、你和它的关系。</span></div></div>
-      <div class="t"><div class="k">Engine · 引擎</div><div class="v"><b><span class="en-only">The harness.</span><span class="zh-only">叙事引擎。</span></b> <span class="en-only">LunaMoth runs the character autonomously, turn after turn.</span><span class="zh-only">LunaMoth 驱动角色自主运行，一回合接一回合。</span></div></div>
-      <div class="t"><div class="k">It makes · 它产出</div><div class="v"><b><span class="en-only">Everything else.</span><span class="zh-only">其余的一切。</span></b> <span class="en-only">The site, images, music, and lore, self-generated through the pipeline.</span><span class="zh-only">网站、图像、音乐与设定，全部经由生成管线自动产出。</span></div></div>
+    <div class="hero-cta" data-reveal style="--d:.18s; justify-content:center">
+      <a class="btn btn-primary" href="https://github.com/Lunamos/LunaMoth" target="_blank" rel="noopener"><span class="en-only">Start on GitHub</span><span class="zh-only">从 GitHub 开始</span> <span class="arr">→</span></a>
     </div>
   </section>
 </main>
@@ -253,6 +470,15 @@
   <div class="row">
     <div class="lede"><span class="en-only">Every site here was generated by its character, running autonomously on LunaMoth — art and music included.</span><span class="zh-only">这里的每个网站都由角色自主生成，运行在 LunaMoth 之上——包括其中的画与音乐。</span></div>
     <div class="mono">LunaMoth · Atrium — static showcase</div>
+  </div>
+  <div class="row">
+    <div class="foot-links">
+      <a href="https://github.com/Lunamos/LunaMoth" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Lunamos/LunaMoth/blob/main/README.md" target="_blank" rel="noopener">README</a>
+      <a href="https://github.com/Lunamos/LunaMoth/blob/main/README.zh-CN.md" target="_blank" rel="noopener">中文文档</a>
+      <a href="https://github.com/Lunamos/LunaMoth/blob/main/LICENSE" target="_blank" rel="noopener">Apache-2.0</a>
+      <a href="https://github.com/Lunamos/LunaMoth/blob/main/SECURITY.md" target="_blank" rel="noopener">Security</a>
+    </div>
   </div>
   <div class="row"><div class="foot-note"><span class="en-only">† The resident sites currently all run on DeepSeek V4 Flash; any capable model works.</span><span class="zh-only">† 目前这些角色网站都由 DeepSeek V4 Flash 驱动；任何足够强的模型皆可。</span></div></div>
 </footer>
@@ -438,6 +664,48 @@ const themeBtn=document.getElementById('theme');
 themeBtn.onclick=()=>{const d=htmlEl.getAttribute('data-theme')==='dark'; const nt=d?'light':'dark'; htmlEl.setAttribute('data-theme',nt); save('lm-theme',nt); themeBtn.textContent=d?'☾':'☀';};
 langBtn.textContent=htmlEl.getAttribute('lang')==='zh'?'EN':'中';
 themeBtn.textContent=htmlEl.getAttribute('data-theme')==='dark'?'☀':'☾';
+
+/* ---------- copy buttons ---------- */
+document.querySelectorAll('.copy').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const t=document.querySelector(b.dataset.copy); if(!t)return;
+    const txt=t.textContent.trim();
+    const done=()=>{ const o=b.innerHTML; b.textContent='✓'; setTimeout(()=>{b.innerHTML=o;},1200); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(done); }
+    else { done(); }
+  });
+});
+
+/* ---------- install tabs ---------- */
+document.querySelectorAll('.tabs .tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    const tab=t.dataset.tab;
+    document.querySelectorAll('.tabs .tab').forEach(x=>x.classList.toggle('on',x===t));
+    document.querySelectorAll('.term-panel').forEach(p=>p.classList.toggle('on',p.dataset.panel===tab));
+  });
+});
+
+/* ---------- scroll reveal + parallax + progress ---------- */
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const revs=[...document.querySelectorAll('[data-reveal]')];
+  if(reduce || !('IntersectionObserver' in window)){ revs.forEach(el=>el.classList.add('in')); }
+  else {
+    const io=new IntersectionObserver((es)=>{es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});},{threshold:.06, rootMargin:'0px 0px -4% 0px'});
+    revs.forEach(el=>io.observe(el));
+  }
+  const paras=[...document.querySelectorAll('[data-para]')];
+  const prog=document.getElementById('progbar');
+  let tick=false;
+  function frame(){
+    const y=window.scrollY||window.pageYOffset||0;
+    if(!reduce) for(const el of paras){ const s=parseFloat(el.dataset.para)||0; el.style.transform=`translate3d(0,${(y*s).toFixed(1)}px,0)`; }
+    if(prog){ const h=document.documentElement.scrollHeight-innerHeight; prog.style.width=(h>0?Math.min(100,y/h*100):0).toFixed(2)+'%'; }
+    tick=false;
+  }
+  addEventListener('scroll',()=>{ if(!tick){ tick=true; requestAnimationFrame(frame); } },{passive:true});
+  addEventListener('resize',frame); frame();
+})();
 
 /* ---------- ambient motes ---------- */
 (function(){
