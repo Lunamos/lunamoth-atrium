@@ -85,9 +85,9 @@
   .kicker{font-family:"JetBrains Mono",monospace; font-size:.74rem; letter-spacing:.4em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:26px}
   .wordmark{font-family:"Fraunces",serif; font-weight:600; font-optical-sizing:auto; line-height:.86;
     font-size:clamp(4rem,15vw,11rem); letter-spacing:-.04em; margin:0; color:var(--brand);
-    background:linear-gradient(100deg, var(--brand) 0%, color-mix(in srgb,var(--brand) 70%, #7a3fd0) 38%, #dfe4fb 50%, color-mix(in srgb,var(--brand) 70%, #7a3fd0) 62%, var(--brand) 100%);
-    background-size:230% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-    text-shadow:0 30px 80px color-mix(in srgb,var(--brand) 24%, transparent); animation:wm-shine 7.5s ease-in-out infinite}
+    background:linear-gradient(178deg, var(--brand) 0%, color-mix(in srgb,var(--brand) 72%, #7a3fd0) 100%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    text-shadow:0 30px 80px color-mix(in srgb,var(--brand) 24%, transparent)}
   .tagline{font-family:"Fraunces",serif; font-weight:400; font-style:italic; font-size:clamp(1.4rem,3.6vw,2.3rem);
     margin:22px auto 0; max-width:18ch; letter-spacing:-.01em; color:var(--ink); line-height:1.18}
   .hero-second{font-family:"Fraunces",serif; font-style:italic; color:var(--ink-soft); font-size:clamp(1rem,2vw,1.2rem); margin:12px 0 0}
@@ -280,21 +280,18 @@
   [data-split].in .sw{opacity:1; transform:none; filter:none}
   @media (prefers-reduced-motion:reduce){.sw{opacity:1; transform:none; filter:none; transition:none}}
 
-  /* shiny-text — a slow band of light sweeps across the type */
-  @keyframes wm-shine{0%,16%{background-position:135% 0} 52%,100%{background-position:-35% 0}}
-  .kicker.shiny{background-image:linear-gradient(100deg,var(--ink-faint) 0%,var(--ink-faint) 42%,var(--brand) 50%,var(--ink-faint) 58%,var(--ink-faint) 100%);
-    background-size:220% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
-    animation:wm-shine 6.5s ease-in-out 1s infinite}
-
-  /* spotlight-card — a soft brand glow trails the cursor */
-  .spot{position:relative; isolation:isolate}
-  .spot::after{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:3; opacity:0;
-    transition:opacity .4s var(--ease); mix-blend-mode:normal;
-    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb,var(--brand) 15%, transparent), transparent 60%)}
-  .spot:hover::after{opacity:1}
-  html[data-theme="dark"] .spot::after{mix-blend-mode:screen;
-    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb,var(--brand) 36%, transparent), transparent 58%)}
-  @media (hover:none){.spot::after{display:none}}
+  /* border-beam — a light runs around every card frame */
+  @property --beam-a{syntax:"<angle>"; inherits:false; initial-value:0deg}
+  .beam{position:relative}
+  .beam::before{content:""; position:absolute; inset:0; border-radius:inherit; padding:1.5px; pointer-events:none; z-index:4;
+    background:conic-gradient(from var(--beam-a,0deg), transparent 0 58%, var(--brand) 78%, color-mix(in srgb,var(--brand) 42%, #fff) 88%, var(--brand) 96%, transparent 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite:exclude;
+    animation:beam-spin 5s linear infinite; animation-play-state:paused}
+  .beam.lit::before{animation-play-state:running}
+  .how-row .how-step:nth-child(2)::before{animation-delay:-1.7s}
+  .how-row .how-step:nth-child(3)::before{animation-delay:-3.4s}
+  @keyframes beam-spin{to{--beam-a:360deg}}
 
   /* logo-loop — seamless marquee of providers & surfaces */
   .ecost{position:relative; z-index:2; padding:48px 0 6px}
@@ -356,7 +353,7 @@
   <section class="hero" id="hero">
     <div class="hero-mothwrap"><svg class="hero-moth" data-para="-0.05" viewBox="262 290 500 520" fill="currentColor" aria-hidden="true"><use href="#lm-moth"/></svg></div>
     <div class="hero-inner wrap">
-      <div class="kicker shiny" data-reveal><span class="en-only">a persistent character runtime</span><span class="zh-only">持久角色 runtime</span></div>
+      <div class="kicker" data-reveal><span class="en-only">a persistent character runtime</span><span class="zh-only">持久角色 runtime</span></div>
       <h1 class="wordmark" data-reveal style="--d:.05s">LunaMoth</h1>
       <p class="tagline" data-reveal style="--d:.12s"><span class="en-only">Give your original character a computer to live in.</span><span class="zh-only">给你的原创角色一台可以住进去的电脑。</span></p>
       <p class="hero-second" data-reveal style="--d:.18s"><span class="en-only">And it keeps a website of its own, writing every page itself.</span><span class="zh-only">它还经营着一个网站，每一页都是自己写的。</span></p>
@@ -383,7 +380,7 @@
         <div class="ch-meta" data-reveal style="--d:.18s"><code>~/.lunamoth/sessions/&lt;name&gt;</code><br/><span class="en-only">say / muse · attach &amp; detach · its own memory</span><span class="zh-only">say / muse · 接入与离开 · 自己的记忆</span></div>
       </div>
       <div class="ch-visual" data-reveal="right" style="--d:.1s">
-        <div class="livecard spot">
+        <div class="livecard beam">
           <div class="livecard-top"><span class="live-dot"></span> living · muse</div>
           <div class="muse-log">
             <p><span class="en-only">tidied the workspace.</span><span class="zh-only">收拾了一下工作区。</span></p>
@@ -420,7 +417,7 @@
     <div class="ch-no" data-para="0.06" aria-hidden="true">03</div>
     <div class="wrap ch-split ch-split-rev">
       <div class="ch-visual" data-reveal="left" style="--d:.1s">
-        <div class="guard spot">
+        <div class="guard beam">
           <div class="guard-label"><span class="en-only">helping out · today</span><span class="zh-only">今天 · 搭把手</span></div>
           <div class="guard-row can"><span class="gm">✓</span><span class="en-only">summarized the morning's emails</span><span class="zh-only">把早上的邮件理了一遍</span></div>
           <div class="guard-row can"><span class="gm">✓</span><span class="en-only">tracked down a failing test</span><span class="zh-only">揪出了一个挂掉的测试</span></div>
@@ -446,7 +443,7 @@
         <div class="ch-meta" data-reveal style="--d:.18s"><span class="en-only">and everything it does is written down</span><span class="zh-only">而且它做的每一件事，都记录在案</span></div>
       </div>
       <div class="ch-visual" data-reveal="right" style="--d:.1s">
-        <div class="guard spot">
+        <div class="guard beam">
           <div class="guard-label"><span class="en-only">its own space</span><span class="zh-only">它自己的空间</span></div>
           <div class="guard-row can"><span class="gm">✓</span><span class="en-only">its own workspace and files</span><span class="zh-only">自己的 workspace 和文件</span></div>
           <div class="guard-row can"><span class="gm">✓</span><span class="en-only">anything you drop in for it</span><span class="zh-only">你放进去给它的东西</span></div>
@@ -474,9 +471,9 @@
         <h2 class="ch-h ch-h-center" data-split><span class="en-only">A card and a model. That's the input.</span><span class="zh-only">一张卡，一个模型。就是全部输入。</span></h2>
       </div>
       <div class="how-row">
-        <div class="how-step spot" data-reveal style="--d:.04s"><div class="no">1</div><h3><span class="en-only">Bring a card</span><span class="zh-only">带一张卡</span></h3><p><span class="en-only">Pick one from the deck, or describe a character and let it draft the card.</span><span class="zh-only">从牌组挑一张，或描述一个角色，让它替你起草。</span></p></div>
-        <div class="how-step spot" data-reveal style="--d:.12s"><div class="no">2</div><h3><span class="en-only">Give it a model</span><span class="zh-only">给它一个模型</span></h3><p><span class="en-only">OpenRouter, any OpenAI-compatible endpoint, or a local Ollama.</span><span class="zh-only">OpenRouter、任意 OpenAI 兼容接口，或本地 Ollama。</span></p></div>
-        <div class="how-step spot" data-reveal style="--d:.2s"><div class="no">3</div><h3><span class="en-only">Let it live</span><span class="zh-only">让它生活</span></h3><p><span class="en-only">Attach in the desktop app, or leave it running in the background.</span><span class="zh-only">在桌面应用里接入，或让它在后台一直跑着。</span></p></div>
+        <div class="how-step beam" data-reveal style="--d:.04s"><div class="no">1</div><h3><span class="en-only">Bring a card</span><span class="zh-only">带一张卡</span></h3><p><span class="en-only">Pick one from the deck, or describe a character and let it draft the card.</span><span class="zh-only">从牌组挑一张，或描述一个角色，让它替你起草。</span></p></div>
+        <div class="how-step beam" data-reveal style="--d:.12s"><div class="no">2</div><h3><span class="en-only">Give it a model</span><span class="zh-only">给它一个模型</span></h3><p><span class="en-only">OpenRouter, any OpenAI-compatible endpoint, or a local Ollama.</span><span class="zh-only">OpenRouter、任意 OpenAI 兼容接口，或本地 Ollama。</span></p></div>
+        <div class="how-step beam" data-reveal style="--d:.2s"><div class="no">3</div><h3><span class="en-only">Let it live</span><span class="zh-only">让它生活</span></h3><p><span class="en-only">Attach in the desktop app, or leave it running in the background.</span><span class="zh-only">在桌面应用里接入，或让它在后台一直跑着。</span></p></div>
       </div>
     </div>
   </section>
@@ -495,7 +492,7 @@
       </div>
       <div data-reveal="scale" style="--d:.08s">
     <div class="term-panel on" data-panel="mac">
-      <div class="term spot">
+      <div class="term beam">
         <div class="bar"><i></i><i></i><i></i><span class="t">zsh — your Mac</span></div>
 <pre><span class="cm"># install, then open the webui in your browser</span>
 <span class="pr">$</span> curl -fsSL https://raw.githubusercontent.com/Lunamos/LunaMoth/main/install.sh | bash
@@ -503,7 +500,7 @@
       </div>
     </div>
     <div class="term-panel" data-panel="server">
-      <div class="term spot">
+      <div class="term beam">
         <div class="bar"><i></i><i></i><i></i><span class="t">bash — your server</span></div>
 <pre><span class="cm"># install on the server, leave a chara living in the background</span>
 <span class="pr">$</span> curl -fsSL https://raw.githubusercontent.com/Lunamos/LunaMoth/main/install.sh | bash
@@ -513,7 +510,7 @@
       </div>
     </div>
     <div class="term-panel" data-panel="clone">
-      <div class="term spot">
+      <div class="term beam">
         <div class="bar"><i></i><i></i><i></i><span class="t">zsh — from a clone (uv + node)</span></div>
 <pre><span class="cm"># run the full desktop app from source</span>
 <span class="pr">$</span> git clone https://github.com/Lunamos/LunaMoth.git &amp;&amp; cd LunaMoth
@@ -793,19 +790,16 @@ document.querySelectorAll('.tabs .tab').forEach(t=>{
   addEventListener('resize',frame); frame();
 })();
 
-/* ---------- ReactBits-inspired: spotlight · marquee · decode ---------- */
+/* ---------- ReactBits-inspired: border-beam · marquee ---------- */
 (function(){
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  /* spotlight cards follow the cursor */
-  if(!reduce && matchMedia('(hover:hover)').matches){
-    document.querySelectorAll('.spot').forEach(card=>{
-      card.addEventListener('pointermove',e=>{
-        const r=card.getBoundingClientRect();
-        card.style.setProperty('--mx',(((e.clientX-r.left)/r.width)*100).toFixed(1)+'%');
-        card.style.setProperty('--my',(((e.clientY-r.top)/r.height)*100).toFixed(1)+'%');
-      });
-    });
+  /* border-beam — only spin the frames that are on screen */
+  const beams=[...document.querySelectorAll('.beam')];
+  if(reduce || !('IntersectionObserver' in window)){ beams.forEach(b=>b.classList.add('lit')); }
+  else {
+    const bio=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('lit', e.isIntersecting)), {rootMargin:'80px'});
+    beams.forEach(b=>bio.observe(b));
   }
 
   /* logo-loop marquee — duplicate the row so translateX(-50%) wraps seamlessly */
@@ -819,34 +813,6 @@ document.querySelectorAll('.tabs .tab').forEach(t=>{
     t.innerHTML=html+html;
   });
 
-  /* hero decode — scramble → resolve the visible tagline */
-  const POOL='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ·/<>+*'.split('');
-  const KEEP=new Set([' ','\n','。','，','、','.','’','\'']);
-  function decode(span){
-    if(!span) return;
-    const final=[...(span.dataset.txt||span.textContent)];
-    span.dataset.txt=final.join('');
-    if(reduce){ span.textContent=span.dataset.txt; return; }
-    let revealed=0, f=0; const total=final.length;
-    (function tick(){
-      let out='';
-      for(let i=0;i<total;i++){
-        const c=final[i];
-        out += (i<revealed || KEEP.has(c)) ? c : POOL[(Math.random()*POOL.length)|0];
-      }
-      span.textContent=out;
-      if(++f%2===0) revealed++;
-      if(revealed<=total) requestAnimationFrame(tick);
-      else span.textContent=span.dataset.txt;
-    })();
-  }
-  function decodeTagline(){
-    const t=document.querySelector('.tagline'); if(!t) return;
-    decode([...t.querySelectorAll('.en-only,.zh-only')].find(s=>s.offsetParent!==null));
-  }
-  setTimeout(decodeTagline, 300);
-  const lb=document.getElementById('lang');
-  if(lb){ const prev=lb.onclick; lb.onclick=function(e){ if(prev) prev.call(this,e); setTimeout(decodeTagline,30); }; }
 })();
 
 /* ---------- ambient motes ---------- */
