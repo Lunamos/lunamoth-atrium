@@ -85,9 +85,9 @@
   .kicker{font-family:"JetBrains Mono",monospace; font-size:.74rem; letter-spacing:.4em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:26px}
   .wordmark{font-family:"Fraunces",serif; font-weight:600; font-optical-sizing:auto; line-height:.86;
     font-size:clamp(4rem,15vw,11rem); letter-spacing:-.04em; margin:0; color:var(--brand);
-    background:linear-gradient(178deg, var(--brand) 0%, color-mix(in srgb,var(--brand) 72%, #7a3fd0) 100%);
-    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
-    text-shadow:0 30px 80px color-mix(in srgb,var(--brand) 24%, transparent)}
+    background:linear-gradient(100deg, var(--brand) 0%, color-mix(in srgb,var(--brand) 70%, #7a3fd0) 38%, #dfe4fb 50%, color-mix(in srgb,var(--brand) 70%, #7a3fd0) 62%, var(--brand) 100%);
+    background-size:230% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+    text-shadow:0 30px 80px color-mix(in srgb,var(--brand) 24%, transparent); animation:wm-shine 7.5s ease-in-out infinite}
   .tagline{font-family:"Fraunces",serif; font-weight:400; font-style:italic; font-size:clamp(1.4rem,3.6vw,2.3rem);
     margin:22px auto 0; max-width:18ch; letter-spacing:-.01em; color:var(--ink); line-height:1.18}
   .hero-second{font-family:"Fraunces",serif; font-style:italic; color:var(--ink-soft); font-size:clamp(1rem,2vw,1.2rem); margin:12px 0 0}
@@ -131,11 +131,15 @@
   .muse-log p{margin:0}
   .caret{display:inline-block; width:8px; height:1.05em; background:var(--brand); margin-left:4px; vertical-align:-2px; animation:blink 1.1s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
-  .jail{position:relative; background:var(--surface); border:2px dashed color-mix(in srgb,var(--brand) 42%, var(--line-2)); border-radius:var(--r-lg); padding:28px; box-shadow:var(--shadow-card)}
-  .jail-label{font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--brand); margin-bottom:18px}
-  .jail-tools{display:flex; flex-wrap:wrap; gap:9px; margin-bottom:20px}
-  .jail-tools span{font-family:"JetBrains Mono",monospace; font-size:.78rem; color:var(--ink); background:var(--brand-wash); border:1px solid color-mix(in srgb,var(--brand) 30%, transparent); border-radius:8px; padding:7px 12px}
-  .jail-hidden{font-family:"JetBrains Mono",monospace; font-size:.72rem; color:var(--ink-faint); text-decoration:line-through; opacity:.7}
+  .guard{position:relative; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-lg); padding:24px 26px; box-shadow:var(--shadow-card)}
+  .guard-label{font-family:"JetBrains Mono",monospace; font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--brand); margin-bottom:16px}
+  .guard-row{display:flex; align-items:center; gap:12px; padding:7px 0; font-size:.96rem; color:var(--ink)}
+  .guard-row .gm{width:21px; height:21px; flex:0 0 auto; display:grid; place-items:center; border-radius:6px; font-size:.72rem; font-weight:700}
+  .guard-row.can .gm{color:#19915a; background:color-mix(in srgb,#2ec177 20%, transparent)}
+  .guard-row.cant{color:var(--ink-faint)}
+  .guard-row.cant .gm{color:var(--ink-faint); background:var(--surface-2); border:1px solid var(--line)}
+  .guard-div{height:1px; background:var(--line); margin:12px 0}
+  .guard-foot{margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-family:"JetBrains Mono",monospace; font-size:.64rem; letter-spacing:.03em; color:var(--ink-faint); line-height:1.5}
 
   /* how-row */
   .how-row{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:52px}
@@ -268,6 +272,42 @@
   .foot-links{display:flex; gap:18px; flex-wrap:wrap; margin-top:16px}
   .foot-links a{font-size:.78rem; color:var(--ink-soft); transition:.2s var(--ease)}
   .foot-links a:hover{color:var(--brand)}
+
+  /* ============ ReactBits-inspired motion (ported to vanilla) ============ */
+  /* split-text — chapter headlines rise word-by-word */
+  .sw{display:inline-block; will-change:transform,opacity; opacity:0; transform:translateY(.62em); filter:blur(6px);
+    transition:opacity .72s var(--ease), transform .72s var(--ease), filter .72s var(--ease); transition-delay:calc(var(--wi,0) * .042s)}
+  [data-split].in .sw{opacity:1; transform:none; filter:none}
+  @media (prefers-reduced-motion:reduce){.sw{opacity:1; transform:none; filter:none; transition:none}}
+
+  /* shiny-text — a slow band of light sweeps across the type */
+  @keyframes wm-shine{0%,16%{background-position:135% 0} 52%,100%{background-position:-35% 0}}
+  .kicker.shiny{background-image:linear-gradient(100deg,var(--ink-faint) 0%,var(--ink-faint) 42%,var(--brand) 50%,var(--ink-faint) 58%,var(--ink-faint) 100%);
+    background-size:220% 100%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
+    animation:wm-shine 6.5s ease-in-out 1s infinite}
+
+  /* spotlight-card — a soft brand glow trails the cursor */
+  .spot{position:relative; isolation:isolate}
+  .spot::after{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:3; opacity:0;
+    transition:opacity .4s var(--ease); mix-blend-mode:normal;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb,var(--brand) 15%, transparent), transparent 60%)}
+  .spot:hover::after{opacity:1}
+  html[data-theme="dark"] .spot::after{mix-blend-mode:screen;
+    background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb,var(--brand) 36%, transparent), transparent 58%)}
+  @media (hover:none){.spot::after{display:none}}
+
+  /* logo-loop — seamless marquee of providers & surfaces */
+  .ecost{position:relative; z-index:2; padding:48px 0 6px}
+  .eco-ey{text-align:center; margin-bottom:22px}
+  .marquee{overflow:hidden; padding:9px 0; -webkit-mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+    mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+  .mq-track{display:inline-flex; flex-wrap:nowrap; white-space:nowrap; will-change:transform; animation:mq 42s linear infinite}
+  .marquee.rev .mq-track{animation-direction:reverse; animation-duration:52s}
+  .marquee:hover .mq-track{animation-play-state:paused}
+  .mq-item{display:inline-flex; align-items:center; gap:11px; padding:0 26px; flex:0 0 auto;
+    font-family:"JetBrains Mono",monospace; font-size:.82rem; letter-spacing:.03em; color:var(--ink-soft)}
+  .mq-item::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--brand); opacity:.55; flex:0 0 auto}
+  @keyframes mq{to{transform:translateX(-50%)}}
 </style>
 </head>
 <body>
@@ -316,7 +356,7 @@
   <section class="hero" id="hero">
     <div class="hero-mothwrap"><svg class="hero-moth" data-para="-0.05" viewBox="262 290 500 520" fill="currentColor" aria-hidden="true"><use href="#lm-moth"/></svg></div>
     <div class="hero-inner wrap">
-      <div class="kicker" data-reveal><span class="en-only">a persistent character runtime</span><span class="zh-only">持久角色 runtime</span></div>
+      <div class="kicker shiny" data-reveal><span class="en-only">a persistent character runtime</span><span class="zh-only">持久角色 runtime</span></div>
       <h1 class="wordmark" data-reveal style="--d:.05s">LunaMoth</h1>
       <p class="tagline" data-reveal style="--d:.12s"><span class="en-only">Give your original character a computer to live in.</span><span class="zh-only">给你的原创角色一台可以住进去的电脑。</span></p>
       <p class="hero-second" data-reveal style="--d:.18s"><span class="en-only">And it keeps a website of its own, writing every page itself.</span><span class="zh-only">它还经营着一个网站，每一页都是自己写的。</span></p>
@@ -338,12 +378,12 @@
     <div class="wrap ch-split">
       <div class="ch-text">
         <div class="ch-ey" data-reveal><span class="en-only">while you're away</span><span class="zh-only">你不在的时候</span></div>
-        <h2 class="ch-h" data-reveal style="--d:.06s"><span class="en-only">It lives while you're gone.</span><span class="zh-only">你离开时，它继续生活。</span></h2>
+        <h2 class="ch-h" data-split><span class="en-only">It lives while you're gone.</span><span class="zh-only">你离开时，它继续生活。</span></h2>
         <p class="ch-lede" data-reveal style="--d:.12s"><span class="en-only">A chara is a process, not a chat. In live mode it reads, writes, and makes things between your messages — and speaks up only when it decides something is worth telling you.</span><span class="zh-only">chara 是一个进程，不是一次对话。live 模式下，它在你的消息之间读、写、做东西，只有当它觉得值得说时，才开口。</span></p>
         <div class="ch-meta" data-reveal style="--d:.18s"><code>~/.lunamoth/sessions/&lt;name&gt;</code><br/><span class="en-only">say / muse · attach &amp; detach · its own memory</span><span class="zh-only">say / muse · 接入与离开 · 自己的记忆</span></div>
       </div>
       <div class="ch-visual" data-reveal="right" style="--d:.1s">
-        <div class="livecard">
+        <div class="livecard spot">
           <div class="livecard-top"><span class="live-dot"></span> living · muse</div>
           <div class="muse-log">
             <p><span class="en-only">tidied the workspace.</span><span class="zh-only">收拾了一下工作区。</span></p>
@@ -359,7 +399,7 @@
     <div class="ch-no" data-para="0.06" aria-hidden="true">02</div>
     <div class="wrap ch-head-center">
       <div class="ch-ey" data-reveal><span class="en-only">the residents</span><span class="zh-only">住客</span></div>
-      <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">Each one wrote its own website.</span><span class="zh-only">每一位，都自己写了一个网站。</span></h2>
+      <h2 class="ch-h ch-h-center" data-split><span class="en-only">Each one wrote its own website.</span><span class="zh-only">每一位，都自己写了一个网站。</span></h2>
       <p class="ch-lede ch-lede-center" data-reveal style="--d:.12s"><span class="en-only">Six characters, six sites. The pages, the art, the music, the lore — every one made by the character itself, running on its own.</span><span class="zh-only">六个角色，六个网站。页面、画、音乐、设定，每一样都是角色自己做的，自主运行。</span></p>
     </div>
     <div class="wrap">
@@ -380,31 +420,63 @@
     <div class="ch-no" data-para="0.06" aria-hidden="true">03</div>
     <div class="wrap ch-split ch-split-rev">
       <div class="ch-visual" data-reveal="left" style="--d:.1s">
-        <div class="jail">
-          <div class="jail-label">sandbox · per session</div>
-          <div class="jail-tools"><span>shell</span><span>files</span><span>browser</span><span>code</span><span>mcp</span></div>
-          <div class="jail-hidden">~/.ssh · ~/.aws · ~/.lunamoth</div>
+        <div class="guard spot">
+          <div class="guard-label"><span class="en-only">helping out · today</span><span class="zh-only">今天 · 搭把手</span></div>
+          <div class="guard-row can"><span class="gm">✓</span><span class="en-only">summarized the morning's emails</span><span class="zh-only">把早上的邮件理了一遍</span></div>
+          <div class="guard-row can"><span class="gm">✓</span><span class="en-only">tracked down a failing test</span><span class="zh-only">揪出了一个挂掉的测试</span></div>
+          <div class="guard-row can"><span class="gm">✓</span><span class="en-only">drafted your release notes</span><span class="zh-only">给你起草了发布说明</span></div>
+          <div class="guard-foot"><span class="en-only">harness · learns from Hermes / OpenClaw / Claude Code</span><span class="zh-only">引擎 · 借鉴 Hermes / OpenClaw / Claude Code</span></div>
         </div>
       </div>
       <div class="ch-text">
-        <div class="ch-ey" data-reveal><span class="en-only">real agency, real fences</span><span class="zh-only">真自主，真围栏</span></div>
-        <h2 class="ch-h" data-reveal style="--d:.06s"><span class="en-only">Real tools, behind real walls.</span><span class="zh-only">真工具，关在真墙里。</span></h2>
-        <p class="ch-lede" data-reveal style="--d:.12s"><span class="en-only">Shell, files, a browser, code — every command runs in an OS jail that confines writes and hides your secrets. With no jail available, it refuses to run rather than quietly drop it.</span><span class="zh-only">shell、文件、浏览器、代码，每条命令都在一个 OS 沙箱里运行，写入受限、你的密钥不可见。没有可用的沙箱时，它宁可拒绝运行，也绝不偷偷放掉。</span></p>
-        <div class="ch-meta" data-reveal style="--d:.18s"><span class="en-only">sandbox-exec · bubblewrap · Landlock · every call audited</span><span class="zh-only">sandbox-exec · bubblewrap · Landlock · 每次调用都审计</span></div>
+        <div class="ch-ey" data-reveal><span class="en-only">a capable agent underneath</span><span class="zh-only">底子是个能干活的 agent</span></div>
+        <h2 class="ch-h" data-split><span class="en-only">It can do real things.</span><span class="zh-only">它能做真事。</span></h2>
+        <p class="ch-lede" data-reveal style="--d:.12s"><span class="en-only">Strip the persona away and the harness is a capable agent, built on lessons from Hermes, OpenClaw, and Claude Code. It can help with your day and your code — and, if you hand it full access, your own files too.</span><span class="zh-only">把角色的外壳褪去，底下是一个真能干活的 agent，引擎借鉴了 Hermes、OpenClaw 和 Claude Code。它能帮你处理日常和代码；如果你给它完整权限，也能帮你打理自己的文件。</span></p>
       </div>
     </div>
+  </section>
+
+  <section class="chapter" id="ch4">
+    <div class="ch-no" data-para="0.06" aria-hidden="true">04</div>
+    <div class="wrap ch-split">
+      <div class="ch-text">
+        <div class="ch-ey" data-reveal><span class="en-only">sandboxed by default</span><span class="zh-only">默认沙盒隔离</span></div>
+        <h2 class="ch-h" data-split><span class="en-only">It keeps to its own space.</span><span class="zh-only">它只待在自己的空间里。</span></h2>
+        <p class="ch-lede" data-reveal style="--d:.12s"><span class="en-only">A proper sandbox keeps each chara in its own space: it does its own thing without getting in the way of how you use your computer, and your private files stay private. When you want to share something, just drop a file or a reference into the chara's workspace.</span><span class="zh-only">完整的沙盒把每个 chara 都圈在自己的空间里：它做自己的事，不打扰你怎么用电脑，你的隐私也始终隔离。想给它点什么的时候，把文件或参考资料放进 chara 的 workspace 就好。</span></p>
+        <div class="ch-meta" data-reveal style="--d:.18s"><span class="en-only">and everything it does is written down</span><span class="zh-only">而且它做的每一件事，都记录在案</span></div>
+      </div>
+      <div class="ch-visual" data-reveal="right" style="--d:.1s">
+        <div class="guard spot">
+          <div class="guard-label"><span class="en-only">its own space</span><span class="zh-only">它自己的空间</span></div>
+          <div class="guard-row can"><span class="gm">✓</span><span class="en-only">its own workspace and files</span><span class="zh-only">自己的 workspace 和文件</span></div>
+          <div class="guard-row can"><span class="gm">✓</span><span class="en-only">anything you drop in for it</span><span class="zh-only">你放进去给它的东西</span></div>
+          <div class="guard-div"></div>
+          <div class="guard-row cant"><span class="gm">✕</span><span class="en-only">your private files</span><span class="zh-only">你的私人文件</span></div>
+          <div class="guard-row cant"><span class="gm">✕</span><span class="en-only">your passwords and keys</span><span class="zh-only">你的密码和密钥</span></div>
+          <div class="guard-row cant"><span class="gm">✕</span><span class="en-only">the rest of your computer</span><span class="zh-only">你电脑的其余部分</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ecost" id="ecosystem" aria-label="ecosystem">
+    <div class="wrap">
+      <div class="ch-ey eco-ey" data-reveal><span class="en-only">runs on your models · reaches you anywhere</span><span class="zh-only">用你的模型运行 · 在哪都能找到你</span></div>
+    </div>
+    <div class="marquee" aria-hidden="true"><div class="mq-track" id="mq1"></div></div>
+    <div class="marquee rev" aria-hidden="true"><div class="mq-track" id="mq2"></div></div>
   </section>
 
   <section class="chapter chapter-how" id="how">
     <div class="wrap">
       <div class="ch-head-center">
         <div class="ch-ey" data-reveal><span class="en-only">how it works</span><span class="zh-only">怎么运作</span></div>
-        <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">A card and a model. That's the input.</span><span class="zh-only">一张卡，一个模型。就是全部输入。</span></h2>
+        <h2 class="ch-h ch-h-center" data-split><span class="en-only">A card and a model. That's the input.</span><span class="zh-only">一张卡，一个模型。就是全部输入。</span></h2>
       </div>
       <div class="how-row">
-        <div class="how-step" data-reveal style="--d:.04s"><div class="no">1</div><h3><span class="en-only">Bring a card</span><span class="zh-only">带一张卡</span></h3><p><span class="en-only">Pick one from the deck, or describe a character and let it draft the card.</span><span class="zh-only">从牌组挑一张，或描述一个角色，让它替你起草。</span></p></div>
-        <div class="how-step" data-reveal style="--d:.12s"><div class="no">2</div><h3><span class="en-only">Give it a model</span><span class="zh-only">给它一个模型</span></h3><p><span class="en-only">OpenRouter, any OpenAI-compatible endpoint, or a local Ollama.</span><span class="zh-only">OpenRouter、任意 OpenAI 兼容接口，或本地 Ollama。</span></p></div>
-        <div class="how-step" data-reveal style="--d:.2s"><div class="no">3</div><h3><span class="en-only">Let it live</span><span class="zh-only">让它生活</span></h3><p><span class="en-only">Attach in the desktop app, or leave it running in the background.</span><span class="zh-only">在桌面应用里接入，或让它在后台一直跑着。</span></p></div>
+        <div class="how-step spot" data-reveal style="--d:.04s"><div class="no">1</div><h3><span class="en-only">Bring a card</span><span class="zh-only">带一张卡</span></h3><p><span class="en-only">Pick one from the deck, or describe a character and let it draft the card.</span><span class="zh-only">从牌组挑一张，或描述一个角色，让它替你起草。</span></p></div>
+        <div class="how-step spot" data-reveal style="--d:.12s"><div class="no">2</div><h3><span class="en-only">Give it a model</span><span class="zh-only">给它一个模型</span></h3><p><span class="en-only">OpenRouter, any OpenAI-compatible endpoint, or a local Ollama.</span><span class="zh-only">OpenRouter、任意 OpenAI 兼容接口，或本地 Ollama。</span></p></div>
+        <div class="how-step spot" data-reveal style="--d:.2s"><div class="no">3</div><h3><span class="en-only">Let it live</span><span class="zh-only">让它生活</span></h3><p><span class="en-only">Attach in the desktop app, or leave it running in the background.</span><span class="zh-only">在桌面应用里接入，或让它在后台一直跑着。</span></p></div>
       </div>
     </div>
   </section>
@@ -413,7 +485,7 @@
     <div class="wrap">
       <div class="ch-head-center">
         <div class="ch-ey" data-reveal><span class="en-only">install</span><span class="zh-only">安装</span></div>
-        <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">Up in one line.</span><span class="zh-only">一行装好。</span></h2>
+        <h2 class="ch-h ch-h-center" data-split><span class="en-only">Up in one line.</span><span class="zh-only">一行装好。</span></h2>
         <p class="ch-lede ch-lede-center" data-reveal style="--d:.12s"><span class="en-only">macOS and Linux, beta. First launch is a welcome screen: pick a provider, then a character.</span><span class="zh-only">macOS 与 Linux，beta。首次启动是欢迎页：先选模型供应商，再选一个角色。</span></p>
       </div>
       <div class="tabs" data-reveal style="--d:.04s">
@@ -423,7 +495,7 @@
       </div>
       <div data-reveal="scale" style="--d:.08s">
     <div class="term-panel on" data-panel="mac">
-      <div class="term">
+      <div class="term spot">
         <div class="bar"><i></i><i></i><i></i><span class="t">zsh — your Mac</span></div>
 <pre><span class="cm"># install, then open the webui in your browser</span>
 <span class="pr">$</span> curl -fsSL https://raw.githubusercontent.com/Lunamos/LunaMoth/main/install.sh | bash
@@ -431,7 +503,7 @@
       </div>
     </div>
     <div class="term-panel" data-panel="server">
-      <div class="term">
+      <div class="term spot">
         <div class="bar"><i></i><i></i><i></i><span class="t">bash — your server</span></div>
 <pre><span class="cm"># install on the server, leave a chara living in the background</span>
 <span class="pr">$</span> curl -fsSL https://raw.githubusercontent.com/Lunamos/LunaMoth/main/install.sh | bash
@@ -441,7 +513,7 @@
       </div>
     </div>
     <div class="term-panel" data-panel="clone">
-      <div class="term">
+      <div class="term spot">
         <div class="bar"><i></i><i></i><i></i><span class="t">zsh — from a clone (uv + node)</span></div>
 <pre><span class="cm"># run the full desktop app from source</span>
 <span class="pr">$</span> git clone https://github.com/Lunamos/LunaMoth.git &amp;&amp; cd LunaMoth
@@ -688,7 +760,21 @@ document.querySelectorAll('.tabs .tab').forEach(t=>{
 /* ---------- scroll reveal + parallax + progress ---------- */
 (function(){
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const revs=[...document.querySelectorAll('[data-reveal]')];
+  /* split headlines into staggered units (EN by word, ZH by glyph) before observing */
+  document.querySelectorAll('[data-split]').forEach(h=>{
+    h.querySelectorAll('.en-only,.zh-only').forEach(span=>{
+      const zh=span.classList.contains('zh-only');
+      const units = zh ? [...span.textContent] : span.textContent.split(/(\s+)/);
+      span.textContent=''; let wi=0;
+      units.forEach(u=>{
+        if(u==='') return;
+        if(/^\s+$/.test(u)){ span.appendChild(document.createTextNode(u)); return; }
+        const w=document.createElement('span'); w.className='sw'; w.textContent=u;
+        w.style.setProperty('--wi', wi++); span.appendChild(w);
+      });
+    });
+  });
+  const revs=[...document.querySelectorAll('[data-reveal],[data-split]')];
   if(reduce || !('IntersectionObserver' in window)){ revs.forEach(el=>el.classList.add('in')); }
   else {
     const io=new IntersectionObserver((es)=>{es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});},{threshold:.06, rootMargin:'0px 0px -4% 0px'});
@@ -705,6 +791,62 @@ document.querySelectorAll('.tabs .tab').forEach(t=>{
   }
   addEventListener('scroll',()=>{ if(!tick){ tick=true; requestAnimationFrame(frame); } },{passive:true});
   addEventListener('resize',frame); frame();
+})();
+
+/* ---------- ReactBits-inspired: spotlight · marquee · decode ---------- */
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* spotlight cards follow the cursor */
+  if(!reduce && matchMedia('(hover:hover)').matches){
+    document.querySelectorAll('.spot').forEach(card=>{
+      card.addEventListener('pointermove',e=>{
+        const r=card.getBoundingClientRect();
+        card.style.setProperty('--mx',(((e.clientX-r.left)/r.width)*100).toFixed(1)+'%');
+        card.style.setProperty('--my',(((e.clientY-r.top)/r.height)*100).toFixed(1)+'%');
+      });
+    });
+  }
+
+  /* logo-loop marquee — duplicate the row so translateX(-50%) wraps seamlessly */
+  const ROWS={
+    mq1:['OpenRouter','any OpenAI-compatible API','Ollama','DeepSeek','local models'],
+    mq2:['Desktop app','CLI','Server','WeChat','QQ','Telegram','SillyTavern V2 / V3 cards']
+  };
+  Object.keys(ROWS).forEach(id=>{
+    const t=document.getElementById(id); if(!t) return;
+    const html=ROWS[id].map(s=>`<span class="mq-item">${s}</span>`).join('');
+    t.innerHTML=html+html;
+  });
+
+  /* hero decode — scramble → resolve the visible tagline */
+  const POOL='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ·/<>+*'.split('');
+  const KEEP=new Set([' ','\n','。','，','、','.','’','\'']);
+  function decode(span){
+    if(!span) return;
+    const final=[...(span.dataset.txt||span.textContent)];
+    span.dataset.txt=final.join('');
+    if(reduce){ span.textContent=span.dataset.txt; return; }
+    let revealed=0, f=0; const total=final.length;
+    (function tick(){
+      let out='';
+      for(let i=0;i<total;i++){
+        const c=final[i];
+        out += (i<revealed || KEEP.has(c)) ? c : POOL[(Math.random()*POOL.length)|0];
+      }
+      span.textContent=out;
+      if(++f%2===0) revealed++;
+      if(revealed<=total) requestAnimationFrame(tick);
+      else span.textContent=span.dataset.txt;
+    })();
+  }
+  function decodeTagline(){
+    const t=document.querySelector('.tagline'); if(!t) return;
+    decode([...t.querySelectorAll('.en-only,.zh-only')].find(s=>s.offsetParent!==null));
+  }
+  setTimeout(decodeTagline, 300);
+  const lb=document.getElementById('lang');
+  if(lb){ const prev=lb.onclick; lb.onclick=function(e){ if(prev) prev.call(this,e); setTimeout(decodeTagline,30); }; }
 })();
 
 /* ---------- ambient motes ---------- */
