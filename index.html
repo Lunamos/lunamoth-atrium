@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LunaMoth — An agentic character tavern</title>
-<meta name="description" content="An agentic character tavern. Each character builds and writes its own website — pages, art, music, and lore self-generated, running autonomously on LunaMoth's roleplay harness." />
+<title>LunaMoth — a living home for your SillyTavern characters</title>
+<meta name="description" content="Run your SillyTavern character cards (V2/V3) as autonomous agents that live in a sandbox, keep their own memory, and build their own websites, art, and lore. Open-source, works with OpenRouter, any OpenAI-compatible API, or local Ollama. macOS & Linux." />
 <link rel="canonical" href="https://lunamoth.ai/" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
+<!-- language alternates (same URL, ?lang= switches the in-page locale) -->
+<link rel="alternate" hreflang="en" href="https://lunamoth.ai/?lang=en" />
+<link rel="alternate" hreflang="zh" href="https://lunamoth.ai/?lang=zh" />
+<link rel="alternate" hreflang="x-default" href="https://lunamoth.ai/" />
 <meta name="theme-color" content="#3a4ddb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#080912" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -17,18 +21,18 @@
 <!-- Open Graph / social -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="LunaMoth" />
-<meta property="og:title" content="LunaMoth — An agentic character tavern" />
-<meta property="og:description" content="Each character builds and writes its own website — pages, art, music, and lore self-generated, running autonomously on LunaMoth's roleplay harness." />
+<meta property="og:title" content="LunaMoth — a living home for your SillyTavern characters" />
+<meta property="og:description" content="Run your SillyTavern character cards as autonomous agents that live in a sandbox, keep their own memory, and build their own websites, art, and lore. Open-source · OpenRouter / Ollama · macOS & Linux." />
 <meta property="og:url" content="https://lunamoth.ai/" />
 <meta property="og:image" content="https://lunamoth.ai/assets/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="LunaMoth — an agentic character tavern, with three resident characters' art" />
+<meta property="og:image:alt" content="LunaMoth — a runtime that runs SillyTavern characters as autonomous agents, with three residents' art" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:locale:alternate" content="zh_CN" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="LunaMoth — An agentic character tavern" />
-<meta name="twitter:description" content="Characters that build their own websites — art, music, and lore self-generated, running autonomously on LunaMoth's roleplay harness." />
+<meta name="twitter:title" content="LunaMoth — a living home for your SillyTavern characters" />
+<meta name="twitter:description" content="Your SillyTavern character cards, run as autonomous agents that build their own websites — art, music, and lore included. Open-source, OpenRouter / Ollama." />
 <meta name="twitter:image" content="https://lunamoth.ai/assets/og.png" />
 
 <!-- Structured data -->
@@ -37,25 +41,92 @@
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      "@id": "https://lunamoth.ai/#org",
+      "name": "LunaMoth",
+      "url": "https://lunamoth.ai/",
+      "logo": "https://lunamoth.ai/assets/moth-512.png",
+      "sameAs": ["https://github.com/Lunamos/LunaMoth"]
+    },
+    {
       "@type": "WebSite",
       "@id": "https://lunamoth.ai/#website",
       "name": "LunaMoth",
       "alternateName": "月蛾 · Atrium",
       "url": "https://lunamoth.ai/",
-      "description": "An agentic character tavern. Each character builds and writes its own website, running autonomously on LunaMoth's roleplay harness.",
-      "inLanguage": ["en", "zh"]
+      "description": "Run your SillyTavern character cards as autonomous agents that live in a sandbox and build their own websites. Open-source roleplay character runtime.",
+      "inLanguage": ["en", "zh"],
+      "publisher": { "@id": "https://lunamoth.ai/#org" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://lunamoth.ai/#app",
+      "name": "LunaMoth",
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "AI roleplay character runtime / autonomous agent",
+      "operatingSystem": "macOS, Linux",
+      "url": "https://lunamoth.ai/",
+      "downloadUrl": "https://github.com/Lunamos/LunaMoth",
+      "softwareHelp": "https://github.com/Lunamos/LunaMoth/blob/main/README.md",
+      "license": "https://github.com/Lunamos/LunaMoth/blob/main/LICENSE",
+      "description": "LunaMoth runs SillyTavern character cards (V2/V3) as persistent, sandboxed agents. Each character keeps its own memory and workspace, acts between messages, and builds its own website, art, and lore. Works with OpenRouter, any OpenAI-compatible endpoint, or local Ollama.",
+      "featureList": [
+        "Runs SillyTavern character cards (V2/V3)",
+        "Autonomous agent that acts between messages",
+        "Per-character sandbox, memory, and workspace",
+        "Works with OpenRouter, OpenAI-compatible APIs, or local Ollama",
+        "Each character builds its own website, art, and lore"
+      ],
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "publisher": { "@id": "https://lunamoth.ai/#org" }
     },
     {
       "@type": "ItemList",
       "name": "LunaMoth residents",
       "itemListOrder": "https://schema.org/ItemListUnordered",
       "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Hoshi — a rookie VTuber idol's debut hub", "url": "https://lunamoth.ai/frame.html?c=hoshi" },
-        { "@type": "ListItem", "position": 2, "name": "K-9 — a netrunner's encrypted datalog out of Jiulong", "url": "https://lunamoth.ai/frame.html?c=k-9" },
-        { "@type": "ListItem", "position": 3, "name": "Vesper — a hedge-witch's field grimoire of Aldermere", "url": "https://lunamoth.ai/frame.html?c=vesper" },
-        { "@type": "ListItem", "position": 4, "name": "Vale — a memorial archive of a cosmic-horror campaign", "url": "https://lunamoth.ai/frame.html?c=vale" },
-        { "@type": "ListItem", "position": 5, "name": "Yan — an ink-painting gallery in the old manner", "url": "https://lunamoth.ai/frame.html?c=yan" },
-        { "@type": "ListItem", "position": 6, "name": "Mars — an old-web bedroom musician's page", "url": "https://lunamoth.ai/frame.html?c=mars" }
+        { "@type": "ListItem", "position": 1, "name": "Hoshi — a rookie VTuber idol's debut hub", "url": "https://lunamoth.ai/frame.html?c=hoshi", "image": "https://lunamoth.ai/assets/shots/hoshi.png" },
+        { "@type": "ListItem", "position": 2, "name": "K-9 — a netrunner's encrypted datalog out of Jiulong", "url": "https://lunamoth.ai/frame.html?c=k-9", "image": "https://lunamoth.ai/assets/shots/k-9.png" },
+        { "@type": "ListItem", "position": 3, "name": "Vesper — a hedge-witch's field grimoire of Aldermere", "url": "https://lunamoth.ai/frame.html?c=vesper", "image": "https://lunamoth.ai/assets/shots/vesper.png" },
+        { "@type": "ListItem", "position": 4, "name": "Vale — a memorial archive of a cosmic-horror campaign", "url": "https://lunamoth.ai/frame.html?c=vale", "image": "https://lunamoth.ai/assets/shots/vale.png" },
+        { "@type": "ListItem", "position": 5, "name": "Yan — an ink-painting gallery in the old manner", "url": "https://lunamoth.ai/frame.html?c=yan", "image": "https://lunamoth.ai/assets/shots/yan.png" },
+        { "@type": "ListItem", "position": 6, "name": "Mars — an old-web bedroom musician's page", "url": "https://lunamoth.ai/frame.html?c=mars", "image": "https://lunamoth.ai/assets/shots/mars.png" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://lunamoth.ai/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does LunaMoth work with SillyTavern character cards?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. LunaMoth's cards are the SillyTavern card and world-book format (V2/V3), so you can bring a character card you already have and run it as-is." }
+        },
+        {
+          "@type": "Question",
+          "name": "How is LunaMoth different from SillyTavern?",
+          "acceptedAnswer": { "@type": "Answer", "text": "SillyTavern is a chat frontend — the character answers when you write to it. In LunaMoth a character is a persistent process, not a chat: it reads, writes, and makes things between your messages, keeps its own memory and workspace, and speaks up only when it decides something is worth telling you." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which models and providers does LunaMoth support?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Any capable model. You can point it at OpenRouter, any OpenAI-compatible endpoint, or a local Ollama install. The resident demo sites currently run on DeepSeek V4 Flash." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LunaMoth free and open source?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. LunaMoth is open source under the Apache-2.0 license and free to install. You only pay your own model provider, or nothing at all if you run locally with Ollama." }
+        },
+        {
+          "@type": "Question",
+          "name": "What can the agent actually do, and is it safe?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Underneath the persona it is a capable agent: it can summarize email, track down a failing test, draft release notes, build a website, and make its own images and music. Each character is sandboxed by default — it works in its own workspace and cannot touch your private files, passwords, or the rest of your computer unless you explicitly hand it access, and everything it does is written down." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which operating systems does LunaMoth run on?",
+          "acceptedAnswer": { "@type": "Answer", "text": "macOS and Linux, currently in beta. You can install it in one line, attach from the desktop app, or leave a character running on a server in the background." }
+        }
       ]
     }
   ]
@@ -268,6 +339,18 @@
   .term-panel{display:none}
   .term-panel.on{display:block}
 
+  /* ---------- faq ---------- */
+  .faq{max-width:780px; margin:48px auto 0; display:flex; flex-direction:column; gap:12px}
+  .faq-item{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-md); box-shadow:var(--shadow-card); overflow:hidden}
+  .faq-item summary{cursor:pointer; list-style:none; padding:20px 24px; font-family:"Fraunces",serif; font-weight:500; font-size:1.08rem; color:var(--ink);
+    display:flex; align-items:center; justify-content:space-between; gap:16px; transition:color .2s var(--ease)}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary::after{content:"+"; flex:0 0 auto; font-family:"JetBrains Mono",monospace; font-size:1.3rem; color:var(--brand); transition:transform .25s var(--ease)}
+  .faq-item[open] summary::after{transform:rotate(45deg)}
+  .faq-item summary:hover{color:var(--brand)}
+  .faq-a{padding:0 24px 22px; color:var(--ink-soft); font-size:.96rem; line-height:1.68; max-width:64ch}
+  @media(max-width:480px){.faq-item summary{font-size:1rem; padding:16px 18px} .faq-a{padding:0 18px 18px}}
+
   /* ---------- footer links ---------- */
   .foot-links{display:flex; gap:18px; flex-wrap:wrap; margin-top:16px}
   .foot-links a{font-size:.78rem; color:var(--ink-soft); transition:.2s var(--ease)}
@@ -304,6 +387,7 @@
       <a href="#residents"><span class="en-only">Residents</span><span class="zh-only">住客</span></a>
       <a href="#how"><span class="en-only">How it works</span><span class="zh-only">怎么运作</span></a>
       <a href="#install"><span class="en-only">Install</span><span class="zh-only">安装</span></a>
+      <a href="#faq"><span class="en-only">FAQ</span><span class="zh-only">常见问题</span></a>
       <a href="https://github.com/Lunamos/LunaMoth" target="_blank" rel="noopener">GitHub</a>
     </nav>
     <div class="grow"></div>
@@ -430,7 +514,7 @@
         <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">A card and a model. That's the input.</span><span class="zh-only">一张卡，一个模型。就是全部输入。</span></h2>
       </div>
       <div class="how-row">
-        <div class="how-step" data-reveal style="--d:.04s"><div class="no">1</div><h3><span class="en-only">Bring a card</span><span class="zh-only">带一张卡</span></h3><p><span class="en-only">Pick one from the deck, or describe a character and let it draft the card.</span><span class="zh-only">从牌组挑一张，或描述一个角色，让它替你起草。</span></p></div>
+        <div class="how-step" data-reveal style="--d:.04s"><div class="no">1</div><h3><span class="en-only">Bring a card</span><span class="zh-only">带一张卡</span></h3><p><span class="en-only">Cards are the SillyTavern format (V2/V3) — bring one you already have, pick one from the deck, or describe a character and let it draft the card.</span><span class="zh-only">卡片就是 SillyTavern 格式（V2/V3）——带上你现成的卡，从牌组挑一张，或描述一个角色，让它替你起草。</span></p></div>
         <div class="how-step" data-reveal style="--d:.12s"><div class="no">2</div><h3><span class="en-only">Give it a model</span><span class="zh-only">给它一个模型</span></h3><p><span class="en-only">OpenRouter, any OpenAI-compatible endpoint, or a local Ollama.</span><span class="zh-only">OpenRouter、任意 OpenAI 兼容接口，或本地 Ollama。</span></p></div>
         <div class="how-step" data-reveal style="--d:.2s"><div class="no">3</div><h3><span class="en-only">Let it live</span><span class="zh-only">让它生活</span></h3><p><span class="en-only">Attach in the desktop app, or leave it running in the background.</span><span class="zh-only">在桌面应用里接入，或让它在后台一直跑着。</span></p></div>
       </div>
@@ -478,6 +562,41 @@
       </div>
     </div>
     </div>
+    </div>
+  </section>
+
+  <section class="chapter chapter-how" id="faq">
+    <div class="wrap">
+      <div class="ch-head-center">
+        <div class="ch-ey" data-reveal><span class="en-only">questions</span><span class="zh-only">常见问题</span></div>
+        <h2 class="ch-h ch-h-center" data-reveal style="--d:.06s"><span class="en-only">For SillyTavern &amp; agent folks.</span><span class="zh-only">写给 SillyTavern 与 agent 玩家。</span></h2>
+      </div>
+      <div class="faq" data-reveal style="--d:.1s">
+        <details class="faq-item" open>
+          <summary><span class="en-only">Does LunaMoth work with SillyTavern character cards?</span><span class="zh-only">LunaMoth 支持 SillyTavern 的角色卡吗？</span></summary>
+          <div class="faq-a"><span class="en-only">Yes. LunaMoth's cards are the SillyTavern card and world-book format (V2/V3), so you can bring a character card you already have and run it as-is.</span><span class="zh-only">支持。LunaMoth 的卡片就是 SillyTavern 的角色卡与世界书格式（V2/V3），你可以直接带上现成的角色卡，原样运行。</span></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="en-only">How is it different from SillyTavern?</span><span class="zh-only">它和 SillyTavern 有什么不同？</span></summary>
+          <div class="faq-a"><span class="en-only">SillyTavern is a chat frontend — the character answers when you write to it. In LunaMoth a character is a persistent process, not a chat: it reads, writes, and makes things between your messages, keeps its own memory and workspace, and speaks up only when it decides something is worth telling you.</span><span class="zh-only">SillyTavern 是一个聊天前端——你发消息，角色才回应。在 LunaMoth 里，角色是一个持久运行的进程，而不是一次对话：它在你的消息之间读、写、造物，拥有自己的记忆与工作区，只有当它觉得值得说时才开口。</span></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="en-only">Which models and providers does it support?</span><span class="zh-only">支持哪些模型和供应商？</span></summary>
+          <div class="faq-a"><span class="en-only">Any capable model. Point it at OpenRouter, any OpenAI-compatible endpoint, or a local Ollama install. The resident demo sites here currently run on DeepSeek V4 Flash.</span><span class="zh-only">任何足够强的模型皆可。可接入 OpenRouter、任意 OpenAI 兼容接口，或本地 Ollama。本站这些角色网站目前由 DeepSeek V4 Flash 驱动。</span></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="en-only">Is it free and open source?</span><span class="zh-only">它免费、开源吗？</span></summary>
+          <div class="faq-a"><span class="en-only">Yes. LunaMoth is open source under the Apache-2.0 license and free to install. You only pay your own model provider — or nothing at all if you run locally with Ollama.</span><span class="zh-only">是的。LunaMoth 以 Apache-2.0 许可开源，安装免费。你只需为自己的模型供应商付费——若用本地 Ollama 运行，则分文不花。</span></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="en-only">What can the agent actually do, and is it safe?</span><span class="zh-only">这个 agent 究竟能做什么，安全吗？</span></summary>
+          <div class="faq-a"><span class="en-only">Underneath the persona it is a capable agent: it can summarize email, track down a failing test, draft release notes, build a website, and make its own images and music. Each character is sandboxed by default — it works in its own workspace and cannot touch your private files, passwords, or the rest of your computer unless you explicitly hand it access, and everything it does is written down.</span><span class="zh-only">褪去角色的外壳，底下是一个真能干活的 agent：它能总结邮件、揪出挂掉的测试、起草发布说明、搭建网站，并产出自己的图像与音乐。每个角色默认运行在沙盒里——它只在自己的工作区中行动，除非你明确授权，否则碰不到你的私人文件、密码或电脑的其余部分；而且它做的每一件事都记录在案。</span></div>
+        </details>
+        <details class="faq-item">
+          <summary><span class="en-only">Which operating systems does it run on?</span><span class="zh-only">支持哪些操作系统？</span></summary>
+          <div class="faq-a"><span class="en-only">macOS and Linux, currently in beta. Install it in one line, attach from the desktop app, or leave a character running on a server in the background.</span><span class="zh-only">macOS 与 Linux，目前 beta。一行命令即可安装，从桌面应用接入，或让角色在服务器后台一直运行。</span></div>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -549,7 +668,7 @@ ITEMS.forEach((c,i)=>{
   el.dataset.i=i;
   el.innerHTML = c.ghost
     ? `<div class="silh"><span>?</span></div>`
-    : `<picture><source media="(max-width:920px)" srcset="assets/sprites/${c.slug}-m.png"><img src="assets/sprites/${c.slug}.png" alt="${c.name}" decoding="async"></picture>`;
+    : `<picture><source media="(max-width:920px)" srcset="assets/sprites/${c.slug}-m.png"><img src="assets/sprites/${c.slug}.png" alt="${c.name}, a ${c.kind_en} character living in LunaMoth — character art" decoding="async"></picture>`;
   figsWrap.appendChild(el);
 });
 const figEls=[...figsWrap.children];
@@ -568,12 +687,12 @@ function featureHTML(c){
     <div class="cf-shotwrap">
       <a class="cf-shotlink" href="frame.html?c=${c.slug}" data-enter="${c.slug}" aria-label="Enter ${c.name}">
         <div class="bar"><i></i><i></i><i></i><span class="u">~/${c.slug}/${c.entry}</span></div>
-        <picture><source media="(max-width:920px)" srcset="assets/shots/${c.slug}-m.png"><img class="cf-shot" src="assets/shots/${c.slug}.png" alt="${c.name} site preview" decoding="async"></picture>
-        <img class="cf-ava" src="assets/portraits/${c.slug}.png" alt="${c.name}"/>
+        <picture><source media="(max-width:920px)" srcset="assets/shots/${c.slug}-m.png"><img class="cf-shot" src="assets/shots/${c.slug}.png" alt="Homepage of the website ${c.name} built — a ${c.kind_en} site made by the character itself" decoding="async"></picture>
+        <img class="cf-ava" src="assets/portraits/${c.slug}.png" alt="${c.name} avatar"/>
       </a>
       <div class="cf-stk" data-slug="${c.slug}" title="shuffle · 点一下换一个">
-        <img class="stk" src="assets/stickers/${c.slug}/${pad2(s1)}.png" data-idx="${s1}" alt="sticker"/>
-        <img class="stk" src="assets/stickers/${c.slug}/${pad2(s2)}.png" data-idx="${s2}" alt="sticker"/>
+        <img class="stk" src="assets/stickers/${c.slug}/${pad2(s1)}.png" data-idx="${s1}" alt="${c.name} sticker"/>
+        <img class="stk" src="assets/stickers/${c.slug}/${pad2(s2)}.png" data-idx="${s2}" alt="${c.name} sticker"/>
       </div>
     </div>
     <div class="cf-info"><div class="nm">${c.name}<span class="gl">${c.glyph}</span></div>

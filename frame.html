@@ -4,9 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LunaMoth — a character's creation</title>
-<meta name="description" id="m-desc" content="A world one LunaMoth character built by hand, framed inside the Atrium — its own site, art, and lore, generated autonomously." />
+<meta name="description" id="m-desc" content="A website built by an autonomous character running on LunaMoth — a SillyTavern card brought to life as an agent, framed inside the Atrium with its own art and lore." />
 <link rel="canonical" id="m-canon" href="https://lunamoth.ai/frame.html" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="alternate" hreflang="en" id="alt-en" href="https://lunamoth.ai/frame.html?lang=en" />
+<link rel="alternate" hreflang="zh" id="alt-zh" href="https://lunamoth.ai/frame.html?lang=zh" />
+<link rel="alternate" hreflang="x-default" id="alt-def" href="https://lunamoth.ai/frame.html" />
 <meta name="theme-color" content="#3a4ddb" media="(prefers-color-scheme: light)" />
 <meta name="theme-color" content="#080912" media="(prefers-color-scheme: dark)" />
 <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -212,6 +215,28 @@ function build(){
   set('og-url','content',canon);
   set('tw-title','content',ogTitle);
   set('tw-desc','content',desc);
+  set('alt-en','href',`${canon}&lang=en`);
+  set('alt-zh','href',`${canon}&lang=zh`);
+  set('alt-def','href',canon);
+
+  /* per-character structured data: where this page sits, and who made the work */
+  try{
+    const ld={ "@context":"https://schema.org", "@graph":[
+      { "@type":"BreadcrumbList", "itemListElement":[
+        { "@type":"ListItem","position":1,"name":"LunaMoth Atrium","item":"https://lunamoth.ai/" },
+        { "@type":"ListItem","position":2,"name":`${c.name} — ${c.kind_en}`,"item":canon }
+      ]},
+      { "@type":"CreativeWork", "name":`${c.name}'s website`,
+        "description":desc, "url":canon,
+        "inLanguage":["en","zh"], "image":`https://lunamoth.ai/assets/shots/${c.slug}.png`,
+        "isPartOf":{ "@type":"WebSite","name":"LunaMoth","url":"https://lunamoth.ai/" },
+        "author":{ "@type":"Person","name":c.name,
+          "description":`${c.kind_en} character living autonomously on LunaMoth` },
+        "creator":{ "@type":"SoftwareApplication","name":"LunaMoth","url":"https://lunamoth.ai/" } }
+    ]};
+    const s=document.createElement('script'); s.type='application/ld+json';
+    s.textContent=JSON.stringify(ld); document.head.appendChild(s);
+  }catch(e){}
 
   htmlEl.style.setProperty('--c', c.accent);
   document.getElementById('charlabel').innerHTML=L('LunaMoth character','LunaMoth 角色');
@@ -229,14 +254,14 @@ function build(){
   document.getElementById('rail').innerHTML=`
     <div class="kic">${L('a creation by a character living in LunaMoth','LunaMoth 中一位角色的创作')}</div>
     <div class="idrow">
-      <img class="av" src="assets/portraits/${c.slug}.png" alt="${c.name}"/>
+      <img class="av" src="assets/portraits/${c.slug}.png" alt="${c.name} avatar"/>
       <div>
         <div class="nm">${c.name}<span class="gl">${c.glyph}</span></div>
         <div class="live"><span class="d"></span>${L('living','在线生活')}</div>
       </div>
     </div>
     <p class="tagi">${L(c.tag_en,c.tag_zh)}</p>
-    <div class="spritebox"><div class="halo"></div><picture><source media="(max-width:920px)" srcset="assets/sprites/${c.slug}-m.png"><img src="assets/sprites/${c.slug}.png" alt="${c.name}" width="512" height="1200" fetchpriority="high" decoding="async"/></picture></div>
+    <div class="spritebox"><div class="halo"></div><picture><source media="(max-width:920px)" srcset="assets/sprites/${c.slug}-m.png"><img src="assets/sprites/${c.slug}.png" alt="${c.name}, a ${c.kind_en} character living in LunaMoth — character art" width="512" height="1200" fetchpriority="high" decoding="async"/></picture></div>
     <div class="means">
       <div class="h">${L('what this place is to them','这个地方，对它意味着')}</div>
       <div class="b">${L(c.mean_en,c.mean_zh)}</div>
